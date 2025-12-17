@@ -1,0 +1,197 @@
+/* --- Тёмная тема --- */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Изменено: Очень тёмный фон для всего тела страницы */
+    background-color: #121212;
+    /* Изменено: Светлый цвет текста для хорошей читаемости */
+    color: #e0e0e0;
+}
+
+header {
+    /* Изменено: Чуть более светлый фон, чем у body, для визуального разделения */
+    background-color: #1f1f1f;
+    color: #fff;
+    /* Оставлено: Белый текст отлично смотрится на тёмном */
+    padding: 1rem 0;
+    text-align: center;
+    /* Добавлено: Тонкая светлая граница для отделения хедера */
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: #fff;
+    /* Оставлено: Белый цвет подходит */
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #fff;
+    /* Оставлено: Белый цвет подходит */
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 15px;
+    padding: 0;
+}
+
+.nav-button:hover {
+    text-decoration: underline;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    /* Изменено: Тёмный фон для основной контентной области, светлее чем body */
+    background-color: #2a2a2a;
+    /* Изменено: Тень заменена на светлую границу, так как тёмная тень не будет видна */
+    box-shadow: none;
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    /* Изменено: Светлый цвет для заголовков */
+    color: #f5f5f5;
+}
+
+form h2 {
+    text-align: left;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    display: block;
+    width: calc(100% - 20px);
+    padding: 10px;
+    /* Изменено: Граница и фон для полей ввода */
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    /* Изменено: Цвет текста внутри полей ввода */
+    color: #e0e0e0;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+/* Добавлено: Стиль для плейсхолдера */
+form input::placeholder {
+    color: #888;
+}
+
+form button[type="submit"] {
+    width: fit-content+20px;
+    height: 35px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+form button[type="submit"]:hover {
+    background-color: #218838;
+    /* Соответствующий цвет для hover */
+}
+
+form button[type="reset"] {
+    width: fit-content+20px;
+    height: 35px;
+    background-color: #a72828;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+form button[type="reset"]:hover {
+    background-color: #831e1e;
+    /* Соответствующий цвет для hover */
+}
+
+div.change_button {
+    margin-top: 10px;
+}
+
+div.register {
+    display: block;
+}
+
+div.login {
+    display: none;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+/* Переработка стилей уведомлений для тёмной темы */
+.alert-success {
+    color: #a7d7b9;
+    background-color: rgba(39, 174, 96, 0.2);
+    /* Полупрозрачный фон */
+    border-color: #27ae60;
+}
+
+.alert-danger {
+    color: #f5b7b1;
+    background-color: rgba(231, 76, 60, 0.2);
+    border-color: #e74c3c;
+}
+
+.alert-warning {
+    color: #fdeeb3;
+    background-color: rgba(241, 196, 15, 0.2);
+    border-color: #f1c40f;
+}
+
+.alert-info {
+    color: #aed6f1;
+    background-color: rgba(52, 152, 219, 0.2);
+    border-color: #3498db;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 0.9em;
+    /* Изменено: Более светлый серый для второстепенного текста */
+    color: #aaa;
+}
+
+a:any-link {
+    color: #aaa;
+}

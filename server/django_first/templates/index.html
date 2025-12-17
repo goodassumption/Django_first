@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-
-<body>
-    <h1>Курс "Промышленное программирование"</h1>
-    <li>Автор сайта - Головин Алексей</li>
-    <li>Количество страниц на сайте - 1</li>
-</body>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Дочка</h1>
+    <!-- Переменные из context -->
+    <h2>{{ author }}</h2>  
+    <p>{{ pages }}</p>
+{% endblock %}
