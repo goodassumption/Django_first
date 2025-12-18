@@ -5,6 +5,13 @@
 <h1>Нейросеть</h1>
 <p>Здесь вы можете задать нейросети любой вопрос и получить на него ответ. Текущая модель: {{ model }}</p>
 
-<p>Но, спешу вас огорчить, пока ничего не работает. Всё, что нейросеть может вам сказать: {{ ans }}</p>
-
+<form>
+    <h4>Ответ от нейросети:</h4>
+    <p>{{ ans }}</p>
+</form>
+<form title="neyro-message" method="post">
+    {% csrf_token %}
+    <input name="message" type="text" placeholder="Введите запрос">
+<button type="submit">Отправить</button>
+</form>
 {% endblock %}
