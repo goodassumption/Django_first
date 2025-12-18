@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block header_nav %}
-<nav>
-    <button onclick="location.href='{% url 'index' %}'">Главная</button>
-</nav>
-{% endblock header_nav %}
-
 {% block content %}
 <h1>Калькулятор</h1>
-
+<p>Это примитивный калькулятор чисел, использующий Python</p>
+<form title="Калькулятор" method="post">
+    {% csrf_token %}
+    <label>Введите первое число</label>
+    <input type="number" name = "first" value="0">
+    <label>Введите второе число</label>
+    <input type="number" name = "second" value="0">
+    <!--- В разработке -->
+    <p><input type="radio" name="action" value ="sum" checked>Сложить</p>
+    <p><input type="radio" name="action" value ="sub">Вычесть</p>
+    <p><input type="radio" name="action" value ="mul">Перемножить</p>
+    <p><input type="radio" name="action" value ="div">Поделить</p>
+    <button type="submit" name="Вычислить">Вычислить</button>
+    <button type="reset" name="Сбросить">Сбросить</button>
+</form>
+<h4 style="padding-bottom: 0; margin-bottom: 0;">{{ text }}</h4>
+<h4 style="padding-top: 0; margin-top: 0;">{{ ans }}</h4>
 {% endblock %}
