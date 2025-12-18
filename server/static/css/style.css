@@ -1,197 +1,527 @@
-/* --- Тёмная тема --- */
+/* ============================================
+   ТЁМНАЯ ТЕМА - GoodAssumption
+   Версия с улучшенными кнопками навигации
+============================================ */
 
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    /* Изменено: Очень тёмный фон для всего тела страницы */
-    background-color: #121212;
-    /* Изменено: Светлый цвет текста для хорошей читаемости */
-    color: #e0e0e0;
+/* --- Глобальные настройки --- */
+* {
+    box-sizing: border-box;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Шапка сайта --- */
 header {
-    /* Изменено: Чуть более светлый фон, чем у body, для визуального разделения */
-    background-color: #1f1f1f;
+    background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
     color: #fff;
-    /* Оставлено: Белый текст отлично смотрится на тёмном */
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     text-align: center;
-    /* Добавлено: Тонкая светлая граница для отделения хедера */
     border-bottom: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+}
+
+/* Декоративный элемент для хедера */
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(100, 100, 255, 0.5) 20%,
+            rgba(100, 100, 255, 0.8) 50%,
+            rgba(100, 100, 255, 0.5) 80%,
+            transparent 100%);
 }
 
 header h1 {
     margin: 0;
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #4a90e2, #5dce8a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 0 15px;
 }
 
+/* --- Навигация и кнопки --- */
 nav {
-    margin-top: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
 }
 
-nav a {
-    color: #fff;
-    /* Оставлено: Белый цвет подходит */
-    text-decoration: none;
-    margin: 0 15px;
+/* Базовые стили для кнопок навигации */
+nav button {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    min-width: 150px;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-nav a:hover {
-    text-decoration: underline;
+/* Цветовые схемы для разных кнопок */
+/* Главная кнопка (будет на всех страницах) */
+nav button:first-of-type {
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(58, 123, 213, 0.4);
 }
 
+/* Кнопка калькулятора (только на главной) */
+nav button:nth-of-type(2) {
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(142, 45, 226, 0.4);
+}
+
+/* Кнопка времени (только на главной) */
+nav button:nth-of-type(3) {
+    background: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(244, 107, 69, 0.4);
+}
+
+/* Эффект при наведении на любую кнопку */
+nav button:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Специфичные эффекты при наведении для каждой кнопки */
+nav button:first-of-type:hover {
+    box-shadow: 0 10px 25px rgba(58, 123, 213, 0.6);
+}
+
+nav button:nth-of-type(2):hover {
+    box-shadow: 0 10px 25px rgba(142, 45, 226, 0.6);
+}
+
+nav button:nth-of-type(3):hover {
+    box-shadow: 0 10px 25px rgba(244, 107, 69, 0.6);
+}
+
+/* Эффект при нажатии (активном состоянии) */
+nav button:active {
+    transform: translateY(2px) scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Эффект "свечения" при наведении */
+nav button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+nav button:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Стили для фокуса (для доступности) */
+nav button:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 4px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Альтернативный стиль для ссылок в навигации (если будут использоваться) */
 .nav-button {
     background: none;
     border: none;
     color: #fff;
-    /* Оставлено: Белый цвет подходит */
     cursor: pointer;
     font-size: 1rem;
     margin: 0 15px;
-    padding: 0;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .nav-button:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
 }
 
+/* --- Основной контент --- */
 main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    /* Изменено: Тёмный фон для основной контентной области, светлее чем body */
-    background-color: #2a2a2a;
-    /* Изменено: Тень заменена на светлую границу, так как тёмная тень не будет видна */
-    box-shadow: none;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #1e1e1e;
     border: 1px solid #444;
-    border-radius: 5px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    flex-grow: 1;
+    position: relative;
+    z-index: 1;
+}
+
+main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3a7bd5, #8e2de2, #f46b45);
+    border-radius: 12px 12px 0 0;
+    z-index: 2;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #f5f5f5;
+    margin-top: 0;
 }
 
 h1 {
-    text-align: center;
-    /* Изменено: Светлый цвет для заголовков */
-    color: #f5f5f5;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+    color: #d4d4d4;
+}
+
+/* --- Формы --- */
+form {
+    background-color: #2a2a2a;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    margin-bottom: 25px;
 }
 
 form h2 {
     text-align: left;
+    border-bottom: 2px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #d0d0d0;
 }
 
 form input[type="text"],
-form input[type="password"] {
+form input[type="password"],
+form input[type="email"],
+form input[type="number"],
+form textarea,
+form select {
     display: block;
-    width: calc(100% - 20px);
-    padding: 10px;
-    /* Изменено: Граница и фон для полей ввода */
+    width: 100%;
+    padding: 12px 15px;
     border: 1px solid #555;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: #333;
-    /* Изменено: Цвет текста внутри полей ввода */
     color: #e0e0e0;
     box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-/* Добавлено: Стиль для плейсхолдера */
-form input::placeholder {
-    color: #888;
-}
-
-form button[type="submit"] {
-    width: fit-content+20px;
-    height: 35px;
-    background-color: #28a745;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    margin-bottom: 15px;
     font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #3a7bd5;
+    box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+    outline: none;
+}
+
+/* Стиль для плейсхолдера */
+form input::placeholder,
+form textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Кнопки в формах */
+form button[type="submit"] {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
 }
 
 form button[type="submit"]:hover {
-    background-color: #218838;
-    /* Соответствующий цвет для hover */
+    background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
 }
 
 form button[type="reset"] {
-    width: fit-content+20px;
-    height: 35px;
-    background-color: #a72828;
+    background: linear-gradient(135deg, #a72828 0%, #dc3545 100%);
     color: white;
-    padding: 10px 15px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 1rem;
-    margin-left: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-left: 15px;
+    box-shadow: 0 4px 10px rgba(167, 40, 40, 0.3);
 }
 
 form button[type="reset"]:hover {
-    background-color: #831e1e;
-    /* Соответствующий цвет для hover */
+    background: linear-gradient(135deg, #831e1e 0%, #c82333 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(167, 40, 40, 0.4);
 }
 
 div.change_button {
-    margin-top: 10px;
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
 }
 
-div.register {
-    display: block;
-}
-
+div.register,
 div.login {
-    display: none;
+    display: block;
+    transition: opacity 0.3s;
 }
 
+/* --- Уведомления и сообщения --- */
 .alert {
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-weight: 500;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Переработка стилей уведомлений для тёмной темы */
+.alert::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    border-radius: 8px 0 0 8px;
+}
+
 .alert-success {
     color: #a7d7b9;
-    background-color: rgba(39, 174, 96, 0.2);
-    /* Полупрозрачный фон */
+    background-color: rgba(39, 174, 96, 0.15);
     border-color: #27ae60;
+}
+
+.alert-success::before {
+    background-color: #27ae60;
 }
 
 .alert-danger {
     color: #f5b7b1;
-    background-color: rgba(231, 76, 60, 0.2);
+    background-color: rgba(231, 76, 60, 0.15);
     border-color: #e74c3c;
+}
+
+.alert-danger::before {
+    background-color: #e74c3c;
 }
 
 .alert-warning {
     color: #fdeeb3;
-    background-color: rgba(241, 196, 15, 0.2);
+    background-color: rgba(241, 196, 15, 0.15);
     border-color: #f1c40f;
+}
+
+.alert-warning::before {
+    background-color: #f1c40f;
 }
 
 .alert-info {
     color: #aed6f1;
-    background-color: rgba(52, 152, 219, 0.2);
+    background-color: rgba(52, 152, 219, 0.15);
     border-color: #3498db;
 }
 
-footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 0.9em;
-    /* Изменено: Более светлый серый для второстепенного текста */
-    color: #aaa;
+.alert-info::before {
+    background-color: #3498db;
 }
 
-a:any-link {
+/* --- Подвал сайта --- */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 25px 15px;
+    font-size: 0.95em;
     color: #aaa;
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
+}
+
+footer p {
+    margin: 8px 0;
+}
+
+footer a {
+    color: #5dce8a;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #4a90e2;
+    text-decoration: underline;
+}
+
+/* --- Общие стили для ссылок --- */
+a:any-link {
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+a:any-link:hover {
+    color: #3a7bd5;
+    text-decoration: underline;
+}
+
+/* --- Списки --- */
+ul, ol {
+    padding-left: 2em;
+    margin-bottom: 1.5em;
+}
+
+li {
+    margin-bottom: 0.5em;
+    color: #d0d0d0;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    nav button {
+        width: 90%;
+        max-width: 300px;
+        min-width: unset;
+        padding: 12px 20px;
+    }
+    
+    main {
+        margin: 15px;
+        padding: 20px;
+    }
+    
+    form button[type="submit"],
+    form button[type="reset"] {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    div.change_button {
+        flex-direction: column;
+    }
+}
+
+/* --- Утилитные классы --- */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- Анимации --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Специальные элементы --- */
+.highlight {
+    background: linear-gradient(120deg, rgba(58, 123, 213, 0.2) 0%, rgba(142, 45, 226, 0.2) 100%);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.code-block {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 20px 0;
+    overflow-x: auto;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
 }

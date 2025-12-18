@@ -1,8 +1,44 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block header_nav %}
+    <nav>
+        <button onclick="location.href='{% url 'calc' %}'">Калькулятор</button>
+        <button onclick="location.href='{% url 'time' %}'">Время</button>
+    </nav>
+{% endblock header_nav %}
+
 {% block content %}
-    <h1>Дочка</h1>
-    <!-- Переменные из context -->
-    <h2>{{ author }}</h2>  
-    <p>{{ pages }}</p>
+<h1>Добро пожаловать на сайт!</h1>
+<p>
+    Я - Головин Алексей aka GoodAssumption. На данный момент занимаюсь разработкой различных приложений на Python
+    Этот сайт является учебным и нужен для отработки навыков работы с Djanga.
+</p>
+
+<h1>О разработчике</h1>
+<h4>Языки программирования</h4>
+<ul type="disc">
+    <li>Python</li>
+    <li>C++</li>
+    <li>C#</li>
+</ul>
+
+<h4>Контакты</h4>
+<ul type="disc">
+    <li>
+        <a href="https://t.me/ink_visit_or" target="_blank">
+            Telegram
+        </a>
+    </li>
+    <li>
+        <a href="https://github.com/goodassumption" target="_blank">
+            GitHub
+        </a>
+    </li>
+    <li>
+        <a href="https://gitlab.informatics.ru/goodassumption" target="_blank">
+            GitLab
+        </a>
+    </li>
+</ul>
 {% endblock %}

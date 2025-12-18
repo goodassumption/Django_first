@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <button onclick="location.href='{% url 'index' %}'">Главная</button>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<h1>Калькулятор</h1>
+
+{% endblock %}

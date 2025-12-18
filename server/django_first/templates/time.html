@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <button onclick="location.href='{% url 'index' %}'">Главная</button>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<h1>Текущее время</h1>
+<ul type="disc">
+    <li id = 'date-field'></li>
+    <li id = 'time-field'></li>
+</ul>
+
+<script>
+        function updatePageData() {
+            // Отправляем AJAX-запрос к созданному нами эндпоинту /update/
+            fetch('/update/')
+                .then(response => response.json())
+                .then(data => {
+                    // Находим элементы по ID и заменяем их содержимое
+                    document.getElementById('date-field').textContent = 'Текущая дата: ' + data.date;
+                    document.getElementById('time-field').textContent = 'Текущее время: ' + data.time;
+                    console.log('Данные обновлены:', data);
+                })
+                .catch(error => console.error('Ошибка при обновлении:', error));
+        }
+
+        updatePageData();
+        setInterval(updatePageData, 1000);
+    </script>
+
+{% endblock %}

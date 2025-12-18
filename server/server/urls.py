@@ -20,5 +20,8 @@ from django_first import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('', views.index, name='index'),
+    path('time/', views.time, name = 'time'),
+    path('update/', views.time_update, name='update'),
+    path('calc/', views.calc, name='calc'),
 ]

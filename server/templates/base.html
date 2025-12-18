@@ -10,13 +10,21 @@
 </head>
 
 <body>
-    <header></header>
+    <header>
+        <h1>Курс "Промышленное программирование"</h1>
+        {% block header_nav %}
+        {% endblock header_nav %}
+    </header>
 
     <main>
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer></footer>
+    <footer>
+        <p>&copy; 2025 GoodAssumption</p>
+        <a href="https://t.me/ink_visit_or" target="_blank">Ссылка для
+            связи</a>
+    </footer>
 </body>
 </html>
