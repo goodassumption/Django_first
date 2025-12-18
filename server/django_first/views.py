@@ -3,6 +3,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 import datetime
+import requests
 
 def index(request):
     context = {}
@@ -47,3 +48,14 @@ def time_update(request):
     now = datetime.datetime.now()
     context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
     return JsonResponse(context)
+
+def neyro(request):
+
+
+    content = {
+        'model': 'None',
+        'ans': 'None',
+    }
+    
+    print(content['ans'])
+    return render(request, 'neyro.html', content)
