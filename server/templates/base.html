@@ -13,6 +13,9 @@
     <header>
         <h1>Курс "Промышленное программирование"</h1>
         {% block header_nav %}
+        <nav>
+            <button onclick="location.href='{% url 'index' %}'">На главную</button>
+        </nav>
         {% endblock header_nav %}
     </header>
 
