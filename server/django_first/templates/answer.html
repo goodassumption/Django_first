@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button onclick="location.href='{% url 'riddle' %}'"
+            class="nav-single-btn">К загадке</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<h2>Ну что, отгадал?</h2>
+<div class="copy-grid-item">
+    <div class="copy-item-title">Ответ</div>
+    <div class="copy-item-content" onclick="copyTextOnClick()">Рояль</div>
+</div>
+{% endblock %}

@@ -131,3 +131,11 @@ def neyro(request):
 def prompts(request):
     context = {}
     return render(request, 'prompts.html', context)
+
+def riddle(request):
+    context = {}
+    return render(request, 'riddle.html', context)
+
+def answer(request):
+    context = {}
+    return render(request, 'answer.html', context)

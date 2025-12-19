@@ -26,4 +26,6 @@ urlpatterns = [
     path('calc/', views.calc, name='calc'),
     path('neyro/', views.neyro, name='neyro'),
     path('neyro/prompts/', views.prompts, name='prompts'),
+    path('riddle/', views.riddle, name='riddle'),
+    path('answer/', views.answer, name='answer'),
 ]
