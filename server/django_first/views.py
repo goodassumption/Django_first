@@ -127,3 +127,7 @@ def neyro(request):
         'ans': ai_answer,
     }
     return render(request, 'neyro.html', content)
+
+def prompts(request):
+    context = {}
+    return render(request, 'prompts.html', context)

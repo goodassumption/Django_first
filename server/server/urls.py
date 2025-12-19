@@ -25,4 +25,5 @@ urlpatterns = [
     path('update/', views.time_update, name='update'),
     path('calc/', views.calc, name='calc'),
     path('neyro/', views.neyro, name='neyro'),
+    path('neyro/prompts/', views.prompts, name='prompts'),
 ]
