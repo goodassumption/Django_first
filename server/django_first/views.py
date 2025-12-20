@@ -139,3 +139,29 @@ def riddle(request):
 def answer(request):
     context = {}
     return render(request, 'answer.html', context)
+
+def multiply(request):
+    context ={
+        'ans': ['1 * 0 = 0', '1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10'],
+        'n1': 1,
+        'n2': 10,
+    }
+    if request.method == 'POST':
+        try:
+            n1 = int(request.POST.get('num1'))
+            n2 = int(request.POST.get('num2'))
+        except Exception as e:
+            print(e)
+            context['ans'] = f'ОШИБКА: {e}'
+            return render(request, 'multiply.html', context)
+    
+        smth = []
+        for i in range(n2+1):
+            smth.append(
+                f'{n1} * {i} = {n1*i}'
+            )
+        context['ans'] = smth
+        context['n1'] = n1
+        context['n2'] = n2
+
+    return render(request, 'multiply.html', context)

@@ -28,4 +28,5 @@ urlpatterns = [
     path('neyro/prompts/', views.prompts, name='prompts'),
     path('riddle/', views.riddle, name='riddle'),
     path('answer/', views.answer, name='answer'),
+    path('multiply/', views.multiply, name='multiply'),
 ]

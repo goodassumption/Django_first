@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'JavaScript/copy_text.js' %}" defer></script>
+{% endblock head%}
+
+{% block content %}
+<h1>Таблица умножения</h1>
+<p>Это простой создатель таблицы умножения</p>
+
+<form title="Умножение" method="post">
+    {% csrf_token %}
+    <label>Введите число для умножения</label>
+    <input type="number" name="num1" value="{{ n1 }}">
+    <label>Введите число, до которого умножаем</label>
+    <input type="number" name="num2" value="{{ n2 }}">
+    <button type="submit">Создать таблицу</button>
+    <button type="reset">Сброс</button>
+</form>
+
+<div class="copy-grid-container">
+    <div class="copy-grid-header">
+        <h2>Готовая таблица</h2>
+    </div>
+
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Готовая таблица</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)"
+            style="text-align: center;">{{ ans|join:"<br>"|safe }} </div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
+    </div>
+</div>
+{% endblock %}

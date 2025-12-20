@@ -2,11 +2,24 @@
 {% load static %}
 
 {% block header_nav %}
-    <nav>
-        <button onclick="location.href='{% url 'calc' %}'">Калькулятор</button>
-        <button onclick="location.href='{% url 'time' %}'">Время</button>
-        <button onclick="location.href='{% url 'neyro' %}'">Нейросеть</button>
-    </nav>
+<nav class="main-nav">
+    <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Инструменты</button>
+        <div class="nav-dropdown-content">
+            <a href="{% url 'calc' %}">Калькулятор</a>
+            <a href="{% url 'time' %}">Время</a>
+            <a href="{% url 'multiply' %}">Таблица умножения</a>
+        </div>
+    </div>
+    
+    <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Прочее</button>
+        <div class="nav-dropdown-content">
+            <a href="{% url 'neyro' %}">Нейросеть</a>
+            <a href="{% url 'riddle' %}">Загадка :)</a>
+        </div>
+    </div>
+</nav>
 {% endblock header_nav %}
 
 {% block content %}
