@@ -2,15 +2,20 @@
 {% load static %}
 
 {% block header_nav %}
-        <nav>
-            <button onclick="location.href='{% url 'index' %}'">На главную</button>
-            <button onclick="location.href='{% url 'prompts' %}'">К промптам</button>
-        </nav>
+<nav>
+    <div class="nav-single-buttons">
+        <button onclick="location.href='{% url 'index' %}'"
+            class="nav-single-btn primary">На главную</button>
+        <button onclick="location.href='{% url 'prompts' %}'"
+            class="nav-single-btn secondary">К промптам</button>
+    </div>
+</nav>
 {% endblock header_nav %}
 
 {% block content %}
 <h1>Нейросеть</h1>
-<p>Здесь вы можете задать нейросети любой вопрос и получить на него ответ. Текущая модель: {{ model }}</p>
+<p>Здесь вы можете задать нейросети любой вопрос и получить на него ответ.
+    Текущая модель: {{ model }}</p>
 
 <form>
     <h4>Ответ от нейросети:</h4>
@@ -18,7 +23,8 @@
 </form>
 <form title="neyro-message" method="post">
     {% csrf_token %}
-    <input name="message" type="text" placeholder="Введите запрос" value="{{ question }}">
-<button type="submit">Отправить</button>
+    <input name="message" type="text" placeholder="Введите запрос"
+        value="{{ question }}">
+    <button type="submit">Отправить</button>
 </form>
 {% endblock %}

@@ -1,33 +1,38 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoodAssumption</title>
-    
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GoodAssumption</title>
 
-<body>
-    <header>
-        <h1>Курс "Промышленное программирование"</h1>
-        {% block header_nav %}
-        <nav>
-            <button onclick="location.href='{% url 'index' %}'">На главную</button>
-        </nav>
-        {% endblock header_nav %}
-    </header>
+        <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+        {% block head %}
+        {% endblock head%}
+    </head>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <body>
+        <header>
+            <h3>Курс "Промышленное программирование"</h3>
+            {% block header_nav %}
+            <nav>
+                <div class="nav-single-buttons">
+                    <button onclick="location.href='{% url 'index' %}'"
+                        class="nav-single-btn">На главную</button>
+                </div>
+            </nav>
+            {% endblock header_nav %}
+        </header>
 
-    <footer>
-        <p>&copy; 2025 GoodAssumption</p>
-        <a href="https://t.me/ink_visit_or" target="_blank">Ссылка для
-            связи</a>
-    </footer>
-</body>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2025 GoodAssumption</p>
+            <a href="https://t.me/ink_visit_or" target="_blank">Ссылка для
+                связи</a>
+        </footer>
+    </body>
 </html>

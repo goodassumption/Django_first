@@ -1,398 +1,227 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+    <script src="{% static 'JavaScript/copy_text.js' %}" defer></script>
+{% endblock head%}
+
 {% block header_nav %}
-        <nav>
-            <button onclick="location.href='{% url 'neyro' %}'">К нейросети</button>
-        </nav>
+<nav class="main-nav">
+    <div class="nav-single-buttons">
+        <button onclick="location.href='{% url 'neyro' %}'"
+                class="nav-single-btn">К нейросети</button>
+                </div>
+</nav>
 {% endblock header_nav %}
 
 {% block content %}
 <h1>Примеры системных промптов</h1>
+
 <div class="copy-grid-container">
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Перепиши в формате Conventional commits. Тело на русском и
-            английском, заголовок на английском. Если коммит состоит из двух или
-            менее предложений суммарной длинной менее 150 символов, пиши только
-            заголовок. Если тело повторяет заголовок, оставь тело пустым Не пиши
-            лишнего, только переделанный текст коммита. Если у тебя возникают
-            сомнения, напиши несколько вариантов. Готовый текст заключай в ```
-            ```
-        </p>
+    <div class="copy-grid-header">
+        <h2>Форматы и стили</h2>
+        <p>Нажмите на любой элемент, чтобы скопировать его содержимое</p>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Отвечай строго в формате обычного текста без какого-либо
-            форматирования Не используй Markdown заголовки списки
-            жирныйкурсивный текст Emoji смайлики или символы для оформления
-            Блоки кода с обратными кавычками HTML-теги Отступы или визуальное
-            структурирование кроме обычных переносов строк Разделители вроде ---
-            или *** Комментарии о формате в начале или конце ответа Все ответы
-            должны представлять собой чистый непреформатированный текст Если
-            нужно перечислить пункты используй простые цифры или дефисы в строку
-            Излагай информацию максимально лаконично и по существу
-        </p>
+    
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Conventional Commits</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Перепиши в формате Conventional commits. Тело на русском и английском, заголовок на английском. Если коммит состоит из двух или менее предложений суммарной длинной менее 150 символов, пиши только заголовок. Если тело повторяет заголовок, оставь тело пустым Не пиши лишнего, только переделанный текст коммита. Если у тебя возникают сомнения, напиши несколько вариантов. Готовый текст заключай в ``` ```</div>
+        <div class="copy-item-description">Форматирование коммитов</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
+    </div>
+    
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Чистый текст</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Отвечай строго в формате обычного текста без какого-либо форматирования. Не используй Markdown, заголовки, списки, жирный, курсивный текст, Emoji, смайлики или символы для оформления. Блоки кода с обратными кавычками HTML-теги. Отступы или визуальное структурирование кроме обычных переносов строк. Разделители вроде --- или ***. Комментарии о формате в начале или конце ответа. Все ответы должны представлять собой чистый непреформатированный текст. Если нужно перечислить пункты используй простые цифры или дефисы в строку. Излагай информацию максимально лаконично и по существу</div>
+        <div class="copy-item-description">Формат ответа без форматирования</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
+    </div>
+
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Нейросеть-исследователь</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Ты — эксперт-аналитик по исследованиям. Мне нужно исчерпывающее исследование по теме [ТЕМА].
+
+Пожалуйста, предоставь:
+1. Ключевые выводы за последние 12 месяцев
+2. Данные и статистику с указанием источников
+3. Мнения экспертов и цитаты
+4. Намечающиеся тренды и прогнозы
+5. Спорные точки зрения или дискуссионные вопросы
+6. Практическое значение для [ОТРАСЛЬ/АУДИТОРИЯ]
+
+Оформи ответ в виде аналитической справки с четкими разделами. Включи ссылки на источники для всех утверждений.
+
+Дополнительный контекст: [ВАШИ КОНКРЕТНЫЕ ПОТРЕБНОСТИ]
+        </div>
+        <div class="copy-item-description">Нейросетевые исследования</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
 </div>
 
-<h2>Промпты для всех этапов планировния</h2>
-
-<div class="copy-grid-container">
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Создай чёткий план этого проекта.
-            Проект: [вставьте название проекта]
-            Включи в план
-            1. Основную цель
-            2. Конечный результат, которого я хочу достичь
-            3. Как будет выглядеть успех
-            4. Чего мне следует избегать
-            Пиши кратко, чтобы я мог прочитать это менее чем за тридцать
-            секунд.
-        </p>
+<div class="copy-grid-container copy-grid-medium">
+    <div class="copy-grid-header">
+        <h2>Промпты для всех этапов планирования</h2>
+        <p>Промпты для планирования и выполнения проектов</p>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Разбей этот проект на простые задачи.
-            Проект: [вставь название проекта]
-            Для каждой задачи укажи:
-
-            1. Простое описание
-            2. Что нужно, чтобы начать
-            3. Какие блоки могут возникнуть
-            4. Мини-план следующих действий
-        </p>
+    
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Чёткий план проекта</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Создай чёткий план этого проекта.
+Проект: [вставьте название проекта]
+Включи в план:
+1. Основную цель
+2. Конечный результат, которого я хочу достичь
+3. Как будет выглядеть успех
+4. Чего мне следует избегать
+Пиши кратко, чтобы я мог прочитать это менее чем за тридцать секунд.</div>
+        <div class="copy-item-description">Создание общего плана проекта</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Составь простой график выполнения проекта.
-            Проект: [вставь название проекта]
-            Разбей на недельные этапы.
-            Для каждой недели опиши:
-
-            1. Что должно быть сделано
-            2. Как должен выглядеть прогресс
-        </p>
+    
+    <div class="copy-grid-item success">
+        <div class="copy-item-title">Разбиение на задачи</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Разбей этот проект на простые задачи.
+Проект: [вставь название проекта]
+Для каждой задачи укажи:
+1. Простое описание
+2. Что нужно, чтобы начать
+3. Какие блоки могут возникнуть
+4. Мини-план следующих действий</div>
+        <div class="copy-item-description">Декомпозиция проекта на задачи</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Посмотри на этот проект и перечисли возможные риски.
-            Проект: [вставь название проекта]
-            Для каждого риска укажи:
-
-            1. Почему он может возникнуть
-            2. Как его предотвратить
-            3. Что делать, если он всё-таки случится
-        </p>
+    
+    <div class="copy-grid-item">
+        <div class="copy-item-title">График выполнения</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Составь простой график выполнения проекта.
+Проект: [вставь название проекта]
+Разбей на недельные этапы.
+Для каждой недели опиши:
+1. Что должно быть сделано
+2. Как должен выглядеть прогресс</div>
+        <div class="copy-item-description">Планирование временных рамок</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Перечисли ресурсы, необходимые для проекта.
-            Проект: [вставь название проекта]
-            Укажи: инструменты, информацию, людей, ссылки и всё важное.
-            Отметь каждый пункт как обязательный или необязательный.
-        </p>
+    
+    <div class="copy-grid-item warning">
+        <div class="copy-item-title">Анализ рисков</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Посмотри на этот проект и перечисли возможные риски.
+Проект: [вставь название проекта]
+Для каждого риска укажи:
+1. Почему он может возникнуть
+2. Как его предотвратить
+3. Что делать, если он всё-таки случится</div>
+        <div class="copy-item-description">Идентификация и минимизация рисков</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
-    <div class="copyable copyable-text" onclick="copyTextOnClick(this)">
-        <p>
-            Составь простой еженедельный план.
-            Проект: [вставь название проекта]
-            Включи:
-
-            1. Что уже сделано
-            2. Что не сделано и почему
-            3. На чём сосредоточиться в следующий раз
-            4. Одно маленькое улучшение, которое облегчит жизнь на следующей
-            неделе
-        </p>
+    
+    <div class="copy-grid-item">
+        <div class="copy-item-title">Необходимые ресурсы</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Перечисли ресурсы, необходимые для проекта.
+Проект: [вставь название проекта]
+Укажи: инструменты, информацию, людей, ссылки и всё важное.
+Отметь каждый пункт как обязательный или необязательный.</div>
+        <div class="copy-item-description">Определение необходимых ресурсов</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
+    </div>
+    
+    <div class="copy-grid-item success">
+        <div class="copy-item-title">Еженедельный план</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">Составь простой еженедельный план.
+Проект: [вставь название проекта]
+Включи:
+1. Что уже сделано
+2. Что не сделано и почему
+3. На чём сосредоточиться в следующий раз
+4. Одно маленькое улучшение, которое облегчит жизнь на следующей неделе</div>
+        <div class="copy-item-description">Планирование и ретроспектива</div>
+        <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
 </div>
 
-<script>
-    // Основная функция копирования
-async function copyTextOnClick(element) {
-    // Определяем, какой текст копировать
-    // Приоритет 1: data-copy-text атрибут
-    // Приоритет 2: textContent элемента (без иконки)
-    let textToCopy = element.getAttribute('data-copy-text');
-    
-    if (!textToCopy) {
-        // Удаляем иконку копирования из текста
-        const tempElement = element.cloneNode(true);
-        const icons = tempElement.querySelectorAll('.copy-icon');
-        icons.forEach(icon => icon.remove());
-        textToCopy = tempElement.textContent.trim();
-    }
+<div class="copy-grid-container copy-grid-medium">
+    <div class="copy-grid-header">
+        <h2>Промпты настройки нейросети</h2>
+        <p>Промпты, чтобы нейросеть не выдумывала</p>
+    </div>
 
-    // Получаем дополнительную информацию (если есть)
-    const metaInfo = element.getAttribute('data-copy-meta') || 'Текст';
+    <div class="copy-grid-item">
+    <div class="copy-item-title">Приведение в порядок сырых идей</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">I have an unclear idea.
 
-    try {
-        // Пробуем использовать современный Clipboard API
-        if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(textToCopy);
-            showCopySuccess(element, textToCopy, metaInfo);
-        } else {
-            // Fallback для старых браузеров или HTTP
-            copyUsingFallback(textToCopy, element, metaInfo);
-        }
-    } catch (err) {
-        console.error('Ошибка при копировании:', err);
-        // Второй fallback, если и первый не сработал
-        copyUsingFallback(textToCopy, element, metaInfo);
-    }
-}
+Process:
+1. Ask clarifying questions
+2. Summarize my idea clearly
+3. Suggest 3 directions
+4. Explain trade-offs</div>
+    <div class="copy-item-description">Структурирование</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 
-// Fallback метод для старых браузеров
-function copyUsingFallback(text, element, metaInfo) {
-    // Создаем временный textarea
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    
-    // Стили, чтобы элемент не был виден
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    textArea.style.opacity = '0';
-    textArea.style.pointerEvents = 'none';
-    
-    document.body.appendChild(textArea);
-    
-    try {
-        // Выделяем и копируем
-        textArea.select();
-        textArea.setSelectionRange(0, 99999); // Для мобильных устройств
-        
-        // Пробуем скопировать
-        const successful = document.execCommand('copy');
-        
-        if (successful) {
-            showCopySuccess(element, text, metaInfo);
-        } else {
-            throw new Error('Не удалось выполнить команду copy');
-        }
-    } catch (err) {
-        console.error('Fallback копирование не удалось:', err);
-        showCopyError(element);
-    } finally {
-        // Удаляем временный элемент
-        document.body.removeChild(textArea);
-    }
-}
+<div class="copy-grid-item">
+    <div class="copy-item-title">Проработка неудачных сценариев развития</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">Create a 30-day LinkedIn content plan.
 
-// Показать успешное копирование через алерт
-function showCopySuccess(element, copiedText, metaInfo) {
-    // 1. Визуальная обратная связь на элементе
-    element.classList.add('copied');
-    
-    // 2. Создаем алерт об успехе
-    showAlert(`${metaInfo} скопирован: ${truncateText(copiedText, 30)}`, 'success');
-    
-    // 3. Восстановить исходное состояние элемента через 1.5 секунды
-    setTimeout(() => {
-        element.classList.remove('copied');
-    }, 1500);
-    
-    // 4. Опционально: логирование в консоль
-    console.log(`Скопировано: ${copiedText}`);
-    
-    // 5. Отправить аналитику (если нужно)
-    sendCopyAnalytics(metaInfo, copiedText.length);
-}
+For each week:
+- Goal
+- Tasks
+- Likely risks
+- Mitigation steps</div>
+    <div class="copy-item-description">Планирование</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 
-// Показать ошибку копирования через алерт
-function showCopyError(element) {
-    // Создаем алерт об ошибке
-    showAlert('Не удалось скопировать текст', 'danger');
-    
-    // Мигание элемента красным
-    element.style.backgroundColor = '#ffebee';
-    setTimeout(() => {
-        element.style.backgroundColor = '';
-    }, 500);
-}
+<div class="copy-grid-item">
+    <div class="copy-item-title">Ведение интервью перед выполнением задачи</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">I want to build a personal learning system.
 
-// Функция для показа алертов
-function showAlert(message, type = 'info') {
-    // Создаем контейнер для алертов, если его нет
-    let alertContainer = document.getElementById('alert-container');
-    if (!alertContainer) {
-        alertContainer = document.createElement('div');
-        alertContainer.id = 'alert-container';
-        alertContainer.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            pointer-events: none;
-        `;
-        document.body.appendChild(alertContainer);
-    }
-    
-    // Создаем алерт
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type} fade-in`;
-    alert.style.cssText = `
-        pointer-events: auto;
-        animation: slideIn 0.3s ease-out;
-        margin-bottom: 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        max-width: 400px;
-        word-break: break-word;
-        transition: opacity 0.3s, transform 0.3s;
-    `;
-    
-    // Добавляем текст и кнопку закрытия
-    alert.innerHTML = `
-        <span>${message}</span>
-        <button type="button" class="alert-close" aria-label="Закрыть" 
-                style="background: none; border: none; color: inherit; cursor: pointer; 
-                       margin-left: 10px; font-size: 1.2rem; line-height: 1;">
-            &times;
-        </button>
-    `;
-    
-    // Добавляем алерт в контейнер
-    alertContainer.appendChild(alert);
-    
-    // Обработчик закрытия алерта
-    const closeBtn = alert.querySelector('.alert-close');
-    closeBtn.addEventListener('click', () => {
-        alert.style.opacity = '0';
-        alert.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (alert.parentNode) {
-                alert.remove();
-            }
-        }, 300);
-    });
-    
-    // Автоматическое скрытие через 2 секунды
-    setTimeout(() => {
-        if (alert.parentNode) {
-            alert.style.opacity = '0';
-            alert.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                if (alert.parentNode) {
-                    alert.remove();
-                }
-            }, 300);
-        }
-    }, 2000); // Изменено с 3000 на 2000
-    
-    // Отмена автоскрытия при наведении
-    let autoRemoveTimer;
-    alert.addEventListener('mouseenter', () => {
-        // Очищаем таймер автоскрытия при наведении
-        clearTimeout(autoRemoveTimer);
-    });
-    
-    alert.addEventListener('mouseleave', () => {
-        // При уходе мыши снова устанавливаем таймер на 2 секунды
-        autoRemoveTimer = setTimeout(() => {
-            if (alert.parentNode) {
-                alert.style.opacity = '0';
-                alert.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (alert.parentNode) {
-                        alert.remove();
-                    }
-                }, 300);
-            }
-        }, 2000); // Изменено с 1000 на 2000
-    });
-}
+Before giving advice:
+- Ask up to 5 clarifying questions
+- Wait for my answers
+- Then design the system</div>
+    <div class="copy-item-description">Уточнение</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 
-// Вспомогательная функция для обрезания текста
-function truncateText(text, maxLength) {
-    if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
-}
+<div class="copy-grid-item">
+    <div class="copy-item-title">Приведение других точек зрения на ЛЮБОЙ вопрос</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">Explain remote work from:
+1. Startup founder
+2. Mid-level employee
+3. HR manager
 
-// Функция для отправки аналитики (заглушка)
-function sendCopyAnalytics(type, length) {
-    // Здесь можно отправить данные в Google Analytics, Яндекс.Метрику и т.д.
-    console.log(`Аналитика: скопирован ${type}, длина: ${length} символов`);
-}
+Rules:
+- Different priorities for each
+- No repeated points</div>
+    <div class="copy-item-description">Анализ</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 
-// Дополнительная функциональность
+<div class="copy-grid-item">
+    <div class="copy-item-title">Сохранение контекста даже для длинных задач</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">We are writing a 5-part beginner guide on leadership.
+Already covered:
+Part 1: Meaning of leadership
+Part 2: Leadership myths
+Now write Part 3.
+Topic: Core leadership skills
 
-// Копирование при двойном клике (альтернатива)
-document.querySelectorAll('.copyable').forEach(element => {
-    element.addEventListener('dblclick', function(e) {
-        e.stopPropagation();
-        copyTextOnClick(this);
-        showAlert('Скопировано по двойному клику!', 'info');
-    });
-});
+Rules:
+- Do not repeat earlier ideas
+- Keep the same tone</div>
+    <div class="copy-item-description">Продолжение</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 
-// Копирование по нажатию Ctrl/Cmd + клик
-document.querySelectorAll('.copyable').forEach(element => {
-    element.addEventListener('click', function(e) {
-        if (e.ctrlKey || e.metaKey) {
-            e.preventDefault(); // Предотвращаем стандартное поведение
-            e.stopPropagation();
-            copyTextOnClick(this);
-            showAlert('Скопировано по Ctrl+клик!', 'info');
-        }
-    });
-});
-
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    // Добавляем атрибут title для дополнительной подсказки
-    document.querySelectorAll('.copyable').forEach(element => {
-        if (!element.hasAttribute('title')) {
-            element.setAttribute('title', 'Кликните, чтобы скопировать. Ctrl+клик для альтернативного копирования.');
-        }
-    });
-    
-    // Показываем подсказку при первом посещении
-    if (!localStorage.getItem('copyHintShown')) {
-        setTimeout(() => {
-            showAlert('💡 Подсказка: кликайте на цветные блоки для копирования текста', 'warning');
-            localStorage.setItem('copyHintShown', 'true');
-        }, 1000);
-    }
-});
-
-// Функция для копирования текста из любого места на странице
-window.copyAnyText = function(text, metaInfo = 'Текст') {
-    // Создаем временный элемент для копирования
-    const tempElement = document.createElement('div');
-    tempElement.className = 'copyable copyable-code';
-    tempElement.textContent = text;
-    document.body.appendChild(tempElement);
-    
-    // Вызываем функцию копирования
-    copyToClipboard(text, tempElement, metaInfo);
-    
-    // Удаляем временный элемент
-    setTimeout(() => {
-        document.body.removeChild(tempElement);
-    }, 2000);
-};
-
-// Универсальная функция копирования
-async function copyToClipboard(text, element, metaInfo) {
-    try {
-        if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-            showCopySuccess(element, text, metaInfo);
-        } else {
-            copyUsingFallback(text, element, metaInfo);
-        }
-    } catch (err) {
-        console.error('Ошибка при копировании:', err);
-        copyUsingFallback(text, element, metaInfo);
-    }
-}
-
-// Пример использования из консоли: copyAnyText("Текст для копирования");
-</script>
+<div class="copy-grid-item">
+    <div class="copy-item-title">Четкое соблюдение инструкций</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">"Follow these rules exactly:
+- Write exactly 120 words
+- Short sentences only
+- No bullet points
+- No examples
+Topic: Why focus matters in deep work"</div>
+    <div class="copy-item-description">Формат</div>
+    <div class="copy-item-indicator">Кликните для копирования</div>
+</div>
 {% endblock %}
