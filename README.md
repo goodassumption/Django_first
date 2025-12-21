@@ -2,8 +2,9 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
 ![Django](https://img.shields.io/badge/Django-5.1-green?logo=django&logoColor=white)
-![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![License](https://img.shields.io/badge/License-GPLv3-red.svg)
 ![GitLab](https://img.shields.io/badge/hosted%20on-GitLab-orange?logo=gitlab)
+![GitHub](https://img.shields.io/badge/hosted%20on-GitHub-yellow?logo=github)
 
 Это мой личный сайт-портфолио и площадка для экспериментов, созданный на Django в рамках школьного проекта. Здесь собраны разные утилиты, небольшие веб-приложения и просто забавные штуки.
 
