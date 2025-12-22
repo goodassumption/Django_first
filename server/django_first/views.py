@@ -6,6 +6,8 @@ import datetime
 import requests
 import uuid
 import json
+import os
+from django.conf import settings
 
 def index(request):
     context = {}
@@ -24,23 +26,21 @@ def calc(request):
         n1 = float(request.POST.get('first'))
         n2 = float(request.POST.get('second'))
         ans = 0.0
-
-        match action:
-            case 'sum':
-                ans = n1 + n2
-                context['ans'] = f'{n1} + {n2} = {str(ans)}'
-            case 'sub':
-                ans = n1 - n2
-                context['ans'] = f'{n1} - {n2} = {str(ans)}'
-            case 'mul':
-                ans = n1 * n2
-                context['ans'] = f'{n1} * {n2} = {str(ans)}'
-            case 'div':
-                if n2 == 0:
-                    context['ans'] = 'На ноль делить нельзя!'
-                    return render(request, 'calc.html', context)
-                ans = n1 / n2
-                context['ans'] = f'{n1} / {n2} = {str(ans)}'
+        if action ==  'sum':
+            ans = n1 + n2
+            context['ans'] = f'{n1} + {n2} = {str(ans)}'
+        elif action ==  'sub':
+            ans = n1 - n2
+            context['ans'] = f'{n1} - {n2} = {str(ans)}'
+        elif action ==  'mul':
+            ans = n1 * n2
+            context['ans'] = f'{n1} * {n2} = {str(ans)}'
+        elif action ==  'div':
+            if n2 == 0:
+                context['ans'] = 'На ноль делить нельзя!'
+                return render(request, 'calc.html', context)
+            ans = n1 / n2
+            context['ans'] = f'{n1} / {n2} = {str(ans)}'
 
     context['text'] = 'Итоговая операция:'
     return render(request, 'calc.html', context)
@@ -165,3 +165,59 @@ def multiply(request):
         context['n2'] = n2
 
     return render(request, 'multiply.html', context)
+
+def anime(request):
+    return render(request, 'anime.html', {})
+
+def kinns(request):
+    context = {
+        'media_list': scan_kinns_folder(),
+    }
+    return render(request, 'kinns.html', context)
+
+def scan_kinns_folder():
+    """
+    Функция для автоматического сканирования папки kinns
+    """
+    media_list = []
+    
+    try:
+        # Путь к вашей папке kinns
+        kinns_path = os.path.join(settings.STATICFILES_DIRS[0], 'media', 'kinns')
+        
+        if os.path.exists(kinns_path):
+            for filename in os.listdir(kinns_path):
+                # Проверяем расширения файлов
+                if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp')):
+                    media_list.append({
+                        'type': 'photo',
+                        'title': get_nice_filename(filename),
+                        'url': f'media/kinns/{filename}',  # Правильный путь
+                        'description': f'Фото из коллекции',
+                    })
+                elif filename.lower().endswith(('.mp4', '.avi', '.mov', '.mkv', '.webm')):
+                    media_list.append({
+                        'type': 'video',
+                        'title': get_nice_filename(filename),
+                        'url': f'media/kinns/{filename}',  # Правильный путь
+                        'description': f'Видео из коллекции',
+                        'duration': '2:00'
+                    })
+        else:
+            print(f"Папка не найдена: {kinns_path}")
+            
+    except Exception as e:
+        print(f"Ошибка сканирования папки: {e}")
+    
+    return media_list
+
+def get_nice_filename(filename):
+    """
+    Преобразует имя файла в читаемый формат
+    Пример: "my_photo_2023.jpg" -> "My Photo 2023"
+    """
+    name = os.path.splitext(filename)[0]
+    # Заменяем подчеркивания и дефисы на пробелы
+    name = name.replace('_', ' ').replace('-', ' ')
+    # Делаем первую букву каждого слова заглавной
+    return ' '.join(word.capitalize() for word in name.split())   

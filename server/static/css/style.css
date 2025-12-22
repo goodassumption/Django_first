@@ -1707,3 +1707,326 @@ form input[type="radio"]:first-of-type {
 .volume-changing {
     animation: volumeChange 0.3s ease;
 }
+
+/* ============================================
+   УПРОЩЁННАЯ МЕДИА-СЕТКА С ОРИГИНАЛЬНЫМ РАЗРЕШЕНИЕМ
+   Без базы данных, только статические файлы
+============================================ */
+
+/* Основной контейнер медиа-сетки */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+    padding: 0;
+}
+
+/* Элемент медиа-сетки */
+.media-item {
+    background: linear-gradient(135deg, #353535 0%, #3a3a3a 100%);
+    border: 1px solid #555;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.media-item:hover {
+    transform: translateY(-5px);
+    border-color: #3a7bd5;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Контейнер для медиа-контента */
+.media-preview {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    min-height: 200px;
+    max-height: 500px;
+}
+
+.media-preview img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.media-preview video {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.media-item:hover .media-preview img {
+    transform: scale(1.03);
+}
+
+/* Индикатор типа медиа */
+.media-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(58, 123, 213, 0.9);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.media-badge.photo {
+    background: rgba(244, 107, 69, 0.9);
+}
+
+.media-badge.video {
+    background: rgba(142, 45, 226, 0.9);
+}
+
+/* Контент медиа-элемента */
+.media-content {
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.media-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.media-title::before {
+    font-size: 1.1rem;
+}
+
+.media-title.photo::before {
+    content: '🖼️';
+}
+
+.media-title.video::before {
+    content: '🎬';
+}
+
+.media-description {
+    color: #b0b0b0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
+}
+
+/* Информация о медиа */
+.media-info {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Кнопки управления */
+.media-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.media-btn {
+    flex: 1;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #444;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.media-btn:hover {
+    background: #3a7bd5;
+    transform: translateY(-2px);
+}
+
+.media-btn.view {
+    background: #3a7bd5;
+}
+
+.media-btn.view:hover {
+    background: #2a6bc4;
+}
+
+.media-btn.download {
+    background: #00b09b;
+}
+
+.media-btn.download:hover {
+    background: #00a08b;
+}
+
+/* Сообщение об отсутствии медиа */
+.no-media {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.no-media::before {
+    content: '📁';
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* Адаптивность - планшеты */
+@media (max-width: 1024px) {
+    .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .media-preview {
+        min-height: 180px;
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .media-preview {
+        min-height: 150px;
+        max-height: 350px;
+    }
+    
+    .media-content {
+        padding: 15px;
+    }
+    
+    .media-actions {
+        flex-direction: column;
+    }
+    
+    .media-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .media-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .media-preview {
+        min-height: 180px;
+        max-height: 300px;
+    }
+}
+
+/* Улучшенная сетка для больших экранов */
+@media (min-width: 1200px) {
+    .media-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .media-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+    }
+}
+
+/* Дополнительные классы для контроля сетки */
+.media-grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.media-grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.media-grid-4-col {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.media-grid-5-col {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+/* Утилиты для управления отображением */
+.media-contain {
+    object-fit: contain !important;
+}
+
+.media-cover {
+    object-fit: cover !important;
+}
+
+.media-original {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+/* Плавающие элементы для сетки masonry (опционально) */
+.masonry-grid {
+    column-count: 4;
+    column-gap: 15px;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+    .masonry-grid {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid {
+        column-count: 1;
+    }
+}

@@ -11,7 +11,15 @@
             <a href="{% url 'multiply' %}">Таблица умножения</a>
         </div>
     </div>
-    
+
+    <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Обо мне</button>
+        <div class="nav-dropdown-content">
+            <a href="{% url 'anime' %}">Мой список просмотренного</a>
+            <a href="{% url 'kinns' %}">Кинн лист</a>
+        </div>
+    </div>
+
     <div class="nav-dropdown">
         <button class="nav-dropdown-btn">Прочее</button>
         <div class="nav-dropdown-content">
@@ -25,7 +33,8 @@
 {% block content %}
 <h1>Добро пожаловать на сайт!</h1>
 <p>
-    Я - Головин Алексей aka GoodAssumption. На данный момент занимаюсь разработкой различных приложений на Python.
+    Я - Головин Алексей aka GoodAssumption. На данный момент занимаюсь
+    разработкой различных приложений на Python.
     Это - учебный сайт для отработки навыков работы с Djanga.
 </p>
 
