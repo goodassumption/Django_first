@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+class FirstModel(models.Model):
+    date = models.DateField()
+    # integrer = models.IntegrerField()
+    string = models.CharField(max_length = 100)

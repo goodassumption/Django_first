@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>А это уже история...</h1>
+<h2>Твоя история лежит здесь</h2>
+<ul>
+{% for el in data %}
+<li>{{ el.data }} - {{ el.string }}</li>
+{% endfor %}
+</ul>
+<h2>Добавить историю</h2>
+<form action="add" method="post">
+    {% csrf_token %}
+    <p>{{ form.integrer.label }}: {{ form.integrer }}</p>
+    <p>{{ form.string.label }}: {{ form.string }}</p>
+    <button type="submit">Создать историю</button>
+    <button type="reset">Сброс</button>
+</form>
+{% endblock %}

@@ -31,4 +31,7 @@ urlpatterns = [
     path('multiply/', views.multiply, name='multiply'),
     path('anime/', views.anime, name='anime'),
     path('kinns/', views.kinns, name='kinns'),
+    path('history/', views.history, name='history'),
+    path('add/', views.add, name='add'),
+    path('expression/', views.expression, name='expression'),
 ]

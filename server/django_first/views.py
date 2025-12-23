@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 # Create your views here.
@@ -8,6 +8,9 @@ import uuid
 import json
 import os
 from django.conf import settings
+from django_first.models import FirstModel
+
+from django_first.forms import FirstForm
 
 def index(request):
     context = {}
@@ -221,3 +224,18 @@ def get_nice_filename(filename):
     name = name.replace('_', ' ').replace('-', ' ')
     # Делаем первую букву каждого слова заглавной
     return ' '.join(word.capitalize() for word in name.split())   
+
+def history(request):
+    test = FirstModel(
+        date = datetime.datetime.now(),
+        string = 'smth',
+    )
+    context = None
+    return render(request, 'history.html', context)
+
+def add(request):
+    pass
+
+def expression(request):
+    pass
+
