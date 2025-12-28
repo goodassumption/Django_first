@@ -5,3 +5,5 @@ venv/
 **/*.pyc
 */db.sqlite3
 */db.sqlite3-journal
+*.zip
+*/passenger_wsgi.py

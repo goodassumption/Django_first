@@ -315,6 +315,376 @@ header h1, header h2, header h3 {
 }
 
 /* ============================================
+   ПРОСТЫЕ КНОПКИ (SIMPLE BUTTONS)
+   Универсальные кнопки в стиле навигационных
+============================================ */
+
+/* Базовый стиль простой кнопки */
+.simple-btn {
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 120px;
+    outline: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Эффект при наведении */
+.simple-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(58, 123, 213, 0.5);
+    background: linear-gradient(135deg, #2a6bc4 0%, #00c2ff 100%);
+}
+
+/* Эффект при нажатии */
+.simple-btn:active {
+    transform: translateY(-1px);
+    transition: transform 0.1s ease;
+}
+
+/* Эффект свечения (как у навигационных кнопок) */
+.simple-btn::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #3a7bd5, #00d2ff, #3a7bd5);
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.simple-btn:hover::after {
+    opacity: 0.3;
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Варианты цветов */
+.simple-btn.primary {
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+}
+
+.simple-btn.primary:hover {
+    background: linear-gradient(135deg, #2a6bc4 0%, #00c2ff 100%);
+    box-shadow: 0 8px 25px rgba(58, 123, 213, 0.5);
+}
+
+.simple-btn.primary::after {
+    background: linear-gradient(45deg, #3a7bd5, #00d2ff, #3a7bd5);
+}
+
+.simple-btn.secondary {
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+    box-shadow: 0 4px 15px rgba(142, 45, 226, 0.3);
+}
+
+.simple-btn.secondary:hover {
+    background: linear-gradient(135deg, #7d1dd1 0%, #3a00d0 100%);
+    box-shadow: 0 8px 25px rgba(142, 45, 226, 0.5);
+}
+
+.simple-btn.secondary::after {
+    background: linear-gradient(45deg, #8e2de2, #4a00e0, #8e2de2);
+}
+
+.simple-btn.success {
+    background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+    box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3);
+}
+
+.simple-btn.success:hover {
+    background: linear-gradient(135deg, #00a08b 0%, #86b92d 100%);
+    box-shadow: 0 8px 25px rgba(0, 176, 155, 0.5);
+}
+
+.simple-btn.success::after {
+    background: linear-gradient(45deg, #00b09b, #96c93d, #00b09b);
+}
+
+.simple-btn.warning {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.simple-btn.warning:hover {
+    background: linear-gradient(135deg, #ff5b5b 0%, #ff7e43 100%);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+}
+
+.simple-btn.warning::after {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53, #ff6b6b);
+}
+
+.simple-btn.danger {
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+}
+
+.simple-btn.danger:hover {
+    background: linear-gradient(135deg, #ff316c 0%, #ff3b1b 100%);
+    box-shadow: 0 8px 25px rgba(255, 65, 108, 0.5);
+}
+
+.simple-btn.danger::after {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b, #ff416c);
+}
+
+.simple-btn.info {
+    background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
+    box-shadow: 0 4px 15px rgba(54, 209, 220, 0.3);
+}
+
+.simple-btn.info:hover {
+    background: linear-gradient(135deg, #26c1cc 0%, #4b76d5 100%);
+    box-shadow: 0 8px 25px rgba(54, 209, 220, 0.5);
+}
+
+.simple-btn.info::after {
+    background: linear-gradient(45deg, #36d1dc, #5b86e5, #36d1dc);
+}
+
+/* Кнопка с иконкой */
+.simple-btn.with-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+}
+
+.simple-btn.with-icon i {
+    font-size: 1.1rem;
+}
+
+/* Размеры кнопок */
+.simple-btn.small {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    min-width: 100px;
+}
+
+.simple-btn.large {
+    padding: 16px 36px;
+    font-size: 1.2rem;
+    min-width: 150px;
+}
+
+.simple-btn.xlarge {
+    padding: 20px 44px;
+    font-size: 1.3rem;
+    min-width: 180px;
+    border-radius: 12px;
+}
+
+/* Полная ширина (блочная кнопка) */
+.simple-btn.block {
+    display: block;
+    width: 100%;
+    min-width: auto;
+}
+
+/* Отключенная кнопка */
+.simple-btn:disabled,
+.simple-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.simple-btn:disabled:hover,
+.simple-btn.disabled:hover {
+    transform: none;
+    background: inherit;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.simple-btn:disabled:hover::after,
+.simple-btn.disabled:hover::after {
+    opacity: 0;
+    animation: none;
+}
+
+/* Контурный вариант (outline) */
+.simple-btn.outline {
+    background: transparent;
+    border: 2px solid #3a7bd5;
+    color: #3a7bd5;
+    box-shadow: none;
+}
+
+.simple-btn.outline:hover {
+    background: rgba(58, 123, 213, 0.1);
+    color: #3a7bd5;
+}
+
+.simple-btn.outline.primary {
+    border-color: #3a7bd5;
+    color: #3a7bd5;
+}
+
+.simple-btn.outline.secondary {
+    border-color: #8e2de2;
+    color: #8e2de2;
+}
+
+.simple-btn.outline.success {
+    border-color: #00b09b;
+    color: #00b09b;
+}
+
+.simple-btn.outline.warning {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+.simple-btn.outline.danger {
+    border-color: #ff416c;
+    color: #ff416c;
+}
+
+.simple-btn.outline.info {
+    border-color: #36d1dc;
+    color: #36d1dc;
+}
+
+/* Светлый вариант */
+.simple-btn.light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.simple-btn.light:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.simple-btn.light::after {
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef, #f8f9fa);
+}
+
+/* Контейнер для группы кнопок */
+.simple-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.simple-btn-group.horizontal {
+    flex-direction: row;
+}
+
+.simple-btn-group.vertical {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.simple-btn-group.vertical .simple-btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .simple-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        min-width: 110px;
+    }
+    
+    .simple-btn.large {
+        padding: 14px 28px;
+        font-size: 1.1rem;
+    }
+    
+    .simple-btn.xlarge {
+        padding: 16px 32px;
+        font-size: 1.2rem;
+    }
+    
+    .simple-btn-group {
+        gap: 10px;
+    }
+    
+    .simple-btn-group.horizontal {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .simple-btn-group.horizontal .simple-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .simple-btn {
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        min-width: 100px;
+    }
+    
+    .simple-btn.with-icon {
+        padding: 8px 12px;
+    }
+    
+    .simple-btn.with-icon i {
+        font-size: 1rem;
+    }
+}
+
+/* Анимация загрузки для кнопки */
+.simple-btn.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.simple-btn.loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: button-spinner 0.6s linear infinite;
+}
+
+.simple-btn.loading.outline::before {
+    border: 2px solid rgba(58, 123, 213, 0.3);
+    border-top-color: #3a7bd5;
+}
+
+@keyframes button-spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
    ОДИНОЧНЫЕ КНОПКИ НАВИГАЦИИ
    Стилизованы аналогично выпадающему меню
 ============================================ */
@@ -769,6 +1139,643 @@ header h1, header h2, header h3 {
     display: block;
     margin-bottom: 15px;
     opacity: 0.5;
+}
+
+/* ============================================
+   СОВРЕМЕННЫЕ ТАБЛИЦЫ
+   Совместимые с тёмной темой GoodAssumption
+============================================ */
+
+/* Основной контейнер таблицы для адаптивности */
+.table-container {
+    overflow-x: auto;
+    margin: 30px 0;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #2a2a2a 0%, #353535 100%);
+    border: 2px solid #444;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch; /* Для плавного скролла на iOS */
+}
+
+.table-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #3a7bd5, #8e2de2, #3a7bd5);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(5px);
+}
+
+/* Основной стиль таблицы */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: linear-gradient(135deg, #2a2a2a 0%, #2d2d2d 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.95rem;
+    position: relative;
+    min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную минимальную ширину */
+    table-layout: auto;
+}
+
+/* Улучшенный перенос текста в ячейках */
+.modern-table td {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    max-width: none;
+}
+
+/* Для таблиц с двумя колонками (как история операций) */
+.modern-table.two-columns {
+    table-layout: fixed; /* Фиксированная таблица для предсказуемости */
+}
+
+.modern-table.two-columns th:first-child,
+.modern-table.two-columns td:first-child {
+    width: 30%; /* Ширина для первой колонки (время) */
+    min-width: 0; /* Разрешаем сжиматься */
+}
+
+.modern-table.two-columns th:nth-child(2),
+.modern-table.two-columns td:nth-child(2) {
+    width: 70%; /* Ширина для второй колонки (выражение) */
+    min-width: 0; /* Разрешаем сжиматься */
+}
+
+/* Заголовок таблицы */
+.modern-table thead {
+    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-table thead::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    z-index: 0;
+    transform: translateX(-100%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Заголовки столбцов */
+.modern-table th {
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 18px 20px;
+    border: none;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.5px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+}
+
+.modern-table th:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Иконка сортировки */
+.modern-table .sortable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-right: 30px;
+}
+
+.modern-table .sortable:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modern-table .sortable::after {
+    content: '↕';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.modern-table .sortable.asc::after {
+    content: '↑';
+    opacity: 1;
+    color: #00d2ff;
+}
+
+.modern-table .sortable.desc::after {
+    content: '↓';
+    opacity: 1;
+    color: #00d2ff;
+}
+
+/* Тело таблицы */
+.modern-table tbody tr {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+.modern-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(58, 123, 213, 0.15) 0%, transparent 100%);
+    transform: translateX(5px);
+}
+
+/* Чередование строк (зебра) */
+.modern-table.striped tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.modern-table.striped tbody tr:nth-child(even):hover {
+    background: linear-gradient(90deg, rgba(58, 123, 213, 0.2) 0%, transparent 100%);
+}
+
+/* Ячейки таблицы */
+.modern-table td {
+    padding: 16px 20px;
+    color: #e0e0e0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.modern-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Эффект границы слева при наведении */
+.modern-table tbody tr:hover td:first-child::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #3a7bd5, #00d2ff);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Выделенная строка */
+.modern-table tbody tr.selected {
+    background: linear-gradient(90deg, rgba(58, 123, 213, 0.25) 0%, transparent 100%);
+    box-shadow: inset 0 0 0 2px #3a7bd5;
+}
+
+/* Футер таблицы */
+.modern-table tfoot {
+    background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+    border-top: 2px solid #444;
+}
+
+.modern-table tfoot td {
+    color: #aaa;
+    font-weight: 500;
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    white-space: normal;
+}
+
+/* Варианты цветов для таблиц */
+.modern-table.primary thead {
+    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+}
+
+.modern-table.secondary thead {
+    background: linear-gradient(135deg, #8e2de2 0%, #7d1dd1 100%);
+}
+
+.modern-table.success thead {
+    background: linear-gradient(135deg, #00b09b 0%, #00a08b 100%);
+}
+
+.modern-table.warning thead {
+    background: linear-gradient(135deg, #f46b45 0%, #e35a35 100%);
+}
+
+.modern-table.danger thead {
+    background: linear-gradient(135deg, #ff416c 0%, #ff316c 100%);
+}
+
+/* Компактный вариант */
+.modern-table.compact th,
+.modern-table.compact td {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+/* Таблица с границами */
+.modern-table.bordered td,
+.modern-table.bordered th {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Выравнивание текста */
+.modern-table.center th,
+.modern-table.center td {
+    text-align: center;
+}
+
+.modern-table.right th,
+.modern-table.right td {
+    text-align: right;
+}
+
+/* Стили для действий в таблице */
+.table-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.table-action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.table-action-btn:hover {
+    background: rgba(58, 123, 213, 0.5);
+    transform: translateY(-2px);
+}
+
+.table-action-btn.edit {
+    color: #3a7bd5;
+}
+
+.table-action-btn.delete {
+    color: #ff416c;
+}
+
+.table-action-btn.view {
+    color: #00b09b;
+}
+
+/* Статусы в ячейках */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    min-width: 80px;
+    white-space: nowrap;
+}
+
+.status-active {
+    background: rgba(0, 176, 155, 0.2);
+    color: #00b09b;
+    border: 1px solid rgba(0, 176, 155, 0.3);
+}
+
+.status-pending {
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.status-inactive {
+    background: rgba(149, 165, 166, 0.2);
+    color: #95a5a6;
+    border: 1px solid rgba(149, 165, 166, 0.3);
+}
+
+.status-error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* Пагинация таблицы */
+.table-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #353535 100%);
+    border-top: 1px solid #444;
+    border-radius: 0 0 12px 12px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.pagination-info {
+    color: #aaa;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: rgba(58, 123, 213, 0.5);
+    transform: translateY(-2px);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.page-number {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.page-number:hover {
+    background: rgba(58, 123, 213, 0.3);
+}
+
+.page-number.active {
+    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+    color: white;
+    font-weight: 600;
+}
+
+/* Таблица с чекбоксами */
+.table-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #3a7bd5;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Адаптивность - планшеты */
+@media (max-width: 768px) {
+    .table-container {
+        margin: 20px 0;
+        border-radius: 8px;
+        overflow-x: auto; /* Оставляем скролл только при реальной необходимости */
+    }
+    
+    .modern-table {
+        font-size: 0.9rem;
+        min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную ширину */
+    }
+    
+    .modern-table th,
+    .modern-table td {
+        padding: 12px 15px;
+    }
+    
+    /* Для таблиц с двумя колонками на планшетах */
+    .modern-table.two-columns th:first-child,
+    .modern-table.two-columns td:first-child {
+        width: 40%;
+        min-width: 0; /* Разрешаем сжиматься */
+    }
+    
+    .modern-table.two-columns th:nth-child(2),
+    .modern-table.two-columns td:nth-child(2) {
+        width: 60%;
+        min-width: 0; /* Разрешаем сжиматься */
+    }
+    
+    .table-pagination {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .pagination-info {
+        text-align: center;
+    }
+    
+    .table-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .table-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Адаптивность - мобильные */
+@media (max-width: 480px) {
+    .table-container {
+        margin: 15px 0;
+        border-radius: 6px;
+    }
+    
+    .modern-table {
+        min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную ширину */
+    }
+    
+    .modern-table th,
+    .modern-table td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    /* Для таблиц с двумя колонками на мобильных */
+    .modern-table.two-columns th:first-child,
+    .modern-table.two-columns td:first-child {
+        width: 35%;
+        min-width: 0; /* Разрешаем сжиматься */
+        font-size: 0.85rem;
+    }
+    
+    .modern-table.two-columns th:nth-child(2),
+    .modern-table.two-columns td:nth-child(2) {
+        width: 65%;
+        min-width: 0; /* Разрешаем сжиматься */
+        font-size: 0.85rem;
+    }
+    
+    .pagination-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .status-badge {
+        min-width: 60px;
+        font-size: 0.8rem;
+        padding: 3px 8px;
+    }
+}
+
+/* Анимация появления строк */
+@keyframes tableRowAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.modern-table tbody tr {
+    animation: tableRowAppear 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.modern-table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.modern-table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.modern-table tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.modern-table tbody tr:nth-child(4) { animation-delay: 0.2s; }
+.modern-table tbody tr:nth-child(5) { animation-delay: 0.25s; }
+.modern-table tbody tr:nth-child(6) { animation-delay: 0.3s; }
+.modern-table tbody tr:nth-child(7) { animation-delay: 0.35s; }
+.modern-table tbody tr:nth-child(8) { animation-delay: 0.4s; }
+
+/* Пустая таблица */
+.empty-table {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 1.1rem;
+    position: relative;
+    word-break: normal;
+    white-space: normal;
+}
+
+.empty-table::before {
+    content: '📊';
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-table::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(58, 123, 213, 0.3) 50%, 
+        transparent 100%);
+}
+
+/* Загрузка таблицы */
+.table-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.table-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(58, 123, 213, 0.1) 50%, 
+        transparent 100%);
+    animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Дополнительные утилиты для таблиц */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-hint {
+    display: none;
+    text-align: center;
+    color: #888;
+    font-size: 0.8rem;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid #444;
+}
+
+@media (max-width: 768px) {
+    .table-scroll-hint {
+        display: block;
+    }
 }
 
 /* --- Основной контент --- */
@@ -1706,4 +2713,327 @@ form input[type="radio"]:first-of-type {
 
 .volume-changing {
     animation: volumeChange 0.3s ease;
+}
+
+/* ============================================
+   УПРОЩЁННАЯ МЕДИА-СЕТКА С ОРИГИНАЛЬНЫМ РАЗРЕШЕНИЕМ
+   Без базы данных, только статические файлы
+============================================ */
+
+/* Основной контейнер медиа-сетки */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+    padding: 0;
+}
+
+/* Элемент медиа-сетки */
+.media-item {
+    background: linear-gradient(135deg, #353535 0%, #3a3a3a 100%);
+    border: 1px solid #555;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.media-item:hover {
+    transform: translateY(-5px);
+    border-color: #3a7bd5;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Контейнер для медиа-контента */
+.media-preview {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    min-height: 200px;
+    max-height: 500px;
+}
+
+.media-preview img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.media-preview video {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.media-item:hover .media-preview img {
+    transform: scale(1.03);
+}
+
+/* Индикатор типа медиа */
+.media-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(58, 123, 213, 0.9);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.media-badge.photo {
+    background: rgba(244, 107, 69, 0.9);
+}
+
+.media-badge.video {
+    background: rgba(142, 45, 226, 0.9);
+}
+
+/* Контент медиа-элемента */
+.media-content {
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.media-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.media-title::before {
+    font-size: 1.1rem;
+}
+
+.media-title.photo::before {
+    content: '🖼️';
+}
+
+.media-title.video::before {
+    content: '🎬';
+}
+
+.media-description {
+    color: #b0b0b0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
+}
+
+/* Информация о медиа */
+.media-info {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Кнопки управления */
+.media-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.media-btn {
+    flex: 1;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #444;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.media-btn:hover {
+    background: #3a7bd5;
+    transform: translateY(-2px);
+}
+
+.media-btn.view {
+    background: #3a7bd5;
+}
+
+.media-btn.view:hover {
+    background: #2a6bc4;
+}
+
+.media-btn.download {
+    background: #00b09b;
+}
+
+.media-btn.download:hover {
+    background: #00a08b;
+}
+
+/* Сообщение об отсутствии медиа */
+.no-media {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.no-media::before {
+    content: '📁';
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* Адаптивность - планшеты */
+@media (max-width: 1024px) {
+    .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .media-preview {
+        min-height: 180px;
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .media-preview {
+        min-height: 150px;
+        max-height: 350px;
+    }
+    
+    .media-content {
+        padding: 15px;
+    }
+    
+    .media-actions {
+        flex-direction: column;
+    }
+    
+    .media-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .media-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .media-preview {
+        min-height: 180px;
+        max-height: 300px;
+    }
+}
+
+/* Улучшенная сетка для больших экранов */
+@media (min-width: 1200px) {
+    .media-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .media-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 30px;
+    }
+}
+
+/* Дополнительные классы для контроля сетки */
+.media-grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.media-grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.media-grid-4-col {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.media-grid-5-col {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+/* Утилиты для управления отображением */
+.media-contain {
+    object-fit: contain !important;
+}
+
+.media-cover {
+    object-fit: cover !important;
+}
+
+.media-original {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+/* Плавающие элементы для сетки masonry (опционально) */
+.masonry-grid {
+    column-count: 4;
+    column-gap: 15px;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+    .masonry-grid {
+        column-count: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid {
+        column-count: 1;
+    }
 }

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Персонажи</h1>
+<p>На этой странице расположен список персонажей, которые мне нравится :)</p>
+
+<div class="media-grid" id="mediaGrid">
+    {% for media in media_list %}
+    <div class="media-item">
+        <div class="media-item">
+            <div class="media-preview">
+                <img src="{% static media.url %}"
+                    alt="{{ media.title }}">
+                <span class="media-badge photo">Фото</span>
+            </div>
+            <div class="media-content">
+                <h3 class="media-title photo">{{ media.title }}</h3>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    {% endfor %}
+</div>
+{% endblock %}

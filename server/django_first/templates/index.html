@@ -11,7 +11,15 @@
             <a href="{% url 'multiply' %}">Таблица умножения</a>
         </div>
     </div>
-    
+
+    <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">Обо мне</button>
+        <div class="nav-dropdown-content">
+            <a href="{% url 'anime' %}">Мой список просмотренного</a>
+            <a href="{% url 'characters' %}">Кинн лист</a>
+        </div>
+    </div>
+
     <div class="nav-dropdown">
         <button class="nav-dropdown-btn">Прочее</button>
         <div class="nav-dropdown-content">
@@ -25,8 +33,9 @@
 {% block content %}
 <h1>Добро пожаловать на сайт!</h1>
 <p>
-    Я - Головин Алексей aka GoodAssumption. На данный момент занимаюсь разработкой различных приложений на Python.
-    Это - учебный сайт для отработки навыков работы с Djanga.
+    Я - Головин Алексей aka GoodAssumption. На данный момент занимаюсь
+    разработкой различных приложений на Python.
+    Это - учебный сайт для отработки навыков работы с Django.
 </p>
 
 <h2>О разработчике</h2>
@@ -47,11 +56,6 @@
     <li>
         <a href="https://github.com/goodassumption" target="_blank">
             GitHub
-        </a>
-    </li>
-    <li>
-        <a href="https://gitlab.informatics.ru/goodassumption" target="_blank">
-            GitLab
         </a>
     </li>
 </ul>

@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.conf import settings
+from django_first.models import CalcHistory
 
-# Create your views here.
-import datetime
+import datetime, os, uuid, json, random
 import requests
-import uuid
-import json
 
 def index(request):
     context = {}
@@ -24,23 +23,21 @@ def calc(request):
         n1 = float(request.POST.get('first'))
         n2 = float(request.POST.get('second'))
         ans = 0.0
-
-        match action:
-            case 'sum':
-                ans = n1 + n2
-                context['ans'] = f'{n1} + {n2} = {str(ans)}'
-            case 'sub':
-                ans = n1 - n2
-                context['ans'] = f'{n1} - {n2} = {str(ans)}'
-            case 'mul':
-                ans = n1 * n2
-                context['ans'] = f'{n1} * {n2} = {str(ans)}'
-            case 'div':
-                if n2 == 0:
-                    context['ans'] = 'На ноль делить нельзя!'
-                    return render(request, 'calc.html', context)
-                ans = n1 / n2
-                context['ans'] = f'{n1} / {n2} = {str(ans)}'
+        if action ==  'sum':
+            ans = n1 + n2
+            context['ans'] = f'{n1} + {n2} = {str(ans)}'
+        elif action ==  'sub':
+            ans = n1 - n2
+            context['ans'] = f'{n1} - {n2} = {str(ans)}'
+        elif action ==  'mul':
+            ans = n1 * n2
+            context['ans'] = f'{n1} * {n2} = {str(ans)}'
+        elif action ==  'div':
+            if n2 == 0:
+                context['ans'] = 'На ноль делить нельзя!'
+                return render(request, 'calc.html', context)
+            ans = n1 / n2
+            context['ans'] = f'{n1} / {n2} = {str(ans)}'
 
     context['text'] = 'Итоговая операция:'
     return render(request, 'calc.html', context)
@@ -48,7 +45,20 @@ def calc(request):
 def time_update(request):
     context = {}
     now = datetime.datetime.now()
-    context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
+
+    # let's go gambling!
+    rnd = random.randint(0, 1000000)
+    if rnd % 2 == 0:
+        if rnd % 3 == 0:
+            context['date'], context['time'] = now.strftime("%m-%Y-%d %H:%M:%S").split()
+        else:
+            context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
+    else:
+        if rnd % 3 == 0:
+            context['date'], context['time'] = now.strftime("%m-%d-%Y %H:%M:%S").split()
+        else:
+            context['date'], context['time'] = now.strftime("%d-%m-%Y %H:%M:%S").split()
+    
     return JsonResponse(context)
 
 def get_tocken():
@@ -165,3 +175,103 @@ def multiply(request):
         context['n2'] = n2
 
     return render(request, 'multiply.html', context)
+
+def anime(request):
+    return render(request, 'anime.html', {})
+
+def characters(request):
+    context = {
+        'media_list': scan_kinns_folder(),
+    }
+    return render(request, 'kinns.html', context)
+
+def expression(request):
+    context = {}
+    if request.method == 'POST':
+        expr_ = request.POST.get('expression')
+        try:
+            expr = expr_.split()
+            context['expression'] = expr_
+            answer = int(expr[0])
+            for i in range(1, len(expr), 2):
+                if expr[i] == '+':
+                    answer += int(expr[i+1])
+                elif expr[i] == '-':
+                    answer -= int(expr[i+1])
+            context['answer'] = answer
+            context['error'] = None
+            
+            now = datetime.datetime.now()
+            obj = CalcHistory(
+                expression = expr_,
+                result = answer,
+                time = str(now.strptime("%d-%m-%Y %H:%M:%S"))
+            )
+            obj.save()
+
+        except Exception as e:
+            print(e)
+            if e == ZeroDivisionError:
+                context['error'] = 'Такого быть не может'
+            elif e == ValueError:
+                context['error'] = 'Ошибка значения'
+            elif e == TypeError:
+                context['error'] = 'Ошибка типа данных. Проверьте ввод, между знаками и числами должны быть пробелы'    
+            else:
+                context['error'] = f'Непонятная ошибка. Данные: {e}'
+
+    return render(request, 'expression.html', context)
+
+def history(request):
+    history = list(CalcHistory.objects.values('expression', 'result', 'time'))
+    context = {
+        'history': history
+    }
+    return render(request, 'history.html', context)
+
+def scan_kinns_folder():
+    """
+    Функция для автоматического сканирования папки kinns
+    """
+    media_list = []
+    
+    try:
+        # Путь к вашей папке kinns
+        kinns_path = os.path.join(settings.STATICFILES_DIRS[0], 'media', 'kinns')
+        
+        if os.path.exists(kinns_path):
+            for filename in os.listdir(kinns_path):
+                # Проверяем расширения файлов
+                if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp')):
+                    media_list.append({
+                        'type': 'photo',
+                        'title': get_nice_filename(filename),
+                        'url': f'media/kinns/{filename}',  # Правильный путь
+                        'description': f'Фото из коллекции',
+                    })
+                elif filename.lower().endswith(('.mp4', '.avi', '.mov', '.mkv', '.webm')):
+                    media_list.append({
+                        'type': 'video',
+                        'title': get_nice_filename(filename),
+                        'url': f'media/kinns/{filename}',  # Правильный путь
+                        'description': f'Видео из коллекции',
+                        'duration': '2:00'
+                    })
+        else:
+            print(f"Папка не найдена: {kinns_path}")
+            
+    except Exception as e:
+        print(f"Ошибка сканирования папки: {e}")
+    
+    return media_list
+
+def get_nice_filename(filename):
+    """
+    Преобразует имя файла в читаемый формат
+    Пример: "my_photo_2023.jpg" -> "My Photo 2023"
+    """
+    name = os.path.splitext(filename)[0]
+    # Заменяем подчеркивания и дефисы на пробелы
+    name = name.replace('_', ' ').replace('-', ' ')
+    # Делаем первую букву каждого слова заглавной
+    return ' '.join(word.capitalize() for word in name.split())   

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'expression' %}"
+            class="nav-single-btn"
+            onclick="window.location.href = this.dataset.url;">К сложным
+            выражениям</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<div class="table-container">
+    <table class="modern-table striped hover two-columns">
+        <thead>
+            <tr>
+                <th>Время операции</th>
+                <th>Операция</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history %}
+            <tr>
+                <td>{{ item.time }}</td>
+                <td>{{ item.expression }} = {{ item.result }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* ПОЛЗУНКИ ВЫ ДОСТАЛИ МЕНЯ ИДИТЕ ***** */
+    /* СИЛЬНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ГОРИЗОНТАЛЬНЫХ ПОЛЗУНКОВ */
+.table-container {
+    overflow-x: hidden !important;
+}
+
+.modern-table {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+.modern-table th,
+.modern-table td {
+    min-width: 0 !important;
+    max-width: none !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+/* Принудительное отключение скролла на мобильных */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: visible !important;
+    }
+}
+
+/* ============================================
+   ОТКЛЮЧЕНИЕ ВЕРТИКАЛЬНОГО СКРОЛЛА В ТАБЛИЦАХ
+============================================ */
+
+/* Основной контейнер таблицы БЕЗ вертикального скролла */
+.table-container {
+    overflow-x: auto;
+    overflow-y: hidden; /* Отключаем вертикальный скролл */
+    margin: 30px 0;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #2a2a2a 0%, #353535 100%);
+    border: 2px solid #444;
+    max-width: 100%;
+    max-height: 500px; /* Ограничиваем максимальную высоту */
+}
+
+/* Таблица с авто-высотой */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: linear-gradient(135deg, #2a2a2a 0%, #2d2d2d 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.95rem;
+    position: relative;
+    min-width: 0;
+    table-layout: auto;
+    max-height: none; /* Убираем ограничение высоты */
+}
+
+/* Для таблиц с фиксированной высотой (если нужно) */
+.modern-table.fixed-height {
+    display: block;
+    max-height: 400px;
+    overflow-y: auto; /* Вертикальный скролл только в таблице */
+}
+
+/* Заголовок фиксированный при скролле */
+.modern-table.fixed-height thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto; /* На мобильных возвращаем скролл если нужно */
+    }
+}
+
+</style>
+{% endblock %}

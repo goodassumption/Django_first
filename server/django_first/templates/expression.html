@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'index' %}"
+            class="simple-btn primary"
+            onclick="window.location.href = this.dataset.url;">На
+            главную</button>
+
+        <button data-url="{% url 'calc' %}"
+            class="simple-btn secondary"
+            onclick="window.location.href = this.dataset.url;">К
+            калькулятору</button>
+
+        <button data-url="{% url 'history' %}"
+            class="nav-single-btn"
+            onclick="window.location.href = this.dataset.url;">
+            История выражений</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<h2>Сложная математика</h2>
+<p>На этой странице вы можете расчитать сложное арифметическое выражение. К
+    сожалению, на данный момент поддерживается только сложение и вычитание</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" placeholder="A1 + A2 - A3 - A4 + ..." name="expression"
+        value="{{expression}}">
+    <button type="submit">Получить ответ</button>
+</form>
+{% if error %}
+<h2>Ошибка!</h2>
+<p>{{ error }}</p>
+{% endif %}
+{% if answer %}
+<div>
+    <hr>
+    <h2>Ответ:</h2>
+    <h4>{{ expression }} = {{ answer }}</h4>
+</div>
+{% endif %}
+{% endblock %}

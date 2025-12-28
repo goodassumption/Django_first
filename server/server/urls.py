@@ -29,4 +29,8 @@ urlpatterns = [
     path('riddle/', views.riddle, name='riddle'),
     path('answer/', views.answer, name='answer'),
     path('multiply/', views.multiply, name='multiply'),
+    path('anime/', views.anime, name='anime'),
+    path('characters/', views.characters, name='characters'),
+    path('expression/', views.expression, name='expression'),
+    path('expression/history/', views.history, name='history'),
 ]
