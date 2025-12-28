@@ -1,20 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'index' %}"
+            class="nav-single-btn"
+            onclick="window.location.href = this.dataset.url;">На
+            главную</button>
+
+        <button data-url="{% url 'expression' %}"
+            class="nav-single-btn"
+            onclick="window.location.href = this.dataset.url;">Сложные
+            выражения</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
 {% block content %}
 <h1>Калькулятор</h1>
 <p>Это примитивный калькулятор чисел, использующий Python</p>
 <form title="Калькулятор" method="post">
     {% csrf_token %}
     <label>Введите первое число</label>
-    <input type="number" name = "first" value="0">
+    <input type="number" name="first" value="0">
     <label>Введите второе число</label>
-    <input type="number" name = "second" value="0">
-    <!--- В разработке -->
-    <p><input type="radio" name="action" value ="sum" checked>Сложить</p>
-    <p><input type="radio" name="action" value ="sub">Вычесть</p>
-    <p><input type="radio" name="action" value ="mul">Перемножить</p>
-    <p><input type="radio" name="action" value ="div">Поделить</p>
+    <input type="number" name="second" value="0">
+    <p><input type="radio" name="action" value="sum" checked>Сложить</p>
+    <p><input type="radio" name="action" value="sub">Вычесть</p>
+    <p><input type="radio" name="action" value="mul">Перемножить</p>
+    <p><input type="radio" name="action" value="div">Поделить</p>
     <button type="submit" name="Вычислить">Вычислить</button>
     <button type="reset" name="Сбросить">Сбросить</button>
 </form>

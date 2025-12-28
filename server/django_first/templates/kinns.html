@@ -2,25 +2,11 @@
 {% load static %}
 
 {% block content %}
-<h1>Мой кинн лист</h1>
-<p>Кинн лист - это список персонажей, с которыми я себя ассоциирую, на которых я
-    хочу быть похожим или которые мне просто нравится</p>
+<h1>Персонажи</h1>
+<p>На этой странице расположен список персонажей, которые мне нравится :)</p>
 
 <div class="media-grid" id="mediaGrid">
     {% for media in media_list %}
-    <!--- <div class="media-item">
-            <div class="media-preview">
-                {% if media.type == 'photo' %}
-                    <img src="{% static media.url %}" alt="{{ media.title }}">
-                    <span class="media-badge photo">Фото</span>
-                {% endif %}
-            </div>
-
-            <div class="media-content">
-                <h3 class="media-title {{ media.type }}">{{ media.title }}</h3>
-            </div>
-        </div> --->
-
     <div class="media-item">
         <div class="media-item">
             <div class="media-preview">

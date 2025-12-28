@@ -1,13 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-
-# Create your views here.
-import datetime
-import requests
-import uuid
-import json
-import os
 from django.conf import settings
+from django_first.models import CalcHistory
+
+import datetime, os, uuid, json, random
+import requests
 
 def index(request):
     context = {}
@@ -48,7 +45,20 @@ def calc(request):
 def time_update(request):
     context = {}
     now = datetime.datetime.now()
-    context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
+
+    # let's go gambling!
+    rnd = random.randint(0, 1000000)
+    if rnd % 2 == 0:
+        if rnd % 3 == 0:
+            context['date'], context['time'] = now.strftime("%m-%Y-%d %H:%M:%S").split()
+        else:
+            context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
+    else:
+        if rnd % 3 == 0:
+            context['date'], context['time'] = now.strftime("%m-%d-%Y %H:%M:%S").split()
+        else:
+            context['date'], context['time'] = now.strftime("%d-%m-%Y %H:%M:%S").split()
+    
     return JsonResponse(context)
 
 def get_tocken():
@@ -169,11 +179,55 @@ def multiply(request):
 def anime(request):
     return render(request, 'anime.html', {})
 
-def kinns(request):
+def characters(request):
     context = {
         'media_list': scan_kinns_folder(),
     }
     return render(request, 'kinns.html', context)
+
+def expression(request):
+    context = {}
+    if request.method == 'POST':
+        expr_ = request.POST.get('expression')
+        try:
+            expr = expr_.split()
+            context['expression'] = expr_
+            answer = int(expr[0])
+            for i in range(1, len(expr), 2):
+                if expr[i] == '+':
+                    answer += int(expr[i+1])
+                elif expr[i] == '-':
+                    answer -= int(expr[i+1])
+            context['answer'] = answer
+            context['error'] = None
+            
+            now = datetime.datetime.now()
+            obj = CalcHistory(
+                expression = expr_,
+                result = answer,
+                time = str(now.strptime("%d-%m-%Y %H:%M:%S"))
+            )
+            obj.save()
+
+        except Exception as e:
+            print(e)
+            if e == ZeroDivisionError:
+                context['error'] = 'Такого быть не может'
+            elif e == ValueError:
+                context['error'] = 'Ошибка значения'
+            elif e == TypeError:
+                context['error'] = 'Ошибка типа данных. Проверьте ввод, между знаками и числами должны быть пробелы'    
+            else:
+                context['error'] = f'Непонятная ошибка. Данные: {e}'
+
+    return render(request, 'expression.html', context)
+
+def history(request):
+    history = list(CalcHistory.objects.values('expression', 'result', 'time'))
+    context = {
+        'history': history
+    }
+    return render(request, 'history.html', context)
 
 def scan_kinns_folder():
     """
