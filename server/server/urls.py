@@ -33,4 +33,5 @@ urlpatterns = [
     path('characters/', views.characters, name='characters'),
     path('expression/', views.expression, name='expression'),
     path('expression/history/', views.history, name='history'),
+
 ]
