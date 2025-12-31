@@ -189,36 +189,82 @@ def expression(request):
     context = {}
     if request.method == 'POST':
         expr_ = request.POST.get('expression')
+        
+        # Проверка на пустое выражение
+        if not expr_:
+            context['error'] = 'Выражение не может быть пустым'
+            return render(request, 'expression.html', context)
+            
         try:
             expr = expr_.split()
+            
+            # Проверка минимальной длины выражения
+            if len(expr) < 3 or len(expr) % 2 == 0:
+                context['error'] = 'Неверный формат выражения. Пример: "5 + 3 - 2"'
+                context['expression'] = expr_
+                return render(request, 'expression.html', context)
+            
             context['expression'] = expr_
-            answer = int(expr[0])
+            
+            # Начальное значение - первое число
+            try:
+                answer = int(expr[0])
+            except ValueError:
+                context['error'] = 'Первым элементом должно быть число'
+                return render(request, 'expression.html', context)
+            
+            # Обработка операций
             for i in range(1, len(expr), 2):
+                # Проверка, что на позиции оператора действительно оператор
+                if expr[i] not in ('+', '-'):
+                    context['error'] = f'Неверный оператор: {expr[i]}'
+                    return render(request, 'expression.html', context)
+                
+                # Проверка, что после оператора идет число
+                if i + 1 >= len(expr):
+                    context['error'] = 'Выражение завершается оператором'
+                    return render(request, 'expression.html', context)
+                
+                try:
+                    num = int(expr[i + 1])
+                except ValueError:
+                    context['error'] = f'Ожидалось число после оператора, получено: {expr[i + 1]}'
+                    return render(request, 'expression.html', context)
+                
+                # Выполнение операции
                 if expr[i] == '+':
-                    answer += int(expr[i+1])
+                    answer += num
                 elif expr[i] == '-':
-                    answer -= int(expr[i+1])
+                    answer -= num
+            
             context['answer'] = answer
             context['error'] = None
             
+            # Сохранение в историю (исправлен формат времени)
             now = datetime.datetime.now()
             obj = CalcHistory(
-                expression = expr_,
-                result = answer,
-                time = str(now.strptime("%d-%m-%Y %H:%M:%S"))
+                expression=expr_,
+                result=answer,
+                time=now.strftime("%d-%m-%Y %H:%M:%S")  # Используйте strftime вместо strptime
             )
             obj.save()
 
         except Exception as e:
-            print(e)
-            if e == ZeroDivisionError:
-                context['error'] = 'Такого быть не может'
-            elif e == ValueError:
-                context['error'] = 'Ошибка значения'
-            elif e == TypeError:
-                context['error'] = 'Ошибка типа данных. Проверьте ввод, между знаками и числами должны быть пробелы'    
+            print(f"Error: {e}")
+            # Правильная проверка типа исключения
+            if isinstance(e, ZeroDivisionError):
+                context['error'] = 'Деление на ноль'
+            elif isinstance(e, ValueError):
+                context['error'] = 'Ошибка значения. Проверьте ввод чисел'
+            elif isinstance(e, TypeError):
+                context['error'] = 'Ошибка типа данных'
+            elif isinstance(e, IndexError):
+                context['error'] = 'Неполное выражение'
             else:
-                context['error'] = f'Непонятная ошибка. Данные: {e}'
+                context['error'] = f'Ошибка: {str(e)}'
+            
+            # Сохраняем выражение даже при ошибке
+            context['expression'] = expr_
 
     return render(request, 'expression.html', context)
 
@@ -275,18 +321,3 @@ def get_nice_filename(filename):
     name = name.replace('_', ' ').replace('-', ' ')
     # Делаем первую букву каждого слова заглавной
     return ' '.join(word.capitalize() for word in name.split())   
-
-def history(request):
-    test = FirstModel(
-        date = datetime.datetime.now(),
-        string = 'smth',
-    )
-    context = None
-    return render(request, 'history.html', context)
-
-def add(request):
-    pass
-
-def expression(request):
-    pass
-
