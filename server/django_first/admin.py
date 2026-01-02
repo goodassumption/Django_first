@@ -18,3 +18,25 @@ class ReviewModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'time')
     search_fields = ('name',)
     list_filter = ('name',)
+
+@admin.register(RefsModel)
+class SocialsModelAdmin(admin.ModelAdmin):
+    list_display = ('author', 'img_url')
+    search_fields = ('author',)
+    list_filter = ('author',)
+
+@admin.register(SocialsModel)
+class SocialsModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+@admin.register(GamesModel)
+class GamesModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+@admin.register(HobbyModel)
+class HobbyModelAdmin(admin.ModelAdmin):
+    pass

@@ -13,12 +13,12 @@
 
     <body>
         <header>
-            <h3>Курс "Промышленное программирование"</h3>
+            <h3>Навигация:</h3>
             {% block header_nav %}
             <nav>
                 <div class="nav-single-buttons">
                     <button data-url="{% url 'index' %}"
-                        class="nav-single-btn"
+                        class="simple-btn secondary"
                         onclick="window.location.href = this.dataset.url;">На
                         главную</button>
                 </div>
@@ -28,6 +28,15 @@
 
         <main>
             {% block content %}
+            <h1>Добро пожаловать на страницу!</h1>
+            <p>К сожалению, на данный момент эта страница пуста. Посмотрите
+                что-нибудь ещё</p>
+            <div style="text-align: center;">
+                <button data-url="{% url 'index' %}"
+                    class="simple-btn warning"
+                    onclick="window.location.href = this.dataset.url;">На
+                    главную</button>
+            </div>
             {% endblock %}
         </main>
 

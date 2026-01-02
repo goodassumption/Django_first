@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
-from django_first.models import CalcHistory
+from django_first.models import *
 
 import datetime, os, uuid, json, random
 import requests
@@ -180,10 +180,8 @@ def anime(request):
     return render(request, 'anime.html', {})
 
 def characters(request):
-    context = {
-        'media_list': scan_kinns_folder(),
-    }
-    return render(request, 'kinns.html', context)
+    context = {}
+    return render(request, 'characters.html', context)
 
 def expression(request):
     context = {}
@@ -275,49 +273,12 @@ def history(request):
     }
     return render(request, 'history.html', context)
 
-def scan_kinns_folder():
-    """
-    Функция для автоматического сканирования папки kinns
-    """
-    media_list = []
-    
-    try:
-        # Путь к вашей папке kinns
-        kinns_path = os.path.join(settings.STATICFILES_DIRS[0], 'media', 'kinns')
-        
-        if os.path.exists(kinns_path):
-            for filename in os.listdir(kinns_path):
-                # Проверяем расширения файлов
-                if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp')):
-                    media_list.append({
-                        'type': 'photo',
-                        'title': get_nice_filename(filename),
-                        'url': f'media/kinns/{filename}',  # Правильный путь
-                        'description': f'Фото из коллекции',
-                    })
-                elif filename.lower().endswith(('.mp4', '.avi', '.mov', '.mkv', '.webm')):
-                    media_list.append({
-                        'type': 'video',
-                        'title': get_nice_filename(filename),
-                        'url': f'media/kinns/{filename}',  # Правильный путь
-                        'description': f'Видео из коллекции',
-                        'duration': '2:00'
-                    })
-        else:
-            print(f"Папка не найдена: {kinns_path}")
-            
-    except Exception as e:
-        print(f"Ошибка сканирования папки: {e}")
-    
-    return media_list
+def about(request):
+    context = {
+        'social': list(SocialsModel.objects.values()),
+        'refs': list(RefsModel.objects.values()),
+        'games': list(GamesModel.objects.values()),
+        'hobbies': list(HobbyModel.objects.values()),
+    }
 
-def get_nice_filename(filename):
-    """
-    Преобразует имя файла в читаемый формат
-    Пример: "my_photo_2023.jpg" -> "My Photo 2023"
-    """
-    name = os.path.splitext(filename)[0]
-    # Заменяем подчеркивания и дефисы на пробелы
-    name = name.replace('_', ' ').replace('-', ' ')
-    # Делаем первую букву каждого слова заглавной
-    return ' '.join(word.capitalize() for word in name.split())   
+    return render(request, 'about.html', context)

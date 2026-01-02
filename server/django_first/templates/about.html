@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Обо мне</h1>
+<p>На этой странице вы можете узнать обо мне побольше, чем сказано на
+    главной. Приятного чтения!</p>
+<p><i>Последнее обновление информации: 02.01.2026</i></p>
+
+<hr>
+
+<div class="Начало">
+    <h2>Кто таков?</h2>
+    <p>Меня зовут Головин Алексей aka ink_visit_or aka GoodAssumption и в моих
+        никах
+        <strong>нет</strong> никаких скрытых смыслов и отсылок, они значат
+        буквально
+        то, что скажет
+        вам переводчик. По крайней мере второй уж точно. Занимаюсь я буквально
+        всем,
+        от программирования до пения. Разве что рисовать я не умею. Слушаю я
+        тоже
+        самую разную музыку, от Rammstein до YOASOBI. Учусь в 10 классе, живу в
+        Подмосковье. День рождения 7 марта</p>
+    <p>Больше мне сказать тут нечего. Обо всём этом подробнее вы можете
+        прочитать ниже</p>
+</div>
+
+<hr>
+
+<div class="Увлечения">
+    <h2>Мои увлечения</h2>
+    <p>За мою, в общем-то, недолгую жизнь, я успел попробовать:</p>
+    <ul>
+        {% for hobby in hobbies %}
+        <li>{{ hobby.name }}</li>
+        {% endfor %}
+        <li><a href="https://twitch.tv/goodassumption"
+                target="_blank">Стриминг</a></li>
+        <li>И, возможно, что-то ещё, но я забыл</li>
+    </ul>
+    <p>Немного поясню за некоторые пункты (похвастаюсь). Музыкалку я закончил в
+        2022
+        году с красным дипломом, чем я весьма горд, по плаванию и фехтованию у
+        меня
+        есть разряды, а на гитаре я играл в оркестре. Программирую я в основном
+        на Python, но также знаю C++ и C#, летом 2024 года изучал Unity</p>
+    <p>А ещё меня всю жизнь увлекало управление светом и звуком, и в последнее
+        время
+        меня стали всё чаще звать поработать за пультом на концертах, чему я
+        весьма рад</p>
+</div>
+
+<hr>
+
+<div class="Игры">
+    <h2>Игры, в которые я играю</h2>
+    <p>Мою библиотеку Стима можно посмотреть <a
+            href="https://steamcommunity.com/id/goodassumption/"
+            target="_blank">вот тут,</a> но
+        мои любимейшие игры это:</p>
+    <ul>
+        {% for game in games %}
+        <li>
+            <a href="{{ game.url }}" target="_blank">{{ game.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<hr>
+
+<div class="Референсы">
+    <h2>Референсы</h2>
+    <p>К сожалению, на данный момент мой персонаж находится в разработке, но у
+        меня
+        есть целый я! Смотрите как красиво меня нарисовали, по нажатию на
+        картинку её можно рассмотреть подробнее</p>
+    <div class="media-grid">
+        {% for item in refs %}
+        <div class="media-item">
+            <div class="media-preview"
+                onclick="window.open('{{ item.channel }}', '_blank')"
+                style="cursor: pointer"
+                title="Клик для перехода в канал">
+                <img src="{{ item.img_url }}"
+                    alt="Безумно красивый арт от {{ item.author }}"
+                    onclick="window.open('{{ item.img_url }}', '_blank'); event.stopPropagation();"
+                    style="cursor: zoom-in"
+                    title="Клик для открытия изображения">
+            </div>
+            <div class="media-content">
+                <div class="media-actions"
+                    style="justify-content: center; gap: 20px; margin-top: 10px;">
+                    <button class="media-btn view"
+                        onclick="window.open('{{ item.channel }}', '_blank')"
+                        style="min-width: 120px;">
+                        Автор: {{ item.author }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <p>А, и ещё. Если вдруг, <strong>НЕ ДАЙ БОГ</strong> вы меня нарисуете, то,
+        пожалуйста, скиньте это мне в <a
+            href="https://t.me/goodassumption" target="_blank">личку тг</a> или в <a
+            href="https://t.me/ink_visit_or" target="_blank">сообщения канала,</a> что бы за
+        арт это не был. К слову, я приветствую любые виды артов с собой, рисуйте
+        всё, что вашей душе угодно</p>
+</div>
+
+<hr>
+
+<div class="Ссылки">
+    <h2>Ссылки</h2>
+    <p>Ссылки на все соцсети, где я есть. <strong>Остальные аккаунты
+            -
+            фейк!</strong></p>
+    <ul>
+        {% for item in social %}
+        <li>
+            <a href="{{ item.url }}" target="_blank">{{ item.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
