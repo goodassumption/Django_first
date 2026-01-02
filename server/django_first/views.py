@@ -279,6 +279,7 @@ def about(request):
         'refs': list(RefsModel.objects.values()),
         'games': list(GamesModel.objects.values()),
         'hobbies': list(HobbyModel.objects.values()),
+        'preformers': list(PreformersModel.objects.values()),
     }
 
     return render(request, 'about.html', context)

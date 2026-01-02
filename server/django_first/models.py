@@ -49,6 +49,15 @@ class RefsModel(models.Model):
     img_url = models.CharField(max_length=100, verbose_name='Ссылка на арт')
     channel = models.CharField(max_length=100, verbose_name='Ссылка на художника')
     author = models.CharField(max_length=100, verbose_name='Ник художника')
+    character = models.CharField(
+        max_length=100,
+        choices=[
+            ('1', 'Селфсона'),
+            ('2', 'Старый скин'),
+        ],
+        default='Undefined',
+        verbose_name='Имя ОС-а',
+    )
 
     def __str__(self):
         return self.author
@@ -58,8 +67,8 @@ class RefsModel(models.Model):
         verbose_name_plural = 'Референсы'
 
 class SocialsModel(models.Model):
-    url = models.CharField(max_length=100, verbose_name='Ссылка на соцсеть')
     name = models.CharField(max_length=100, verbose_name='Название соцсети')
+    url = models.CharField(max_length=100, verbose_name='Ссылка на соцсеть')
 
     def __str__(self):
         return self.name
@@ -69,8 +78,8 @@ class SocialsModel(models.Model):
         verbose_name_plural = 'Ссылки на соцсети'
 
 class GamesModel(models.Model):
-    url = models.CharField(max_length=100, default='', verbose_name='Ссылка на игру в стиме')
     name = models.CharField(max_length=100, verbose_name='Название игры')
+    url = models.CharField(max_length=100, default='', verbose_name='Ссылка на игру в стиме')
 
     def __str__(self):
         return self.name
@@ -79,7 +88,6 @@ class GamesModel(models.Model):
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'
 
-# Это тупизм, у меня едет крыша
 class HobbyModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='Увлечение')
 
@@ -90,3 +98,12 @@ class HobbyModel(models.Model):
         verbose_name = 'Увлечение'
         verbose_name_plural = 'Увлечения'
 
+class PreformersModel(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Исполнитель')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Исполнитель'
+        verbose_name_plural = 'Исполнители'

@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import *
 
+# Модели без кастомизации
+admin.site.register(HobbyModel)
+admin.site.register(PreformersModel)
+
 @admin.register(CalcHistory)
 class CalcHistoryAdmin(admin.ModelAdmin):
     list_display = ('expression', 'result', 'time')
@@ -20,8 +24,8 @@ class ReviewModelAdmin(admin.ModelAdmin):
     list_filter = ('name',)
 
 @admin.register(RefsModel)
-class SocialsModelAdmin(admin.ModelAdmin):
-    list_display = ('author', 'img_url')
+class RefsModelAdmin(admin.ModelAdmin):
+    list_display = ('author','character' ,'img_url')
     search_fields = ('author',)
     list_filter = ('author',)
 
@@ -36,7 +40,3 @@ class GamesModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name',)
     list_filter = ('name',)
-
-@admin.register(HobbyModel)
-class HobbyModelAdmin(admin.ModelAdmin):
-    pass
