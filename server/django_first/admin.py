@@ -40,3 +40,9 @@ class GamesModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name',)
     list_filter = ('name',)
+
+@admin.register(PagesModel)
+class PagesModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url')
+    search_fields = ('name',)
+    list_filter = ('name',)

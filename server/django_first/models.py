@@ -107,3 +107,14 @@ class PreformersModel(models.Model):
     class Meta:
         verbose_name = 'Исполнитель'
         verbose_name_plural = 'Исполнители'
+
+class PagesModel(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название страницы')
+    url = models.CharField(max_length=100, verbose_name='Путь относительно главной')
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Страница'
+        verbose_name_plural = 'Страницы'

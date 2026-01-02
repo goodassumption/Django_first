@@ -7,9 +7,10 @@ import datetime, os, uuid, json, random
 import requests
 
 def index(request):
-    context = {}
-    context['author'] = 'Головин Алексей'
-    context['pages'] = 1
+    context = {
+        'pages': list(PagesModel.objects.values())
+    }
+    
     return render(request, 'index.html', context)
 
 def time(request):
