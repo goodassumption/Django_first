@@ -180,7 +180,10 @@ def anime(request):
     return render(request, 'anime.html', {})
 
 def characters(request):
-    context = {}
+    context = {
+        'media_list': list(CharactersModel.objects.values()),
+    }
+
     return render(request, 'characters.html', context)
 
 def expression(request):
