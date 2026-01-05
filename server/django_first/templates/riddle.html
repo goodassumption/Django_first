@@ -4,9 +4,11 @@
 {% block header_nav %}
 <nav>
     <div class="nav-single-buttons">
-        <button onclick="location.href='{% url 'index' %}'"
+        <button data-url="{% url 'index' %}"
+            onclick="window.location.href = this.dataset.url;"
             class="nav-single-btn primary">На главную</button>
-        <button onclick="location.href='{% url 'answer' %}'"
+        <button data-url="{% url 'answer' %}"
+            onclick="window.location.href = this.dataset.url;"
             class="nav-single-btn secondary">К ответу</button>
     </div>
 </nav>
@@ -16,8 +18,8 @@
 <h2>Отгадай загадку и реши вопрос</h2>
 <div class="copy-grid-item">
     <div class="copy-item-title">Загадка</div>
-    <div class="copy-item-content" onclick="copyTextOnClick(this)">Зимой и летом одним цветом</div>
+    <div class="copy-item-content" onclick="copyTextOnClick(this)">Зимой и летом
+        одним цветом</div>
 </div>
-
 
 {% endblock %}

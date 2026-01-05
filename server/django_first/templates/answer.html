@@ -2,14 +2,15 @@
 {% load static %}
 
 {% block head %}
-    <script src="{% static 'JavaScript/volume_manager.js' %}" defer></script>
+<script src="{% static 'JavaScript/volume_manager.js' %}" defer></script>
 {% endblock head%}
 
 {% block header_nav %}
 <nav class="main-nav">
     <div class="nav-single-buttons">
-        <button onclick="location.href='{% url 'riddle' %}'" 
-                class="nav-single-btn primary">К загадке</button>
+        <button data-url="{% url 'riddle' %}"
+            onclick="window.location.href = this.dataset.url;"
+            class="nav-single-btn primary">К загадке</button>
     </div>
 </nav>
 {% endblock header_nav %}
@@ -21,18 +22,20 @@
 <div class="copy-grid-item" id="answerText">
     <div class="copy-item-title">Ответ</div>
     <div class="copy-item-content">Рояль</div>
-    <div class="copy-item-description">Нажми на текст, чтобы узреть что могу</div>
+    <div class="copy-item-description">Нажми на текст, чтобы узреть что
+        могу</div>
     <div class="copy-item-indicator">Кликните для пояснения</div>
 </div>
 
 <div id="videoWrapper">
     <div class="video-container">
         <!-- Видеоплеер без встроенных элементов управления -->
-        <video id="customVideo" class="video-player" preload="metadata" playsinline>
+        <video id="customVideo" class="video-player" preload="metadata"
+            playsinline>
             <source src="https://noikcloud.xyz/fxnY5hp" type="video/mp4">
             Ваш браузер не поддерживает видео.
         </video>
-        
+
         <!-- Кастомные элементы управления -->
         <div class="video-controls">
             <div class="control-group">
@@ -41,13 +44,13 @@
                     <span id="volumeValue">100%</span>
                 </label>
                 <div class="slider-container">
-                    <input type="range" id="volumeSlider" class="volume-slider" 
-                           min="0" max="1" step="0.01" value="1">
+                    <input type="range" id="volumeSlider" class="volume-slider"
+                        min="0" max="1" step="0.01" value="1">
                     <div class="slider-track"></div>
                     <div class="slider-progress"></div>
                 </div>
             </div>
-            
+
             <div class="control-buttons">
                 <button id="muteBtn" class="control-btn">
                     <span class="btn-icon">🔇</span> Выкл. звук

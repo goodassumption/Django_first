@@ -4,9 +4,11 @@
 {% block header_nav %}
 <nav>
     <div class="nav-single-buttons">
-        <button onclick="location.href='{% url 'index' %}'"
+        <button data-url="{% url 'index' %}"
+            onclick="window.location.href = this.dataset.url;"
             class="nav-single-btn primary">На главную</button>
-        <button onclick="location.href='{% url 'prompts' %}'"
+        <button data-url="{% url 'prompts' %}"
+            onclick="window.location.href = this.dataset.url;"
             class="nav-single-btn secondary">К промптам</button>
     </div>
 </nav>
