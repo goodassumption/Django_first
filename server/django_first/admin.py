@@ -13,13 +13,13 @@ class CalcHistoryAdmin(admin.ModelAdmin):
 
 @admin.register(CharactersModel)
 class CharactersModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'time')
+    list_display = ('name', 'url')
     list_filter = ('name',)
     search_fields = ('name',)
 
 @admin.register(ReviewModel)
 class ReviewModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'time')
+    list_display = ('name', 'review_time')
     search_fields = ('name',)
     list_filter = ('name',)
 

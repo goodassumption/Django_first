@@ -6,6 +6,8 @@ from django_first.models import *
 import datetime, os, uuid, json, random
 import requests
 
+from .utilits import get_tocken
+
 def index(request):
     context = {
         'pages': list(PagesModel.objects.values())
@@ -61,28 +63,6 @@ def time_update(request):
             context['date'], context['time'] = now.strftime("%d-%m-%Y %H:%M:%S").split()
     
     return JsonResponse(context)
-
-def get_tocken():
-    """Получает и возвращает актуальный access_token для GigaChat API."""
-    url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
-    
-    # scope определяет права доступа (для физ. лиц - GIGACHAT_API_PERS)
-    payload = {'scope': 'GIGACHAT_API_PERS'}
-    
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-        'RqUID': str(uuid.uuid4()),  # ГЕНЕРИРУЕМ УНИКАЛЬНЫЙ ID
-        'Authorization': 'Bearer MDE5YjMzMzUtODVmNy03NmY5LTgxNGUtNjU5M2ZjMzcyMTg2OjA5NWM5NTdiLTQ4YjQtNDU3Yy04ZWQ5LTUzNjA5Yzk0ZWY0ZQ=='  # ДОБАВЛЯЕМ "Bearer"
-    }
-    
-    # Временное отключение проверки SSL для разработки (verify=False)
-    response = requests.post(url=url, headers=headers, data=payload, verify=False)
-    
-    # Парсим JSON и извлекаем токен
-    response_data = response.json()
-    access_token = response_data['access_token']
-    return access_token
 
 def neyro(request):
     user_message = 'Привет! Кто ты?'
@@ -144,41 +124,39 @@ def prompts(request):
     return render(request, 'prompts.html', context)
 
 def riddle(request):
-    context = {}
-    return render(request, 'riddle.html', context)
+    return render(request, 'riddle.html')
 
 def answer(request):
-    context = {}
-    return render(request, 'answer.html', context)
+    return render(request, 'answer.html')
 
 def multiply(request):
     context ={
-        'ans': ['1 * 0 = 0', '1 * 1 = 1', '1 * 2 = 2', '1 * 3 = 3', '1 * 4 = 4', '1 * 5 = 5', '1 * 6 = 6', '1 * 7 = 7', '1 * 8 = 8', '1 * 9 = 9', '1 * 10 = 10'],
         'n1': 1,
         'n2': 10,
     }
+
     if request.method == 'POST':
         try:
             n1 = int(request.POST.get('num1'))
             n2 = int(request.POST.get('num2'))
+            context['n1'] = n1
+            context['n2'] = n2
         except Exception as e:
             print(e)
             context['ans'] = f'ОШИБКА: {e}'
             return render(request, 'multiply.html', context)
-    
-        smth = []
-        for i in range(n2+1):
-            smth.append(
-                f'{n1} * {i} = {n1*i}'
-            )
-        context['ans'] = smth
-        context['n1'] = n1
-        context['n2'] = n2
 
+    smth = []
+    for i in range(context['n2']+1):
+        smth.append(
+            f'{context['n1']} * {i} = {context['n1']*i}'
+        )
+    context['ans'] = smth
     return render(request, 'multiply.html', context)
 
 def anime(request):
-    return render(request, 'anime.html', {})
+    context = {}
+    return render(request, 'anime.html', context)
 
 def characters(request):
     context = {
@@ -271,10 +249,10 @@ def expression(request):
     return render(request, 'expression.html', context)
 
 def history(request):
-    history = list(CalcHistory.objects.values('expression', 'result', 'time'))
     context = {
-        'history': history
+        'history': list(CalcHistory.objects.values('expression', 'result', 'time'))
     }
+    
     return render(request, 'history.html', context)
 
 def about(request):
