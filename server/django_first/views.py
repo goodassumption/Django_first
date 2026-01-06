@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
 from django_first.models import *
+from django_first.forms import *
 
-import datetime, os, uuid, json, random
+import datetime, json, random
 import requests
 
 from .utilits import get_tocken
@@ -16,53 +17,60 @@ def index(request):
     return render(request, 'index.html', context)
 
 def time(request):
-    context = {}
-    return render(request, 'time.html', context)
+    return render(request, 'time.html')
+
+def time_update(request):
+    now = datetime.datetime.now()
+
+    context = {
+        'date': now.strftime("%d-%m-%Y"),
+        'time': now.strftime("%H:%M:%S"),
+    }
+    
+    return JsonResponse(context)
 
 def calc(request):
-    context = {}
+    action = 'sum'
+    n1 = 5
+    n2 = 10
+    
+    context = {
+        'n1': n1,
+        'n2': n2,
+    }
+
     if request.method == 'POST':
         action = request.POST.get('action', 'add')
-        n1 = float(request.POST.get('first'))
-        n2 = float(request.POST.get('second'))
-        ans = 0.0
-        if action ==  'sum':
-            ans = n1 + n2
-            context['ans'] = f'{n1} + {n2} = {str(ans)}'
-        elif action ==  'sub':
-            ans = n1 - n2
-            context['ans'] = f'{n1} - {n2} = {str(ans)}'
-        elif action ==  'mul':
-            ans = n1 * n2
-            context['ans'] = f'{n1} * {n2} = {str(ans)}'
-        elif action ==  'div':
-            if n2 == 0:
-                context['ans'] = 'На ноль делить нельзя!'
-                return render(request, 'calc.html', context)
-            ans = n1 / n2
-            context['ans'] = f'{n1} / {n2} = {str(ans)}'
+        
+        try:
+            n1 = int(request.POST.get('first'))
+        except:
+            n1 = float(request.POST.get('first'))
+
+        try:
+            n2 = int(request.POST.get('second'))
+        except:
+            n2 = float(request.POST.get('second'))
+
+
+    if action == 'sum':
+        ans = n1 + n2
+        context['ans'] = f'{n1} + {n2} = {str(ans)}'
+    elif action == 'sub':
+        ans = n1 - n2
+        context['ans'] = f'{n1} - {n2} = {str(ans)}'
+    elif action == 'mul':
+        ans = n1 * n2
+        context['ans'] = f'{n1} * {n2} = {str(ans)}'
+    elif action == 'div':
+        if n2 == 0:
+            context['ans'] = 'На ноль делить нельзя!'
+            return render(request, 'calc.html', context)
+        ans = n1 / n2
+        context['ans'] = f'{n1} / {n2} = {str(ans)}'
 
     context['text'] = 'Итоговая операция:'
     return render(request, 'calc.html', context)
-
-def time_update(request):
-    context = {}
-    now = datetime.datetime.now()
-
-    # let's go gambling!
-    rnd = random.randint(0, 1000000)
-    if rnd % 2 == 0:
-        if rnd % 3 == 0:
-            context['date'], context['time'] = now.strftime("%m-%Y-%d %H:%M:%S").split()
-        else:
-            context['date'], context['time'] = now.strftime("%Y-%m-%d %H:%M:%S").split()
-    else:
-        if rnd % 3 == 0:
-            context['date'], context['time'] = now.strftime("%m-%d-%Y %H:%M:%S").split()
-        else:
-            context['date'], context['time'] = now.strftime("%d-%m-%Y %H:%M:%S").split()
-    
-    return JsonResponse(context)
 
 def neyro(request):
     user_message = 'Привет! Кто ты?'
@@ -120,8 +128,28 @@ def neyro(request):
     return render(request, 'neyro.html', content)
 
 def prompts(request):
-    context = {}
+    context = {
+        'prompts': list(PromptsModel.objects.values('name', 'prompt', 'description').filter(is_approved=True))
+    }
+
     return render(request, 'prompts.html', context)
+
+def add_prompt(request):
+    if request.method == 'POST':
+        form = AddPromptForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_prompt')
+    
+    else:
+        form = AddPromptForm(data=None)
+
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'add_prompt.html', context) 
 
 def riddle(request):
     return render(request, 'riddle.html')
@@ -130,33 +158,43 @@ def answer(request):
     return render(request, 'answer.html')
 
 def multiply(request):
-    context ={
+    context = {
         'n1': 1,
         'n2': 10,
     }
 
     if request.method == 'POST':
         try:
-            n1 = int(request.POST.get('num1'))
+            try:
+                n1 = int(request.POST.get('num1'))
+            except:
+                n1 = float(request.POST.get('num1'))
             n2 = int(request.POST.get('num2'))
             context['n1'] = n1
             context['n2'] = n2
         except Exception as e:
             print(e)
-            context['ans'] = f'ОШИБКА: {e}'
+            context['error'] = f'Информация об ошибке: {e}'
             return render(request, 'multiply.html', context)
 
     smth = []
     for i in range(context['n2']+1):
         smth.append(
-            f'{context['n1']} * {i} = {context['n1']*i}'
+            f'{context['n1']} * {i} = {round(context['n1']*i, 4)}'
         )
     context['ans'] = smth
     return render(request, 'multiply.html', context)
 
-def anime(request):
-    context = {}
-    return render(request, 'anime.html', context)
+def viewed(request):
+    all = list(ReviewModel.objects.all())
+    no_review = list(ReviewModel.objects.filter(review=''))
+    context = {
+        'data': no_review
+    }
+    if len(all) > len(no_review):
+        context['rewiews'] = list(ReviewModel.objects.values('name', 'review', 'review_time')),
+    
+    return render(request, 'viewed.html', context)
 
 def characters(request):
     context = {
@@ -252,7 +290,7 @@ def history(request):
     context = {
         'history': list(CalcHistory.objects.values('expression', 'result', 'time'))
     }
-    
+
     return render(request, 'history.html', context)
 
 def about(request):

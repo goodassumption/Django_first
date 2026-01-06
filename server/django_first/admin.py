@@ -8,20 +8,17 @@ admin.site.register(PreformersModel)
 @admin.register(CalcHistory)
 class CalcHistoryAdmin(admin.ModelAdmin):
     list_display = ('expression', 'result', 'time')
-    list_filter = ('time',)
     search_fields = ('expression',)
 
 @admin.register(CharactersModel)
 class CharactersModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
-    list_filter = ('name',)
     search_fields = ('name',)
 
 @admin.register(ReviewModel)
 class ReviewModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'review_time')
     search_fields = ('name',)
-    list_filter = ('name',)
 
 @admin.register(RefsModel)
 class RefsModelAdmin(admin.ModelAdmin):
@@ -33,16 +30,19 @@ class RefsModelAdmin(admin.ModelAdmin):
 class SocialsModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name',)
-    list_filter = ('name',)
 
 @admin.register(GamesModel)
 class GamesModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name',)
-    list_filter = ('name',)
 
 @admin.register(PagesModel)
 class PagesModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'url')
     search_fields = ('name',)
-    list_filter = ('name',)
+
+@admin.register(PromptsModel)
+class PromptsModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'is_approved')
+    search_fields = ('name',)
+    list_filter = ('is_approved',)

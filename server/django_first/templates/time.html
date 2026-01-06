@@ -4,14 +4,14 @@
 {% block content %}
 <h1>Текущее время</h1>
 <ul type="disc">
-    <li id = 'date-field'></li>
-    <li id = 'time-field'></li>
+    <li id='date-field'></li>
+    <li id='time-field'></li>
 </ul>
 
 <script>
         function updatePageData() {
             // Отправляем AJAX-запрос к созданному нами эндпоинту /update/
-            fetch('/update/')
+            fetch('/update/time')
                 .then(response => response.json())
                 .then(data => {
                     // Находим элементы по ID и заменяем их содержимое

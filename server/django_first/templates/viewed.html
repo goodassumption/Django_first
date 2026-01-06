@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Архив просмотренного</h1>
+<p>Здесь находится информация о всех фильмах, сериалах, аниме и мультиках, которые я посмотрел</p>
+{{ rewiews }}
+{{ rewiews.review }}
+{% if rewiews %}
+<div class="data-grid-container">
+<h2>Рецензии</h2>
+    <div class="data-grid">
+        {% for item in rewiews|first %}
+        <div class="data-block">
+            <div class="data-grid-title">{{ item.name }}</div>
+            <div class="data-content scrollable">{{ item.review }}</div>
+            <div class="data-footer">
+                <p class="data-label">Создано: {{ item.review_time }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if data %}
+<h2>Просто просмотренное</h2>
+<ul>
+    {% for item in data %}
+    <li>
+        {{ item.name }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

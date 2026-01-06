@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav class="main-nav">
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'prompts' %}"
+            onclick="window.location.href = this.dataset.url;"
+            class="nav-single-btn">К промптам</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<div>
+    <h1>Страница добавления промпта</h1>
+    <p>На этой странице вы можете добавить собственный промпт, и он отобразится
+        на
+        странице сразу же после проверки модерацией</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <h2>Заполните форму для добавления вашего промпта</h2>
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}

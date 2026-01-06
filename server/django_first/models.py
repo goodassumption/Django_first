@@ -27,9 +27,9 @@ class CharactersModel(models.Model):
         verbose_name_plural = "Персонажи"
 
 class ReviewModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название фильма')
-    review = models.TextField(verbose_name='Текст рецензии')
-    review_time = models.CharField(max_length=50, default=create_time(), verbose_name='Время создания рецензии')
+    name = models.CharField(max_length=100, verbose_name='Название')
+    review = models.TextField(verbose_name='Текст рецензии', default='', blank=True, null=True)
+    review_time = models.CharField(max_length=50, default=create_time()[:-9], verbose_name='Дата создания рецензии')
 
     def __str__(self):
         return self.name
@@ -111,3 +111,17 @@ class PagesModel(models.Model):
     class Meta:
         verbose_name = 'Страница'
         verbose_name_plural = 'Страницы'
+
+class PromptsModel(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Название промпта')
+    prompt = models.TextField(verbose_name='Промпт')
+    description = models.CharField(max_length=100, verbose_name='Описание промпта')
+    is_approved = models.BooleanField(verbose_name='Статус одобрения', default=False)
+    created_at = models.CharField(max_length=50, default=create_time(), verbose_name='Время отправки промпта')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name='Промпт'
+        verbose_name_plural='Промпты'

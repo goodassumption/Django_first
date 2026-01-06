@@ -16,45 +16,60 @@
 {% endblock header_nav %}
 
 {% block content %}
-<h1>Примеры системных промптов</h1>
+<h1>Библиотека промптов</h1>
+<p>Добро пожаловать в библиотеку промптов!</p>
+<p>Если хотите дополнить список, то заполните <a
+        href="{% url 'add_prompt' %}">форму добавления</a> и мы добавим ваш
+    промпт после рассмотрения</p>
 
 <div class="copy-grid-container">
+
     <div class="copy-grid-header">
-        <h2>Форматы и стили</h2>
-        <p>Нажмите на любой элемент, чтобы скопировать его содержимое</p>
+        <h2>Примеры системных промптов</h2>
     </div>
-
+    {% for cur_prompt in prompts %}
     <div class="copy-grid-item">
-        <div class="copy-item-title">Conventional Commits</div>
-        <div class="copy-item-content" onclick="copyTextOnClick(this)">Перепиши
-            в формате Conventional commits. Тело на русском и английском,
-            заголовок на английском. Если коммит состоит из двух или менее
-            предложений суммарной длинной менее 150 символов, пиши только
-            заголовок. Если тело повторяет заголовок, оставь тело пустым Не пиши
-            лишнего, только переделанный текст коммита. Если у тебя возникают
-            сомнения, напиши несколько вариантов. Готовый текст заключай в ```
-            ```</div>
-        <div class="copy-item-description">Форматирование коммитов</div>
+        <div class="copy-item-title">{{ cur_prompt.name }}</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">{{ cur_prompt.prompt }}</div>
+        <div class="copy-item-description">{{ cur_prompt.description }}</div>
         <div class="copy-item-indicator">Кликните для копирования</div>
     </div>
+    {% endfor %}
 
-    <div class="copy-grid-item">
-        <div class="copy-item-title">Чистый текст</div>
-        <div class="copy-item-content" onclick="copyTextOnClick(this)">Отвечай
-            строго в формате обычного текста без какого-либо форматирования. Не
-            используй Markdown, заголовки, списки, жирный, курсивный текст,
-            Emoji, смайлики или символы для оформления. Блоки кода с обратными
-            кавычками HTML-теги. Отступы или визуальное структурирование кроме
-            обычных переносов строк. Разделители вроде --- или ***. Комментарии
-            о формате в начале или конце ответа. Все ответы должны представлять
-            собой чистый непреформатированный текст. Если нужно перечислить
-            пункты используй простые цифры или дефисы в строку. Излагай
-            информацию максимально лаконично и по существу</div>
-        <div class="copy-item-description">Формат ответа без
-            форматирования</div>
-        <div class="copy-item-indicator">Кликните для копирования</div>
-    </div>
+</div>
 
+<style>
+            .copy-item-content {
+        color: #d0d0d0;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #3a7bd5;
+        font-family: 'Consolas', 'Monaco', monospace;
+        
+        /* Для переноса слов */
+        white-space: pre-wrap;
+        word-wrap: break-word; /* Перенос длинных слов */
+        overflow-wrap: break-word; /* Современная версия word-wrap */
+        word-break: break-word; /* Перенос по словам, а не по буквам */
+        hyphens: auto; /* Автоматические переносы слов (не все браузеры поддерживают) */
+    }
+
+    /* Для Firefox */
+    @supports (-moz-appearance:none) {
+        .copy-item-content {
+            word-break: break-word;
+        }
+    }
+</style>
+
+<!-- То, что не попало в БД (пока что) -->
+
+<!--
     <div class="copy-grid-item">
         <div class="copy-item-title">Нейросеть-исследователь</div>
         <div class="copy-item-content" onclick="copyTextOnClick(this)">Ты —
@@ -76,13 +91,6 @@
         </div>
         <div class="copy-item-description">Нейросетевые исследования</div>
         <div class="copy-item-indicator">Кликните для копирования</div>
-    </div>
-</div>
-
-<div class="copy-grid-container copy-grid-medium">
-    <div class="copy-grid-header">
-        <h2>Промпты для всех этапов планирования</h2>
-        <p>Промпты для планирования и выполнения проектов</p>
     </div>
 
     <div class="copy-grid-item">
@@ -167,13 +175,6 @@
             неделе</div>
         <div class="copy-item-description">Планирование и ретроспектива</div>
         <div class="copy-item-indicator">Кликните для копирования</div>
-    </div>
-</div>
-
-<div class="copy-grid-container copy-grid-medium">
-    <div class="copy-grid-header">
-        <h2>Промпты настройки нейросети</h2>
-        <p>Промпты, чтобы нейросеть не выдумывала</p>
     </div>
 
     <div class="copy-grid-item">
@@ -264,5 +265,5 @@
             Topic: Why focus matters in deep work"</div>
         <div class="copy-item-description">Формат</div>
         <div class="copy-item-indicator">Кликните для копирования</div>
-    </div>
-    {% endblock %}
+        -->
+{% endblock %}
