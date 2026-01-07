@@ -30,6 +30,16 @@ class ReviewModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
     review = models.TextField(verbose_name='Текст рецензии', default='', blank=True, null=True)
     review_time = models.CharField(max_length=50, default=create_time()[:-9], verbose_name='Дата создания рецензии')
+    genre = models.CharField(
+        verbose_name='Жанр',
+        choices={
+            'Аниме': 'Аниме',
+            'Фильм': 'Фильм',
+            'Сериал': 'Сериал',
+            'Мультик': 'Мультик',
+        },
+        null=True
+    )
 
     def __str__(self):
         return self.name

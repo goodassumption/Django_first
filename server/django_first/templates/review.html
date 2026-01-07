@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'viewed' %}"
+            class="simple-btn"
+            onclick="window.location.href = this.dataset.url;">Вернуться
+            назад</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+<h1>{{ name|first|first }}</h1>
+<div class="data-content">
+    {{ review|first|first }}
+</div>
+{% endblock %}

@@ -186,15 +186,21 @@ def multiply(request):
     return render(request, 'multiply.html', context)
 
 def viewed(request):
-    all = list(ReviewModel.objects.all())
-    no_review = list(ReviewModel.objects.filter(review=''))
+    all = list(ReviewModel.objects.values())
+
     context = {
-        'data': no_review
+        'data': all
     }
-    if len(all) > len(no_review):
-        context['rewiews'] = list(ReviewModel.objects.values('name', 'review', 'review_time')),
     
     return render(request, 'viewed.html', context)
+
+def review(request, rev_name):
+    context = {
+        'name': ReviewModel.objects.values_list('name').filter(name=rev_name),
+        'review': ReviewModel.objects.values_list('review').filter(name=rev_name),
+    }
+
+    return render(request, 'review.html', context)
 
 def characters(request):
     context = {

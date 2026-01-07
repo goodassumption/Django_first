@@ -1142,23 +1142,39 @@ header h1, header h2, header h3 {
 }
 
 /* ============================================
-   СОВРЕМЕННЫЕ ТАБЛИЦЫ
-   Совместимые с тёмной темой GoodAssumption
+   ИСПРАВЛЕННЫЕ СОВРЕМЕННЫЕ ТАБЛИЦЫ
+   Без прокрутки (если не требуется)
 ============================================ */
 
-/* Основной контейнер таблицы для адаптивности */
+/* Глобальные исправления */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Основной контейнер таблицы - ИСПРАВЛЕНО */
 .table-container {
-    overflow-x: auto;
+    display: block;
+    width: 100%;
+    max-width: 100%;
     margin: 30px 0;
     border-radius: 12px;
     position: relative;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     background: linear-gradient(135deg, #2a2a2a 0%, #353535 100%);
     border: 2px solid #444;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch; /* Для плавного скролла на iOS */
+    
+    /* КРИТИЧЕСКИЕ ИЗМЕНЕНИЯ: */
+    overflow: visible; /* Меняем на visible */
+    -webkit-overflow-scrolling: auto;
+    
+    /* Убираем любые фиксированные размеры */
+    min-height: auto;
+    height: auto;
 }
 
+/* Убираем или исправляем псевдоэлемент, который может вызывать прокрутку */
 .table-container::before {
     content: '';
     position: absolute;
@@ -1171,76 +1187,55 @@ header h1, header h2, header h3 {
     z-index: -1;
     opacity: 0.3;
     filter: blur(5px);
+    pointer-events: none;
+    
+    /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: исправляем позиционирование */
+    transform: translateZ(0); /* Ускоряем рендеринг */
+    will-change: transform;
 }
 
-/* Основной стиль таблицы */
+/* Основной стиль таблицы - ИСПРАВЛЕНО */
 .modern-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    max-width: 100%;
+    border-collapse: collapse; /* Всегда collapse для стабильности */
     background: linear-gradient(135deg, #2a2a2a 0%, #2d2d2d 100%);
     border-radius: 10px;
-    overflow: hidden;
     font-size: 0.95rem;
     position: relative;
-    min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную минимальную ширину */
-    table-layout: auto;
+    overflow: hidden;
+    
+    /* КРИТИЧЕСКИЕ ИЗМЕНЕНИЯ: */
+    display: table; /* Явно указываем display */
+    table-layout: auto; /* Автоматическая раскладка */
+    
+    /* Убираем все трансформации и анимации, которые могут вызывать прокрутку */
+    transform: none !important;
+    animation: none !important;
 }
 
-/* Улучшенный перенос текста в ячейках */
-.modern-table td {
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    white-space: normal;
-    max-width: none;
-}
-
-/* Для таблиц с двумя колонками (как история операций) */
-.modern-table.two-columns {
-    table-layout: fixed; /* Фиксированная таблица для предсказуемости */
-}
-
-.modern-table.two-columns th:first-child,
-.modern-table.two-columns td:first-child {
-    width: 30%; /* Ширина для первой колонки (время) */
-    min-width: 0; /* Разрешаем сжиматься */
-}
-
-.modern-table.two-columns th:nth-child(2),
-.modern-table.two-columns td:nth-child(2) {
-    width: 70%; /* Ширина для второй колонки (выражение) */
-    min-width: 0; /* Разрешаем сжиматься */
-}
-
-/* Заголовок таблицы */
+/* Заголовок таблицы - ИСПРАВЛЕНО */
 .modern-table thead {
     background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
     position: relative;
     overflow: hidden;
+    
+    /* Фиксируем заголовок, если нужно */
+    display: table-header-group;
 }
 
+/* ИСПРАВЛЕНИЕ: Убираем псевдоэлемент с анимацией, который может вызывать прокрутку */
 .modern-table thead::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0.2) 50%, 
-        rgba(255, 255, 255, 0.1) 100%);
-    z-index: 0;
-    transform: translateX(-100%);
-    animation: shimmer 3s infinite;
+    content: none; /* Убираем анимированный фон */
 }
 
-@keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+/* Альтернатива: статический фон вместо анимированного */
+.modern-table thead {
+    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+    position: relative;
 }
 
-/* Заголовки столбцов */
+/* Заголовки столбцов - ИСПРАВЛЕНО */
 .modern-table th {
     color: white;
     font-weight: 600;
@@ -1253,234 +1248,106 @@ header h1, header h2, header h3 {
     font-size: 1rem;
     text-transform: uppercase;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    white-space: nowrap;
+    
+    /* КРИТИЧЕСКИЕ ИЗМЕНЕНИЯ: */
+    white-space: normal; /* Разрешаем перенос */
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: none;
 }
 
-.modern-table th:not(:last-child) {
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Иконка сортировки */
-.modern-table .sortable {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    padding-right: 30px;
-}
-
-.modern-table .sortable:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.modern-table .sortable::after {
-    content: '↕';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
-
-.modern-table .sortable.asc::after {
-    content: '↑';
-    opacity: 1;
-    color: #00d2ff;
-}
-
-.modern-table .sortable.desc::after {
-    content: '↓';
-    opacity: 1;
-    color: #00d2ff;
-}
-
-/* Тело таблицы */
-.modern-table tbody tr {
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    position: relative;
-}
-
-.modern-table tbody tr:hover {
-    background: linear-gradient(90deg, rgba(58, 123, 213, 0.15) 0%, transparent 100%);
-    transform: translateX(5px);
-}
-
-/* Чередование строк (зебра) */
-.modern-table.striped tbody tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.modern-table.striped tbody tr:nth-child(even):hover {
-    background: linear-gradient(90deg, rgba(58, 123, 213, 0.2) 0%, transparent 100%);
-}
-
-/* Ячейки таблицы */
+/* Ячейки таблицы - ИСПРАВЛЕНО */
 .modern-table td {
     padding: 16px 20px;
     color: #e0e0e0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
-    transition: all 0.2s ease;
+    
+    /* КРИТИЧЕСКИЕ ИЗМЕНЕНИЯ: */
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    max-width: 100%;
+    
+    /* Убираем transition, который может вызывать проблемы */
+    transition: background-color 0.2s ease; /* Только цвет фона */
 }
 
-.modern-table tbody tr:last-child td {
-    border-bottom: none;
+/* Тело таблицы - ИСПРАВЛЕНО */
+.modern-table tbody {
+    display: table-row-group;
 }
 
-/* Эффект границы слева при наведении */
+/* Строки таблицы - ИСПРАВЛЕНО */
+.modern-table tbody tr {
+    display: table-row;
+    
+    /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем transform и сложные анимации */
+    transition: background-color 0.3s ease; /* Только цвет фона */
+    position: static; /* Убираем relative если не нужно */
+}
+
+/* ИСПРАВЛЕНИЕ: Убираем hover-эффекты с transform */
+.modern-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(58, 123, 213, 0.15) 0%, transparent 100%);
+    /* Убираем transform: translateX(5px); */
+}
+
+/* ИСПРАВЛЕНИЕ: Убираем псевдоэлемент, который может выходить за границы */
 .modern-table tbody tr:hover td:first-child::before {
+    /* Убираем или исправляем */
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
     width: 4px;
+    height: 60%; /* Ограничиваем высоту */
     background: linear-gradient(to bottom, #3a7bd5, #00d2ff);
     border-radius: 0 4px 4px 0;
 }
 
-/* Выделенная строка */
-.modern-table tbody tr.selected {
-    background: linear-gradient(90deg, rgba(58, 123, 213, 0.25) 0%, transparent 100%);
-    box-shadow: inset 0 0 0 2px #3a7bd5;
+/* ИСПРАВЛЕНИЕ анимации появления строк - упрощаем */
+.modern-table tbody tr {
+    animation: tableRowAppear 0.3s ease-out;
+    animation-fill-mode: both;
 }
 
-/* Футер таблицы */
-.modern-table tfoot {
-    background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-    border-top: 2px solid #444;
+@keyframes tableRowAppear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.modern-table tfoot td {
-    color: #aaa;
-    font-weight: 500;
-    padding: 15px 20px;
-    font-size: 0.9rem;
-    white-space: normal;
+/* Убираем задержки для анимации, которые могут вызывать проблемы */
+.modern-table tbody tr {
+    animation-delay: 0s !important;
 }
 
-/* Варианты цветов для таблиц */
-.modern-table.primary thead {
-    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+/* Для таблиц с двумя колонками - ИСПРАВЛЕНО */
+.modern-table.two-columns {
+    table-layout: fixed;
 }
 
-.modern-table.secondary thead {
-    background: linear-gradient(135deg, #8e2de2 0%, #7d1dd1 100%);
+.modern-table.two-columns th:first-child,
+.modern-table.two-columns td:first-child {
+    width: 30%;
+    min-width: 100px; /* Минимальная ширина вместо фиксированной */
+    max-width: 30%;
 }
 
-.modern-table.success thead {
-    background: linear-gradient(135deg, #00b09b 0%, #00a08b 100%);
+.modern-table.two-columns th:nth-child(2),
+.modern-table.two-columns td:nth-child(2) {
+    width: 70%;
+    min-width: 200px; /* Минимальная ширина вместо фиксированной */
+    max-width: 70%;
 }
 
-.modern-table.warning thead {
-    background: linear-gradient(135deg, #f46b45 0%, #e35a35 100%);
-}
-
-.modern-table.danger thead {
-    background: linear-gradient(135deg, #ff416c 0%, #ff316c 100%);
-}
-
-/* Компактный вариант */
-.modern-table.compact th,
-.modern-table.compact td {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-}
-
-/* Таблица с границами */
-.modern-table.bordered td,
-.modern-table.bordered th {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Выравнивание текста */
-.modern-table.center th,
-.modern-table.center td {
-    text-align: center;
-}
-
-.modern-table.right th,
-.modern-table.right td {
-    text-align: right;
-}
-
-/* Стили для действий в таблице */
-.table-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
-
-.table-action-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: #e0e0e0;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-}
-
-.table-action-btn:hover {
-    background: rgba(58, 123, 213, 0.5);
-    transform: translateY(-2px);
-}
-
-.table-action-btn.edit {
-    color: #3a7bd5;
-}
-
-.table-action-btn.delete {
-    color: #ff416c;
-}
-
-.table-action-btn.view {
-    color: #00b09b;
-}
-
-/* Статусы в ячейках */
-.status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-align: center;
-    min-width: 80px;
-    white-space: nowrap;
-}
-
-.status-active {
-    background: rgba(0, 176, 155, 0.2);
-    color: #00b09b;
-    border: 1px solid rgba(0, 176, 155, 0.3);
-}
-
-.status-pending {
-    background: rgba(241, 196, 15, 0.2);
-    color: #f1c40f;
-    border: 1px solid rgba(241, 196, 15, 0.3);
-}
-
-.status-inactive {
-    background: rgba(149, 165, 166, 0.2);
-    color: #95a5a6;
-    border: 1px solid rgba(149, 165, 166, 0.3);
-}
-
-.status-error {
-    background: rgba(231, 76, 60, 0.2);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.3);
-}
-
-/* Пагинация таблицы */
+/* Пагинация таблицы - ИСПРАВЛЕНО */
 .table-pagination {
     display: flex;
     justify-content: space-between;
@@ -1491,147 +1358,138 @@ header h1, header h2, header h3 {
     border-radius: 0 0 12px 12px;
     flex-wrap: wrap;
     gap: 15px;
+    
+    /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: */
+    overflow: visible;
+    max-width: 100%;
 }
 
-.pagination-info {
-    color: #aaa;
-    font-size: 0.9rem;
-    white-space: nowrap;
+/* Специальные классы для отключения прокрутки */
+.no-scroll {
+    overflow: hidden !important;
 }
 
-.pagination-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
+.no-x-scroll {
+    overflow-x: hidden !important;
 }
 
-.pagination-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: #e0e0e0;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.9rem;
-    white-space: nowrap;
+.no-y-scroll {
+    overflow-y: hidden !important;
 }
 
-.pagination-btn:hover:not(:disabled) {
-    background: rgba(58, 123, 213, 0.5);
-    transform: translateY(-2px);
-}
-
-.pagination-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.pagination-numbers {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-}
-
-.page-number {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    color: #e0e0e0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.page-number:hover {
-    background: rgba(58, 123, 213, 0.3);
-}
-
-.page-number.active {
-    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
-    color: white;
-    font-weight: 600;
-}
-
-/* Таблица с чекбоксами */
-.table-checkbox {
-    width: 20px;
-    height: 20px;
-    accent-color: #3a7bd5;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-/* Адаптивность - планшеты */
+/* Адаптивность - планшеты - ИСПРАВЛЕНО */
 @media (max-width: 768px) {
     .table-container {
         margin: 20px 0;
         border-radius: 8px;
-        overflow-x: auto; /* Оставляем скролл только при реальной необходимости */
+        overflow: visible; /* Всегда visible на мобильных */
+        border: 1px solid #444; /* Уменьшаем границу */
+    }
+    
+    .table-container::before {
+        display: none; /* Убираем декоративный элемент на мобильных */
     }
     
     .modern-table {
         font-size: 0.9rem;
-        min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную ширину */
+        min-width: 100%;
+        table-layout: auto; /* Автоматическая раскладка */
     }
     
     .modern-table th,
     .modern-table td {
         padding: 12px 15px;
+        font-size: 0.9rem;
     }
     
-    /* Для таблиц с двумя колонками на планшетах */
+    /* Упрощаем двухколоночные таблицы на мобильных */
+    .modern-table.two-columns {
+        table-layout: auto;
+    }
+    
     .modern-table.two-columns th:first-child,
-    .modern-table.two-columns td:first-child {
-        width: 40%;
-        min-width: 0; /* Разрешаем сжиматься */
-    }
-    
+    .modern-table.two-columns td:first-child,
     .modern-table.two-columns th:nth-child(2),
     .modern-table.two-columns td:nth-child(2) {
-        width: 60%;
-        min-width: 0; /* Разрешаем сжиматься */
+        width: auto;
+        min-width: 0;
+        max-width: none;
     }
     
-    .table-pagination {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
+    /* Скрываем необязательные колонки */
+    .mobile-hide {
+        display: none !important;
     }
     
-    .pagination-info {
-        text-align: center;
+    /* Превращаем в карточки на очень узких экранах */
+    .mobile-stack {
+        display: block;
+        border: none;
+        background: transparent;
     }
     
-    .table-actions {
-        flex-direction: column;
-        gap: 5px;
+    .mobile-stack thead {
+        display: none;
     }
     
-    .table-action-btn {
-        width: 100%;
-        justify-content: center;
+    .mobile-stack tbody,
+    .mobile-stack tr {
+        display: block;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .mobile-stack td {
+        display: block;
+        width: 100% !important;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 12px 15px;
+        position: relative;
+        padding-left: 40%;
+    }
+    
+    .mobile-stack td:last-child {
+        border-bottom: none;
+    }
+    
+    .mobile-stack td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        top: 12px;
+        font-weight: bold;
+        color: #3a7bd5;
+        font-size: 0.8rem;
+        width: 35%;
+    }
+    
+    /* Убираем hover-эффекты на мобильных */
+    .modern-table tbody tr:hover {
+        transform: none;
+        background: rgba(58, 123, 213, 0.1);
+    }
+    
+    .modern-table tbody tr:hover td:first-child::before {
+        display: none;
     }
 }
 
-/* Адаптивность - мобильные */
+/* Адаптивность - мобильные - ИСПРАВЛЕНО */
 @media (max-width: 480px) {
     .table-container {
         margin: 15px 0;
         border-radius: 6px;
+        border: none;
+        background: transparent;
+        box-shadow: none;
     }
     
     .modern-table {
-        min-width: 0; /* КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: убираем фиксированную ширину */
+        background: transparent;
+        border-radius: 0;
     }
     
     .modern-table th,
@@ -1640,142 +1498,84 @@ header h1, header h2, header h3 {
         font-size: 0.85rem;
     }
     
-    /* Для таблиц с двумя колонками на мобильных */
-    .modern-table.two-columns th:first-child,
-    .modern-table.two-columns td:first-child {
-        width: 35%;
-        min-width: 0; /* Разрешаем сжиматься */
-        font-size: 0.85rem;
+    .table-pagination {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
     }
     
-    .modern-table.two-columns th:nth-child(2),
-    .modern-table.two-columns td:nth-child(2) {
-        width: 65%;
-        min-width: 0; /* Разрешаем сжиматься */
-        font-size: 0.85rem;
-    }
-    
-    .pagination-controls {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .pagination-btn {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-    }
-    
-    .status-badge {
-        min-width: 60px;
-        font-size: 0.8rem;
-        padding: 3px 8px;
+    /* Форсируем перенос длинного текста */
+    .force-wrap {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
     }
 }
 
-/* Анимация появления строк */
-@keyframes tableRowAppear {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* Дополнительные утилиты для контроля прокрутки */
+.table-fixed {
+    table-layout: fixed;
 }
 
-.modern-table tbody tr {
-    animation: tableRowAppear 0.3s ease-out;
-    animation-fill-mode: both;
+.table-auto {
+    table-layout: auto;
 }
 
-.modern-table tbody tr:nth-child(1) { animation-delay: 0.05s; }
-.modern-table tbody tr:nth-child(2) { animation-delay: 0.1s; }
-.modern-table tbody tr:nth-child(3) { animation-delay: 0.15s; }
-.modern-table tbody tr:nth-child(4) { animation-delay: 0.2s; }
-.modern-table tbody tr:nth-child(5) { animation-delay: 0.25s; }
-.modern-table tbody tr:nth-child(6) { animation-delay: 0.3s; }
-.modern-table tbody tr:nth-child(7) { animation-delay: 0.35s; }
-.modern-table tbody tr:nth-child(8) { animation-delay: 0.4s; }
-
-/* Пустая таблица */
-.empty-table {
-    text-align: center;
-    padding: 60px 20px;
-    color: #888;
-    font-size: 1.1rem;
-    position: relative;
-    word-break: normal;
-    white-space: normal;
-}
-
-.empty-table::before {
-    content: '📊';
-    font-size: 3rem;
+/* Класс для таблиц, которые должны быть полностью без прокрутки */
+.table-no-scroll-container {
+    overflow: hidden !important;
     display: block;
-    margin-bottom: 15px;
-    opacity: 0.5;
+    width: 100%;
 }
 
-.empty-table::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(58, 123, 213, 0.3) 50%, 
-        transparent 100%);
+.table-no-scroll-container .modern-table {
+    width: 100%;
+    min-width: 100%;
+    table-layout: auto;
 }
 
-/* Загрузка таблицы */
-.table-loading {
-    position: relative;
+/* Альтернативный вариант: использование CSS Grid для таблиц */
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: #444;
+    border-radius: 10px;
     overflow: hidden;
 }
 
-.table-loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(58, 123, 213, 0.1) 50%, 
-        transparent 100%);
-    animation: loadingShimmer 1.5s infinite;
+.table-grid-header {
+    display: contents;
 }
 
-@keyframes loadingShimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
+.table-grid-header > div {
+    background: linear-gradient(135deg, #3a7bd5 0%, #2a6bc4 100%);
+    color: white;
+    padding: 18px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-/* Дополнительные утилиты для таблиц */
+.table-grid-row {
+    display: contents;
+}
+
+.table-grid-row > div {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Для очень сложных таблиц используем горизонтальную прокрутку только при необходимости */
 .table-responsive {
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
-.table-scroll-hint {
-    display: none;
-    text-align: center;
-    color: #888;
-    font-size: 0.8rem;
-    padding: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid #444;
-}
-
-@media (max-width: 768px) {
-    .table-scroll-hint {
-        display: block;
-    }
+.table-responsive .modern-table {
+    min-width: 600px; /* Минимальная ширина для прокрутки */
 }
 
 /* --- Основной контент --- */
@@ -3172,19 +2972,7 @@ form input[type="radio"]:first-of-type {
 .data-content.scrollable::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #4a8ae4, #9e3df2);
 }
-/*
 
-::-webkit-scrollbar-track {
-    
-}
-
-::-webkit-scrollbar-thumb {
-    
-}
-
-::-webkit-scrollbar-thumb:hover {
-}
-*/
 /* Класс для скрытия части текста с градиентом */
 .data-content.fade-overflow {
     max-height: 150px;
@@ -3198,8 +2986,29 @@ form input[type="radio"]:first-of-type {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, transparent, #1f1f1f);
+    height: 120px; /* Было 40px, теперь 80px - в 2 раза выше */
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.02) 40%,    /* Начинаем затемнение раньше */
+        rgba(0, 0, 0, 0.05) 60%,    /* Средняя точка смещена выше */
+        rgba(0, 0, 0, 0.1) 80%,     /* Затемнение усиливается выше */
+        rgba(0, 0, 0, 0.15) 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #ffffff 10%,
+        #ffffff 90%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #ffffff 10%,
+        #ffffff 90%,
+        transparent 100%
+    );
     pointer-events: none;
 }
 
@@ -3384,8 +3193,6 @@ form input[type="radio"]:first-of-type {
 .data-content.expanded::after {
     display: none;
 }
-
-/* ... остальные существующие стили остаются без изменений ... */
 
 /* Адаптивность для большого текста */
 @media (max-width: 768px) {
