@@ -1,33 +1,33 @@
 # Мой Django-сайт
 
-![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
-![Django](https://img.shields.io/badge/Django-5.1-green?logo=django&logoColor=white)
-![License](https://img.shields.io/badge/License-GPLv3-red.svg)
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![Django](https://img.shields.io/badge/Django-6.0-green?logo=django&logoColor=white)
+![License](https://img.shields.io/badge/License-AGPLv3-red.svg)
 ![GitLab](https://img.shields.io/badge/hosted%20on-GitLab-orange?logo=gitlab)
 ![GitHub](https://img.shields.io/badge/hosted%20on-GitHub-yellow?logo=github)
 
 Это мой личный сайт-портфолио и площадка для экспериментов, созданный на Django в рамках школьного проекта. Здесь собраны разные утилиты, небольшие веб-приложения и просто забавные штуки.
 
-![Скриншот главной страницы](./docs/screenshots/scr0.png)
-
 ## 🧰 Что внутри?
 
-На сайте можно найти различные модули, например:
+На сайте можно найти различные страницы, например:
 
-* **Умный текстовый помощник** с функцией копирования.
-* **Кастомный видеоплеер** с управлением громкостью и скрытым режимом работы.
-* Просто интересные или забавные страницы, сделанные для практики.
+* Разные виды кальуляторов
+* Доступ к нейросети
+* Библиотека промптов
+* Разная информация обо мне
+* И множество других страниц, сделаных для практики или развлечения
 
 Сайт постоянно развивается, и здесь может появиться что-то новое.
 
 ## 🚀 Как запустить у себя?
 
-Проект использует стандартный стек Django, поэтому запустить его очень просто.
+Код расположен для ознакомления, но если вы хотите запустить его у себя локально, то следуйте простым шагам:
 
 1. **Клонируйте репозиторий:**
 
     ```bash
-    git clone https://gitlab.informatics.ru/goodassumption/django.git
+    git clone https://github.com/goodassumption/django.git
     cd django
     ```
 
@@ -47,8 +47,6 @@
     pip install -r requirements.txt
     ```
 
-    *(Если файла `requirements.txt` нет, установите Django: `pip install django`)*
-
 4. **Запустите сервер для разработки:**
 
     ```bash
@@ -57,42 +55,11 @@
 
 5. **Откройте сайт в браузере:** Перейдите по адресу [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-## 📁 Структура проекта
-
-```text
-django/
-├── server/ # Основной конфигурационный проект Django
-│ ├── settings.py # Настройки
-│ ├── urls.py # Главная таблица маршрутов
-│ └── ...
-├── django_first/ # Основное приложение с утилитами
-│ ├── templates/ # HTML-шаблоны
-│ │ ├── index.html # Главная страница
-│ │ └── ...
-│ ├── static/ # CSS, JS, изображения, видео
-│ ├── views.py # Логика страниц
-│ └── ...
-├── manage.py # Скрипт для управления проектом
-└── README.md # Этот файл
-```
-
 ## 🛠️ Технологии
 
 * **Backend:** Python 3, Django
-* **Frontend:** HTML, CSS (стили в шаблонах), немного JavaScript
-* **База данных:** SQLite (по умолчанию в Django)
-
-## 💡 Идеи для будущего
-
-Если захочется развивать проект дальше, сюда можно добавить:
-
-* Блог или раздел с постами.
-* Генератор случайных мемов или цитат.
-* Мини-игры в браузере.
-* Интеграцию с каким-нибудь внешним API (погода, курсы валют).
-* Систему комментариев или гостевую книгу.
-
----
+* **Frontend:** HTML, CSS, немного JavaScript
+* **База данных:** SQLite
 
 ## 📄 Лицензия
 
