@@ -10,7 +10,10 @@
     <div class="nav-single-buttons">
         <button data-url="{% url 'neyro' %}"
             onclick="window.location.href = this.dataset.url;"
-            class="nav-single-btn">К нейросети</button>
+            class="nav-single-btn primary">К нейросети</button>
+        <button data-url="{% url 'index' %}"
+            onclick="window.location.href = this.dataset.url;"
+            class="nav-single-btn secondary">На главную</button>
     </div>
 </nav>
 {% endblock header_nav %}
@@ -30,7 +33,8 @@
     {% for cur_prompt in prompts %}
     <div class="copy-grid-item">
         <div class="copy-item-title">{{ cur_prompt.name }}</div>
-        <div class="copy-item-content" onclick="copyTextOnClick(this)">{{ cur_prompt.prompt }}</div>
+        <div class="copy-item-content" onclick="copyTextOnClick(this)">{{
+            cur_prompt.prompt }}</div>
         <div class="copy-item-description">{{ cur_prompt.description }}</div>
         <div class="copy-item-indicator">Кликните для копирования</div>
     </div>

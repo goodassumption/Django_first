@@ -4,8 +4,8 @@ from django.conf import settings
 from django_first.models import *
 from django_first.forms import *
 
-import datetime, json, random
-import requests
+import datetime
+from random import randint
 
 from .utilits import make_request
 
@@ -31,8 +31,8 @@ def time_update(request):
 
 def calc(request):
     action = 'sum'
-    n1 = 5
-    n2 = 10
+    n1 = randint(1, 44)
+    n2 = randint(1, 66)
     
     context = {
         'n1': n1,
@@ -52,22 +52,34 @@ def calc(request):
         except:
             n2 = float(request.POST.get('second'))
 
-
+    ans = None
     if action == 'sum':
         ans = n1 + n2
-        context['ans'] = f'{n1} + {n2} = {str(ans)}'
+        expr = f'{n1} + {n2}'
+        context['ans'] = f'{expr} = {str(ans)}'
     elif action == 'sub':
         ans = n1 - n2
-        context['ans'] = f'{n1} - {n2} = {str(ans)}'
+        expr = f'{n1} - {n2}'
+        context['ans'] = f'{expr} = {str(ans)}'
     elif action == 'mul':
         ans = n1 * n2
-        context['ans'] = f'{n1} * {n2} = {str(ans)}'
+        expr = f'{n1} * {n2}'
+        context['ans'] = f'{expr} = {str(ans)}'
     elif action == 'div':
         if n2 == 0:
             context['ans'] = 'На ноль делить нельзя!'
             return render(request, 'calc.html', context)
         ans = n1 / n2
-        context['ans'] = f'{n1} / {n2} = {str(ans)}'
+        expr = f'{n1} / {n2}'
+        context['ans'] = f'{expr} = {str(ans)}'
+
+    obj = CalcHistory(
+            expression=expr,
+            result=ans,
+            time=create_time(),
+            expr_type='Простая операция'
+        )
+    obj.save()
 
     context['text'] = 'Итоговая операция:'
     return render(request, 'calc.html', context)
@@ -167,7 +179,9 @@ def characters(request):
     return render(request, 'characters.html', context)
 
 def expression(request):
-    context = {}
+    context = {
+        'expression': f'{randint(1, 99)} + {randint(1, 99)} - {randint(1, 99)}'
+    }
     if request.method == 'POST':
         expr_ = request.POST.get('expression')
         
@@ -222,11 +236,11 @@ def expression(request):
             context['error'] = None
             
             # Сохранение в историю (исправлен формат времени)
-            now = datetime.datetime.now()
             obj = CalcHistory(
                 expression=expr_,
                 result=answer,
-                time=now.strftime("%d-%m-%Y %H:%M:%S")  # Используйте strftime вместо strptime
+                time=create_time(),
+                expr_type='Сложная операция'
             )
             obj.save()
 
@@ -250,10 +264,12 @@ def expression(request):
     return render(request, 'expression.html', context)
 
 def history(request):
+    history = CalcHistory.objects.all().order_by('-time')
+    
     context = {
-        'history': list(CalcHistory.objects.values('expression', 'result', 'time'))
+        'complex_history': history.filter(expr_type="Сложная операция"),
+        'simple_history': history.filter(expr_type="Простая операция"),
     }
-
     return render(request, 'history.html', context)
 
 def about(request):

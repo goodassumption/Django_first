@@ -13,19 +13,32 @@
 {% endblock header_nav %}
 
 {% block content %}
+<h1>Операции</h1>
+<p>На этой странце представлена история математических операций, выполненых
+    всеми, кто пользовался сайтом</p>
 <div class="table-container">
-    <table class="modern-table striped hover two-columns">
+    <table class="modern-table striped hover three-columns">
         <thead>
             <tr>
                 <th>Время операции</th>
                 <th>Операция</th>
+                <th>Вид операции</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in history %}
+            {% for item in simple_history %}
             <tr>
                 <td>{{ item.time }}</td>
                 <td>{{ item.expression }} = {{ item.result }}</td>
+                <td>{{ item.expr_type }}</td>
+            </tr>
+            {% endfor %}
+
+            {% for item in complex_history %}
+            <tr>
+                <td>{{ item.time }}</td>
+                <td>{{ item.expression }} = {{ item.result }}</td>
+                <td>{{ item.expr_type }}</td>
             </tr>
             {% endfor %}
         </tbody>

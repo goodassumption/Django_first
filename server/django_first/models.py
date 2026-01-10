@@ -6,7 +6,14 @@ class CalcHistory(models.Model):
     expression = models.CharField(max_length=100, verbose_name='Исходное выражение')
     result = models.IntegerField(verbose_name='Результат операции')
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
-    
+    expr_type = models.CharField(
+        verbose_name='Вид выражения',
+        choices={
+            'Сложная операция': 'Сложная операция',
+            'Простая операция': 'Простая операция'
+        }
+    )
+
     def __str__(self):
         return f"{self.expression} = {self.result}"
     
