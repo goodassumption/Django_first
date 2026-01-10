@@ -19,14 +19,18 @@
 <p>Здесь вы можете задать нейросети любой вопрос и получить на него ответ.
     Текущая модель: {{ model }}</p>
 
-<form>
-    <h4>Ответ от нейросети:</h4>
-    <p>{{ ans }}</p>
-</form>
 <form title="neyro-message" method="post">
     {% csrf_token %}
-    <input name="message" type="text" placeholder="Введите запрос"
-        value="{{ question }}">
+    <h2>Задайте ваш вопрос</h2>
+    <label>Введите ваш запрос</label>
+    <textarea name="message" placeholder="Введите запрос">{{ question }}</textarea>
+    <label>При наличии вы можете ввести системный промпт. Этот параметр не является обязательным</label>
+    <textarea name="system_prompt" placeholder="Введите системный промпт">{{ system_prompt }}</textarea>
     <button type="submit">Отправить</button>
+</form>
+
+<form>
+    <h2>Ответ от нейросети:</h2>
+    <p>{{ ans }}</p>
 </form>
 {% endblock %}
