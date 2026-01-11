@@ -9,21 +9,64 @@
 </ul>
 
 <script>
-        function updatePageData() {
-            // Отправляем AJAX-запрос к созданному нами эндпоинту /update/
-            fetch('/update/time')
-                .then(response => response.json())
-                .then(data => {
-                    // Находим элементы по ID и заменяем их содержимое
-                    document.getElementById('date-field').textContent = 'Текущая дата: ' + data.date;
-                    document.getElementById('time-field').textContent = 'Текущее время: ' + data.time;
-                    console.log('Данные обновлены:', data);
-                })
-                .catch(error => console.error('Ошибка при обновлении:', error));
-        }
+    // Получаем CSRF токен
+    function getCSRFToken() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+        return cookieValue;
+    }
 
+    // Получаем смещение в часах для текущего часового пояса пользователя
+    function getUserTimezoneOffset() {
+        return -new Date().getTimezoneOffset() / 60;
+    }
+
+    // Отправляем часовой пояс на сервер
+    function setUserTimezone() {
+        const timezoneOffset = getUserTimezoneOffset();
+        console.log('Timezone offset (hours):', timezoneOffset);
+        
+        // Используем FormData вместо JSON
+        const formData = new FormData();
+        formData.append('timezone', timezoneOffset);
+        
+        fetch('/update/time/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Timezone set:', data);
+            updatePageData(); // Обновляем время после установки часового пояса
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function updatePageData() {
+        const timezoneOffset = getUserTimezoneOffset();
+        const serverTime = 3
+
+        // Отправляем часовой пояс как GET параметр
+        fetch(`/update/time/?timezone=${timezoneOffset-serverTime}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('date-field').textContent = 'Текущая дата: ' + data.date;
+                document.getElementById('time-field').textContent = 'Текущее время: ' + data.time;
+            })
+            .catch(error => console.error('Ошибка при обновлении:', error));
+    }
+    
+    // Автоматически устанавливаем часовой пояс при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        setUserTimezone();
         updatePageData();
         setInterval(updatePageData, 1000);
-    </script>
+    });
+</script>
 
 {% endblock %}

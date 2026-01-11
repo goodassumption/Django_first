@@ -1,10 +1,12 @@
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
+from django.views.decorators.http import require_POST
 from django_first.models import *
 from django_first.forms import *
 
-import datetime
+import datetime, json
 from random import randint
 
 from .utilits import make_request
@@ -20,14 +22,25 @@ def time(request):
     return render(request, 'time.html')
 
 def time_update(request):
-    now = datetime.datetime.now()
+    # Получаем часовой пояс из GET параметра
+    timezone_str = request.GET.get('timezone')
+    default_hours = 0
+    
+    if timezone_str:
+        try:
+            hours = float(timezone_str)
+        except (ValueError, TypeError):
+            hours = default_hours
+    else:
+        hours = default_hours
+    
+    delta = datetime.timedelta(hours=hours)
+    now = datetime.datetime.now() + delta
 
-    context = {
+    return JsonResponse({
         'date': now.strftime("%d-%m-%Y"),
         'time': now.strftime("%H:%M:%S"),
-    }
-    
-    return JsonResponse(context)
+    })
 
 def calc(request):
     action = 'sum'
