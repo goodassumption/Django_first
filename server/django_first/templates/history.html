@@ -3,11 +3,15 @@
 
 {% block header_nav %}
 <nav>
-    <div class="nav-single-buttons">
+    <div class="simple-btn-group">
         <button data-url="{% url 'expression' %}"
-            class="nav-single-btn"
+            class="simple-btn"
             onclick="window.location.href = this.dataset.url;">К сложным
             выражениям</button>
+        <button data-url="{% url 'calc' %}"
+            class="simple-btn secondary"
+            onclick="window.location.href = this.dataset.url;">К
+            калькулятору</button>
     </div>
 </nav>
 {% endblock header_nav %}
@@ -90,7 +94,6 @@
     background: linear-gradient(135deg, #2a2a2a 0%, #353535 100%);
     border: 2px solid #444;
     max-width: 100%;
-    max-height: 500px; /* Ограничиваем максимальную высоту */
 }
 
 /* Таблица с авто-высотой */

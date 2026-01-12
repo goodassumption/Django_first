@@ -18,6 +18,7 @@ def index(request):
     
     return render(request, 'index.html', context)
 
+# ------------- ВРЕМЯ ------------- 
 def time(request):
     return render(request, 'time.html')
 
@@ -42,7 +43,11 @@ def time_update(request):
         'time': now.strftime("%H:%M:%S"),
     })
 
+# ------------- КАЛЬКУЛЯТОРЫ ------------- 
 def calc(request):
+    return render(request, 'calc_main.html')
+
+def calc_simple(request):
     action = 'sum'
     n1 = randint(1, 44)
     n2 = randint(1, 66)
@@ -97,104 +102,11 @@ def calc(request):
     context['text'] = 'Итоговая операция:'
     return render(request, 'calc.html', context)
 
-def neyro(request):
-    if request.method == 'POST':
-        context = make_request(request)
-
-    else:
-        context = {
-        'model': 'GigaChat',
-        'question': 'Привет! Кто ты?',
-        }
-
-    return render(request, 'neyro.html', context)
-
-def prompts(request):
-    context = {
-        'prompts': list(PromptsModel.objects.values('name', 'prompt', 'description').filter(is_approved=True))
-    }
-
-    return render(request, 'prompts.html', context)
-
-def add_prompt(request):
-    if request.method == 'POST':
-        form = AddPromptForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('add_prompt')
-    
-    else:
-        form = AddPromptForm(data=None)
-
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'add_prompt.html', context) 
-
-def riddle(request):
-    return render(request, 'riddle.html')
-
-def answer(request):
-    return render(request, 'answer.html')
-
-def multiply(request):
-    context = {
-        'n1': 1,
-        'n2': 10,
-    }
-
-    if request.method == 'POST':
-        try:
-            try:
-                n1 = int(request.POST.get('num1'))
-            except:
-                n1 = float(request.POST.get('num1'))
-            n2 = int(request.POST.get('num2'))
-            context['n1'] = n1
-            context['n2'] = n2
-        except Exception as e:
-            print(e)
-            context['error'] = f'Информация об ошибке: {e}'
-            return render(request, 'multiply.html', context)
-
-    smth = []
-    for i in range(context['n2']+1):
-        smth.append(
-            f'{context['n1']} * {i} = {round(context['n1']*i, 4)}'
-        )
-    context['ans'] = smth
-    return render(request, 'multiply.html', context)
-
-def viewed(request):
-    all = list(ReviewModel.objects.values())
-
-    context = {
-        'data': all
-    }
-    
-    return render(request, 'viewed.html', context)
-
-def review(request, rev_name):
-    context = {
-        'name': ReviewModel.objects.values_list('name').filter(name=rev_name),
-        'review': ReviewModel.objects.values_list('review').filter(name=rev_name),
-    }
-
-    return render(request, 'review.html', context)
-
-def characters(request):
-    context = {
-        'media_list': list(CharactersModel.objects.values()),
-    }
-
-    return render(request, 'characters.html', context)
-
 def expression(request):
     context = {
         'expression': f'{randint(1, 99)} + {randint(1, 99)} - {randint(1, 99)}'
     }
+
     if request.method == 'POST':
         expr_ = request.POST.get('expression')
         
@@ -276,7 +188,7 @@ def expression(request):
 
     return render(request, 'expression.html', context)
 
-def history(request):
+def expression_history(request):
     history = CalcHistory.objects.all().order_by('-time')
     
     context = {
@@ -284,6 +196,103 @@ def history(request):
         'simple_history': history.filter(expr_type="Простая операция"),
     }
     return render(request, 'history.html', context)
+
+def multiply(request):
+    context = {
+        'n1': 1,
+        'n2': 10,
+    }
+
+    if request.method == 'POST':
+        try:
+            try:
+                n1 = int(request.POST.get('num1'))
+            except:
+                n1 = float(request.POST.get('num1'))
+            n2 = int(request.POST.get('num2'))
+            context['n1'] = n1
+            context['n2'] = n2
+        except Exception as e:
+            print(e)
+            context['error'] = f'Информация об ошибке: {e}'
+            return render(request, 'multiply.html', context)
+
+    smth = []
+    for i in range(context['n2']+1):
+        smth.append(
+            f'{context['n1']} * {i} = {round(context['n1']*i, 4)}'
+        )
+    context['ans'] = smth
+    return render(request, 'multiply.html', context)
+
+# ------------- НЕЙРОСЕТИ ------------- 
+def neyro(request):
+    if request.method == 'POST':
+        context = make_request(request)
+
+    else:
+        context = {
+        'model': 'GigaChat',
+        'question': 'Привет! Кто ты?',
+        }
+
+    return render(request, 'neyro.html', context)
+
+def prompts(request):
+    context = {
+        'prompts': list(PromptsModel.objects.values('name', 'prompt', 'description').filter(is_approved=True))
+    }
+
+    return render(request, 'prompts.html', context)
+
+def add_prompt(request):
+    if request.method == 'POST':
+        form = AddPromptForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_prompt')
+    
+    else:
+        form = AddPromptForm(data=None)
+
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'add_prompt.html', context) 
+
+# ------------- ЗАГАДКА/ОТГАДКА ------------- 
+def riddle(request):
+    return render(request, 'riddle.html')
+
+def answer(request):
+    return render(request, 'answer.html')
+
+def viewed(request):
+    all = list(ReviewModel.objects.values())
+
+    context = {
+        'data': all
+    }
+    
+    return render(request, 'viewed.html', context)
+
+# ------------- ИНФОРМАЦИОННЫЕ СТРАНИЦЫ ------------- 
+def review(request, rev_name):
+    context = {
+        'name': ReviewModel.objects.values_list('name').filter(name=rev_name),
+        'review': ReviewModel.objects.values_list('review').filter(name=rev_name),
+    }
+
+    return render(request, 'review.html', context)
+
+def characters(request):
+    context = {
+        'media_list': list(CharactersModel.objects.values()),
+    }
+
+    return render(request, 'characters.html', context)
 
 def about(request):
     context = {

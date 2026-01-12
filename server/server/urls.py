@@ -11,10 +11,11 @@ urlpatterns = [
 
     path('update/time/', views.time_update, name='time_update'),
 
-    path('calc/', views.calc, name='calc'),
-    path('multiply/', views.multiply, name='multiply'),
-    path('expression/', views.expression, name='expression'),
-    path('expression/history/', views.history, name='history'),
+    path('calc/', views.calc, name='calc_main'),
+    path('calc/simple/', views.calc_simple, name='calc'),
+    path('calc/multiply/', views.multiply, name='multiply'),
+    path('calc/expression/', views.expression, name='expression'),
+    path('calc/expression/history/', views.expression_history, name='expression/history'),
 
     path('neyro/', views.neyro, name='neyro'),
     path('neyro/prompts/', views.prompts, name='prompts'),

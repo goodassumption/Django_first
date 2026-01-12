@@ -13,6 +13,11 @@
             class="nav-single-btn secondary"
             onclick="window.location.href = this.dataset.url;">Сложные
             выражения</button>
+
+        <button data-url="{% url 'expression/history' %}"
+            class="nav-single-btn warning"
+            onclick="window.location.href = this.dataset.url;">К истории
+            вычислений</button>
     </div>
 </nav>
 {% endblock header_nav %}
