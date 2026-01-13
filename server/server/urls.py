@@ -21,7 +21,7 @@ urlpatterns = [
     path('riddle/', views.riddle, name='riddle'),
     path('answer/', views.answer, name='answer'),
 
-    path('str2words/', views.str2words, name='str2words')
+    path('str2words/', views.str2words, name='str2words'),
 
     # ----------- ЛИЧНОЕ -----------
     path('neyro/', views.neyro, name='neyro'),
