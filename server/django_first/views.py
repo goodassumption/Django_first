@@ -225,6 +225,12 @@ def multiply(request):
     context['ans'] = smth
     return render(request, 'multiply.html', context)
 
+def str2words(request):
+    
+    context = {}
+    
+    return render(request, 'str2words.html', context)
+
 # ------------- НЕЙРОСЕТИ ------------- 
 def neyro(request):
     if request.method == 'POST':

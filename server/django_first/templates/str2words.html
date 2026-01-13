@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Строки в слова</h1>
+<p>Эта страница разберёт вашу строку на цифры и слова, а также проверит правильность их написания при помощи сервиса Yandex Speller</p>
+<form method="post">
+    <h3>Введите вашу строку</h3>
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+    <button type="reset">Сбросить</button>
+</form>
+{% endblock %}

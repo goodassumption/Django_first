@@ -22,6 +22,24 @@ class CalcHistory(models.Model):
         verbose_name_plural = "История вычислений"
         ordering = ['-time']
 
+class StrHistory(models.Model):
+    original_text = models.CharField(max_length=500, verbose_name='Изначальная строка')
+
+    time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
+
+    def __str__(self):
+        try:
+            return f'{self.original_text[:12]}'
+        except:
+            return f'{self.original_text}'
+
+
+    class Meta:
+        verbose_name = "История строк"
+        verbose_name_plural = "История строк"
+        ordering = ['-time']
+
+# ---------------- ЛИЧНОЕ ----------------
 class CharactersModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='Имя персонажа')
     url = models.CharField(max_length=100, verbose_name='Ссылка на картинку')
