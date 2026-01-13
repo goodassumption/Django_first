@@ -24,7 +24,7 @@ class CalcHistory(models.Model):
 
 class StrHistory(models.Model):
     original_text = models.CharField(max_length=500, verbose_name='Изначальная строка')
-
+    answer = models.JsonField()
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
 
     def __str__(self):
