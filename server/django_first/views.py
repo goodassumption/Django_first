@@ -9,7 +9,7 @@ from django_first.forms import *
 import datetime, json
 from random import randint
 
-from .utilits import make_request
+from .utilits import make_request, check_str, check_spell
 
 def index(request):
     context = {
@@ -226,8 +226,42 @@ def multiply(request):
     return render(request, 'multiply.html', context)
 
 def str2words(request):
-    
-    context = {}
+    digits = []
+    words = []
+    others = []
+    if request.method == 'POST':
+        form = Str2WordsForm(request.POST)
+        if form.is_valid():
+            model = form.save(commit=False)
+
+            answer = list(dict(request.POST).values())
+            answer = str(answer[1]).split()
+
+            for item in answer:
+                if item.isdigit():
+                    digits.append(item)
+
+                elif check_str(item):
+                    words.append(item)
+
+                else:
+                    others.append(item)
+
+            words[0] = words[0][2:]
+            words[-1] = words[-1][:-2]
+
+            model.answer = answer
+            model.save()
+
+    else:
+        form = Str2WordsForm()
+
+    context = {
+        'form': form,
+        'digits': digits,
+        'words': words,
+        'others': others,
+    }
     
     return render(request, 'str2words.html', context)
 

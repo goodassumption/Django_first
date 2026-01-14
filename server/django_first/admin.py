@@ -47,5 +47,6 @@ class PromptsModelAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('is_approved',)
 
+@admin.register(StrHistory)
 class StrHistoryAdmin(admin.ModelAdmin):
     pass

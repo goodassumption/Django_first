@@ -1,5 +1,7 @@
 from django.db import models
 
+import json
+
 from .utilits import create_time
 
 class CalcHistory(models.Model):
@@ -24,7 +26,7 @@ class CalcHistory(models.Model):
 
 class StrHistory(models.Model):
     original_text = models.CharField(max_length=500, verbose_name='Изначальная строка')
-    answer = models.JsonField()
+    answer = models.JSONField(verbose_name='Разделелённая строка', default=list, blank=True)
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
 
     def __str__(self):
@@ -32,6 +34,9 @@ class StrHistory(models.Model):
             return f'{self.original_text[:12]}'
         except:
             return f'{self.original_text}'
+        
+    def get_answer(self):
+        return json.loads(self.answer) if self.answer else []
 
 
     class Meta:

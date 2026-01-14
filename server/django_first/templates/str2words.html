@@ -2,12 +2,44 @@
 {% load static %}
 
 {% block content %}
+<h2>{{ answer }}</h2>
 <h1>Строки в слова</h1>
-<p>Эта страница разберёт вашу строку на цифры и слова, а также проверит правильность их написания при помощи сервиса Yandex Speller</p>
+<p>Эта страница разберёт вашу строку на цифры и слова, а также проверит
+    правильность их написания при помощи сервиса Yandex Speller</p>
 <form method="post">
+    {% csrf_token %}
     <h3>Введите вашу строку</h3>
     {{ form.as_p }}
     <button type="submit">Отправить</button>
     <button type="reset">Сбросить</button>
+</form>
+
+<form>
+    {% if digits|length != 0 %}
+    <h4>Цифры</h4>
+    {% for digit in digits %}
+    <ul>
+        <li>{{ digit }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+    <p></p>
+    {% if words %}
+    <h4>Слова</h4>
+    {% for word in words %}
+    <ul>
+        <li>{{ word }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+    <p></p>
+    {% if others %}
+    <h4>Другое</h4>
+    {% for other in others %}
+    <ul>
+        <li>{{ other }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
 </form>
 {% endblock %}

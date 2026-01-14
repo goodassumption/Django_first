@@ -83,3 +83,9 @@ def make_request(request):
         'ans': ai_answer,
         'system_prompt': system_prompt_,
     }
+
+def check_spell(words):
+    return words
+
+def check_str(str):
+    return True
