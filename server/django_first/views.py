@@ -229,6 +229,7 @@ def str2words(request):
     digits = []
     words = []
     others = []
+    errors = []
     if request.method == 'POST':
         form = Str2WordsForm(request.POST)
         if form.is_valid():
@@ -247,8 +248,11 @@ def str2words(request):
                 else:
                     others.append(item)
 
+            # Я полагаю это костыль, но всё же
             words[0] = words[0][2:]
             words[-1] = words[-1][:-2]
+
+            errors = check_spell(words)
 
             model.answer = answer
             model.save()
@@ -261,6 +265,7 @@ def str2words(request):
         'digits': digits,
         'words': words,
         'others': others,
+        'errors': errors,
     }
     
     return render(request, 'str2words.html', context)

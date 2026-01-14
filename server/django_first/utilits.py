@@ -85,7 +85,35 @@ def make_request(request):
     }
 
 def check_spell(words):
-    return words
+    url = 'https://speller.yandex.net/services/spellservice.json/checkText'
+    
+    text = ' '.join(words)
+
+    params = {
+        'text': text
+    }
+    response = requests.get(url=url, params=params)
+
+    if response.status_code != 200:
+        print('Error in check_spell func')
+        print('Status code:', response.status_code)
+        print('Content:', response.content)
+        return []
+
+    data = response.json()
+    result = []
+    if data:
+        for index, error in enumerate(data):
+            tmp = f'{error['word']} - {error['s'][0]}'
+            result.append(tmp)
+        return result
+            
+    else:
+        return []
 
 def check_str(str):
+    for char in str:
+        if char.isdigit():
+            return False
+    
     return True
