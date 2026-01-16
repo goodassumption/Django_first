@@ -230,13 +230,13 @@ def str2words(request):
     words = []
     others = []
     errors = []
+
     if request.method == 'POST':
         form = Str2WordsForm(request.POST)
         if form.is_valid():
             model = form.save(commit=False)
 
-            answer = list(dict(request.POST).values())
-            answer = str(answer[1]).split()
+            answer = list(dict(request.POST).values())[1]
 
             for item in answer:
                 if item.isdigit():
@@ -248,17 +248,13 @@ def str2words(request):
                 else:
                     others.append(item)
 
-            # Я полагаю это костыль, но всё же
-            words[0] = words[0][2:]
-            words[-1] = words[-1][:-2]
-
             errors = check_spell(words)
 
             model.answer = answer
             model.save()
 
-    else:
-        form = Str2WordsForm()
+    
+    form = Str2WordsForm()
 
     context = {
         'form': form,
