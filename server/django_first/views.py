@@ -225,19 +225,22 @@ def multiply(request):
     context['ans'] = smth
     return render(request, 'multiply.html', context)
 
+# ------------- СТРОКИ -------------
 def str2words(request):
-    digits = []
-    words = []
-    others = []
-    errors = []
+    context = {}
 
     if request.method == 'POST':
         form = Str2WordsForm(request.POST)
+
         if form.is_valid():
             model = form.save(commit=False)
 
-            answer = list(dict(request.POST).values())[1]
+            original_text = list(dict(request.POST).values())[1][0]
+            answer = original_text.split()
 
+            digits = []
+            words = []
+            others = []
             for item in answer:
                 if item.isdigit():
                     digits.append(item)
@@ -250,21 +253,45 @@ def str2words(request):
 
             errors = check_spell(words)
 
-            model.answer = answer
+            model.original_text = original_text
+            model.digits = digits
+            model.words = words
+            model.errors = errors
+            model.others = others
             model.save()
 
-    
-    form = Str2WordsForm()
+            context = {
+                'answer': original_text,
+                'digits': digits,
+                'words': words,
+                'others': others,
+                'errors': errors,
+            }
 
-    context = {
-        'form': form,
-        'digits': digits,
-        'words': words,
-        'others': others,
-        'errors': errors,
-    }
+    context['form'] = Str2WordsForm()
+
+    
     
     return render(request, 'str2words.html', context)
+
+def str2words_history(request):
+    context = {
+        'ans': list(StrHistory.objects.values()),   
+        'is_auth': request.user.is_authenticated
+    }
+
+    return render(request, 'str2words_history.html', context)
+
+def str2words_history_more(request, str_id):
+    context = {
+        'answer': StrHistory.objects.values_list('original_text').filter(id=str_id)[0],
+        'digits': StrHistory.objects.values_list('digits').filter(id=str_id)[0][0],
+        'words': StrHistory.objects.values_list('words').filter(id=str_id)[0][0],
+        'others': StrHistory.objects.values_list('others').filter(id=str_id)[0][0],
+        'errors': StrHistory.objects.values_list('errors').filter(id=str_id)[0][0],
+    }
+
+    return render(request, 'str2words_history_more.html', context)
 
 # ------------- НЕЙРОСЕТИ ------------- 
 def neyro(request):

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_nav %}
+<nav>
+    <div class="nav-single-buttons">
+        <button data-url="{% url 'index' %}"
+            class="simple-btn"
+            onclick="window.location.href = this.dataset.url;">На
+            главную</button>
+        <button data-url="{% url 'str2words' %}"
+            class="simple-btn secondary"
+            onclick="window.location.href = this.dataset.url;">К
+            распознованию</button>
+    </div>
+</nav>
+{% endblock header_nav %}
+
+{% block content %}
+{% if ans %}
+<h1>Строки в слова</h1>
+<p>На этой странице хранится вся история распознований. По нажатию на строчкуу
+    таблицы можно открыть страницу с расшифровкой</p>
+
+{% if is_auth %}
+<p>Сейчас вы видите историю всех пользователей сайта. Чтобы видеть только свою
+    историю, <a>зарегистрируйтесь</a> или <a>войдите</a> </p>
+{% endif %}
+
+<div class="table-container">
+    <table class="modern-table striped hover two-columns">
+        <thead>
+            <tr>
+                <th>Время</th>
+                <th>Изначальный текст</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in ans %}
+            <tr onclick="window.location.href = '{{ item.id }}'">
+                <td>
+                    {{ item.time }}
+                </td>
+                <td>
+                    {{ item.original_text }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<h1>Данные отсутствуют</h1>
+<p>К сожалению, данные о конвертациях строк отсутствуют. Предлагаем вам <a
+        href="{% url 'str2words' %}">создать первую.</a> Если вы считатете, что
+    произошла ошибка, свяжитесь с администратором сайта</p>
+
+{% endif %}
+
+{% endblock %}

@@ -17,21 +17,13 @@
 {% endblock header_nav %}
 
 {% block content %}
-<h1>Строки в слова</h1>
-<p>Эта страница разберёт ваш текст на цифры и слова, а также проверит
-    правильность их написания при помощи сервиса Yandex Speller</p>
-<form method="post">
-    {% csrf_token %}
-    <h2>Введите ваш текст</h2>
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-</form>
+<h1>Расшифровка</h1>
 
 {% if answer %}
 <div class="copy-grid-container">
     <h2 class="copy-grid-header">Изначальный текст</h2>
     <div class="copy-grid-item">
-        <p>{{ answer }}</p>
+        <p>{{ answer|first }}</p>
     </div>
 </div>
 

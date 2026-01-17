@@ -22,6 +22,9 @@ urlpatterns = [
     path('answer/', views.answer, name='answer'),
 
     path('str2words/', views.str2words, name='str2words'),
+    path('str2words/history/', views.str2words_history, name='str2words/history'),
+    path('str2words/history/<int:str_id>', views.str2words_history_more, name='str2words/history/more'),
+
 
     # ----------- ЛИЧНОЕ -----------
     path('neyro/', views.neyro, name='neyro'),

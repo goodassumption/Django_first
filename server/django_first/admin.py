@@ -49,4 +49,5 @@ class PromptsModelAdmin(admin.ModelAdmin):
 
 @admin.register(StrHistory)
 class StrHistoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('original_text', 'time')
+    

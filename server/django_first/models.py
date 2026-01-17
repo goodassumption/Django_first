@@ -26,12 +26,17 @@ class CalcHistory(models.Model):
 
 class StrHistory(models.Model):
     original_text = models.CharField(max_length=500, verbose_name='Изначальная строка')
-    answer = models.JSONField(verbose_name='Разделелённая строка', default=list, blank=True)
+    
+    digits = models.JSONField(verbose_name='Цифры', default=list, blank=True)
+    words = models.JSONField(verbose_name='Оригинальные слова', default=list, blank=True)
+    errors = models.JSONField(verbose_name='Исправленные слова', default=list, blank=True)
+    others = models.JSONField(verbose_name='Прочее', default=list, blank=True)
+    
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
 
     def __str__(self):
         try:
-            return f'{self.original_text[:12]}'
+            return f'{self.original_text[:20]}'
         except:
             return f'{self.original_text}'
         
