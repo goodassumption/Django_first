@@ -1,5 +1,5 @@
 import requests
-import uuid, os, json, string
+import uuid, os, json, string, time
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -120,3 +120,37 @@ def check_str(str):
             return False
     
     return True
+
+def get_weather(city):
+    api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
+
+    json_data = requests.get(api).json()
+
+    try:
+        condition = json_data['weather'][0]['main']
+        temp = int(json_data['main']['temp'] - 273.15)
+        min_temp = int(json_data['main']['temp_min'] - 273.15)
+        max_temp = int(json_data['main']['temp_max'] - 273.15)
+        pressure = json_data['main']['pressure']
+        humidity = json_data['main']['humidity']
+        wind = json_data['wind']['speed']
+        sunrise = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunrise'] - 21600))
+        sunset = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunset'] - 21600))
+
+        final = {
+            'Условия': condition,
+            'Температура': str(temp) + "°C",
+            'Минимальная температура': str(min_temp) + "°C",
+            'Максимальная температура': str(max_temp) + "°C",
+            'Давление': str(pressure),
+            'Влажность': str(humidity),
+            'Скорость ветра': str(wind),
+            'Время рассвета': str(sunrise),
+            'Время заката': str(sunset),
+        }
+
+    except Exception as e:
+        final = json_data
+        final['error'] = e
+
+    return final

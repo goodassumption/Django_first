@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Погода</h1>
+<p>На этой странице вы можете проверить погоду в вашем городе.
+</p>
+<p>По умолчанию погода выводится для Москвы</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Введите ваш город</label>
+    <input type="text" name="city">
+    <button type="submit">Получить результат</button>
+</form>
+
+{% if not weather.error %}
+<h2>Погода в городе {{ city }}</h2>
+<table class="modern-table" style="margin: 0 auto">
+    <tbody>
+        {% for key, value in weather.items %}
+        <tr>
+            <td>
+                {{ key }}
+            </td>
+            <td>
+                {{ value }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<h3>Ошибка!</h3>
+<p>Произошла непредвиденная ошибка! Текст ошибки: {{ weather.message }}</p>
+{% endif %}
+{% endblock %}

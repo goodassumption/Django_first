@@ -9,7 +9,7 @@ from django_first.forms import *
 import datetime, json
 from random import randint
 
-from .utilits import make_request, check_str, check_spell
+from .utilits import make_request, check_str, check_spell, get_weather
 
 def index(request):
     context = {
@@ -18,7 +18,7 @@ def index(request):
     
     return render(request, 'index.html', context)
 
-# ------------- ВРЕМЯ ------------- 
+# ------------- БЕСПОЛЕЗНОЕ ------------- 
 def time(request):
     return render(request, 'time.html')
 
@@ -42,6 +42,18 @@ def time_update(request):
         'date': now.strftime("%d-%m-%Y"),
         'time': now.strftime("%H:%M:%S"),
     })
+
+def weather(request):
+    city = 'moscow'
+
+    if request.method == 'POST':
+        city = request.POST.get('city')
+
+    context = {
+        'city': city,
+        'weather': get_weather(city),
+    }
+    return render(request, 'weather.html', context)
 
 # ------------- КАЛЬКУЛЯТОРЫ ------------- 
 def calc(request):
