@@ -241,6 +241,7 @@ def str2words(request):
             digits = []
             words = []
             others = []
+
             for item in answer:
                 if item.isdigit():
                     digits.append(item)
@@ -270,8 +271,6 @@ def str2words(request):
 
     context['form'] = Str2WordsForm()
 
-    
-    
     return render(request, 'str2words.html', context)
 
 def str2words_history(request):

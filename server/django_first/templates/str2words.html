@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+<script src="{% static 'JavaScript/copy_text.js' %}" defer></script>
+{% endblock head%}
+
 {% block header_nav %}
 <nav>
     <div class="nav-single-buttons">
@@ -30,7 +34,7 @@
 {% if answer %}
 <div class="copy-grid-container">
     <h2 class="copy-grid-header">Изначальный текст</h2>
-    <div class="copy-grid-item">
+    <div class="copy-grid-item" onclick="copyTextOnClick(this)">
         <p>{{ answer }}</p>
     </div>
 </div>

@@ -75,7 +75,7 @@ function showCopySuccess(element, copiedText, metaInfo) {
     element.classList.add('copied');
     
     // 2. Создаем алерт об успехе
-    showAlert(`${metaInfo} скопирован: ${truncateText(copiedText, 30)}`, 'success');
+    showAlert(`${metaInfo} скопирован`, 'success');
     
     // 3. Восстановить исходное состояние элемента через 1.5 секунды
     setTimeout(() => {

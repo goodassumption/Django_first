@@ -1,5 +1,5 @@
 import requests
-import uuid, os, json
+import uuid, os, json, string
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -114,6 +114,9 @@ def check_spell(words):
 def check_str(str):
     for char in str:
         if char.isdigit():
+            return False
+            
+        elif char in string.punctuation and not (char == str[0] or char == str[-1]):
             return False
     
     return True
