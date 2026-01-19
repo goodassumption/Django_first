@@ -49,10 +49,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'server.urls'
 
+TEMPLATE_DIRS_ROOT = os.path.join(BASE_DIR, 'django_first', 'templates')
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'useless'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'calc'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'riddle'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'str2words'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'neyro'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'viewed'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'other'),
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

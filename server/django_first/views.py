@@ -207,7 +207,7 @@ def expression_history(request):
         'complex_history': history.filter(expr_type="Сложная операция"),
         'simple_history': history.filter(expr_type="Простая операция"),
     }
-    return render(request, 'history.html', context)
+    return render(request, 'calc_history.html', context)
 
 def multiply(request):
     context = {
