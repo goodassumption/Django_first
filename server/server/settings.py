@@ -16,13 +16,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = [
-    'localhost',
     'goodassumption.ru',
     'www.goodassumption.ru',
     'goodassumption.online',
     'www.goodassumption.online',
-    '192.168.1.74',
-    '127.0.0.1',
 ]
 
 # Application definition
@@ -51,6 +48,7 @@ ROOT_URLCONF = 'server.urls'
 
 TEMPLATE_DIRS_ROOT = os.path.join(BASE_DIR, 'django_first', 'templates')
 TEMPLATE_DIRS = [
+    TEMPLATE_DIRS_ROOT,
     os.path.join(BASE_DIR, 'templates'),
     os.path.join(TEMPLATE_DIRS_ROOT, 'useless'),
     os.path.join(TEMPLATE_DIRS_ROOT, 'calc'),
@@ -112,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -134,6 +132,17 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 if DEBUG:
+    # Настройки SSL и куков при отладке
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
+
+    # Добавление хостов для режима отладки
+    DEBUG_HOSTS = [
+        'localhost',
+        '192.168.1.74',
+        '127.0.0.1',
+    ]
+
+    for d in DEBUG_HOSTS:
+        ALLOWED_HOSTS.append(d)
