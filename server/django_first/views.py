@@ -201,8 +201,12 @@ def expression(request):
     return render(request, 'expression.html', context)
 
 def expression_history(request):
-    history = CalcHistory.objects.all().order_by('-time')
+    if request.user.is_authenticated:
+        history = CalcHistory.objects.filter(user=request.user).order_by('-time')
     
+    else:
+        history = CalcHistory.objects.all().order_by('-time')
+
     context = {
         'complex_history': history.filter(expr_type="Сложная операция"),
         'simple_history': history.filter(expr_type="Простая операция"),
@@ -286,8 +290,14 @@ def str2words(request):
     return render(request, 'str2words.html', context)
 
 def str2words_history(request):
+    if request.user.is_authenticated:
+        ans = list(StrHistory.objects.values(user=request.user))
+
+    else:
+        ans = list(StrHistory.objects.values())
+
     context = {
-        'ans': list(StrHistory.objects.values()),   
+        'ans': ans,   
         'is_auth': request.user.is_authenticated
     }
 

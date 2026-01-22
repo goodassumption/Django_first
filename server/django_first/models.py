@@ -1,13 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 import json
 
 from .utilits import create_time
 
+# ---------------- СВЯЗАНЫ С ПОЛЬЗОВАТЕЛЯМИ ----------------
 class CalcHistory(models.Model):
     expression = models.CharField(max_length=100, verbose_name='Исходное выражение')
     result = models.IntegerField(verbose_name='Результат операции')
+    
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
+    
     expr_type = models.CharField(
         verbose_name='Вид выражения',
         choices={
@@ -15,6 +19,8 @@ class CalcHistory(models.Model):
             'Простая операция': 'Простая операция'
         }
     )
+
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Чья история')
 
     def __str__(self):
         return f"{self.expression} = {self.result}"
@@ -34,10 +40,12 @@ class StrHistory(models.Model):
     
     time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
 
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Чья история')
+
     def __str__(self):
-        try:
-            return f'{self.original_text[:20]}'
-        except:
+        if len(self.original_text) > 40:
+            return f'{self.original_text[:20] + '...'}'
+        else:
             return f'{self.original_text}'
         
     def get_answer(self):
@@ -49,40 +57,8 @@ class StrHistory(models.Model):
         verbose_name_plural = "История строк"
         ordering = ['-time']
 
-# ---------------- ЛИЧНОЕ ----------------
-class CharactersModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Имя персонажа')
-    url = models.CharField(max_length=100, verbose_name='Ссылка на картинку')
 
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Персонаж"
-        verbose_name_plural = "Персонажи"
-
-class ReviewModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название')
-    review = models.TextField(verbose_name='Текст рецензии', default='', blank=True, null=True)
-    review_time = models.CharField(max_length=50, default=create_time()[:-9], verbose_name='Дата создания рецензии')
-    genre = models.CharField(
-        verbose_name='Жанр',
-        choices={
-            'Аниме': 'Аниме',
-            'Фильм': 'Фильм',
-            'Сериал': 'Сериал',
-            'Мультик': 'Мультик',
-        },
-        null=True
-    )
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = "Рецензия"
-        verbose_name_plural = "Рецензии"    
-
+# ---------------- ОБО МНЕ ----------------
 class RefsModel(models.Model):
     img_url = models.CharField(max_length=100, verbose_name='Ссылка на арт')
     channel = models.CharField(max_length=100, verbose_name='Ссылка на художника')
@@ -146,6 +122,8 @@ class PreformersModel(models.Model):
         verbose_name = 'Исполнитель'
         verbose_name_plural = 'Исполнители'
 
+
+# ---------------- ГЛАВНАЯ ----------------
 class PagesModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название страницы')
     url = models.CharField(max_length=100, verbose_name='Путь относительно главной')
@@ -157,6 +135,8 @@ class PagesModel(models.Model):
         verbose_name = 'Страница'
         verbose_name_plural = 'Страницы'
 
+
+# ---------------- ПРОМПТЫ ----------------
 class PromptsModel(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название промпта')
     prompt = models.TextField(verbose_name='Промпт')
@@ -170,3 +150,40 @@ class PromptsModel(models.Model):
     class Meta:
         verbose_name='Промпт'
         verbose_name_plural='Промпты'
+
+
+# ---------------- ПЕРСОНАЖИ ----------------
+class CharactersModel(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя персонажа')
+    url = models.CharField(max_length=100, verbose_name='Ссылка на картинку')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Персонаж"
+        verbose_name_plural = "Персонажи"
+
+
+# ---------------- ПРОСМОТРЕННОЕ ----------------
+class ReviewModel(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название')
+    review = models.TextField(verbose_name='Текст рецензии', default='', blank=True, null=True)
+    review_time = models.CharField(max_length=50, default=create_time()[:-9], verbose_name='Дата создания рецензии')
+    genre = models.CharField(
+        verbose_name='Жанр',
+        choices={
+            'Аниме': 'Аниме',
+            'Фильм': 'Фильм',
+            'Сериал': 'Сериал',
+            'Мультик': 'Мультик',
+        },
+        null=True
+    )
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Рецензия"
+        verbose_name_plural = "Рецензии"    
