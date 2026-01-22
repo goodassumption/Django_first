@@ -56,6 +56,7 @@ TEMPLATE_DIRS = [
     os.path.join(TEMPLATE_DIRS_ROOT, 'str2words'),
     os.path.join(TEMPLATE_DIRS_ROOT, 'neyro'),
     os.path.join(TEMPLATE_DIRS_ROOT, 'viewed'),
+    os.path.join(TEMPLATE_DIRS_ROOT, 'feedback'),
     os.path.join(TEMPLATE_DIRS_ROOT, 'other'),
 ]
 

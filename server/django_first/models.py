@@ -57,6 +57,45 @@ class StrHistory(models.Model):
         verbose_name_plural = "История строк"
         ordering = ['-time']
 
+class UserFeedbackMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Чьё сообщение')
+
+    message = models.TextField('Сообщение')
+
+    def __str__(self):
+        return self.user
+    
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+class UserFeedbackAdd(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Чьё сообщение')
+
+    feedback = models.TextField('Идея')
+
+    def __str__(self):
+        return self.user
+    
+    class Meta:
+        verbose_name = 'Идея'
+        verbose_name_plural = 'Идеи'
+
+class UserFeedbackReport(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Чьё сообщение')
+
+    page = models.CharField(verbose_name='Страница с проблемой', max_length=200)
+
+    report = models.TextField('Текст репорта')
+
+    # В перспективе загрузка скриншотов с проблемой
+
+    def __str__(self):
+        return self.user
+    
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
 
 # ---------------- ОБО МНЕ ----------------
 class RefsModel(models.Model):

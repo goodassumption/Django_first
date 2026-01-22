@@ -46,4 +46,13 @@ urlpatterns = [
 
     # ----------- ОБО МНЕ -----------
     path('about/', views.about, name='about'),
+
+    # ----------- РАНДОМ -----------
+    path('random/', views.random, name='random'),
+
+    # ----------- ОБРАТНАЯ СВЯЗЬ -----------
+    path('feedback/', views.feedback, name='feedback'),
+    path('feedback/add', views.feedback_add, name='feedback/add'),
+    path('feedback/message/', views.feedback_message, name='feedback/message'),
+    path('feedback/report/', views.feedback_report, name='feedback/report'),
 ]

@@ -393,3 +393,25 @@ def about(request):
     }
 
     return render(request, 'about.html', context)
+
+# ------------- ЭЭЭЭЭЭ ------------- 
+def random(request):
+
+    return render(request, 'random.html')
+
+# ------------- Обратная связь ------------- 
+def feedback(request):
+
+    return render(request, 'feedback.html')
+
+def feedback_add(request):
+
+    return render(request, 'feedback_add.html')
+
+def feedback_message(request):
+
+    return render(request, 'feedback_message.html')
+
+def feedback_report(request):
+
+    return render(request, 'feedback_report.html')
