@@ -33,7 +33,7 @@ class Str2WordsForm(forms.ModelForm):
                 }
             )
         }
-
+"""
 class FeedbackAddForm(forms.ModelForm):
     class Meta:
         model = UserFeedbackAdd
@@ -45,3 +45,4 @@ class FeedbackMessageForm(forms.ModelForm):
 class FeedbackReportForm(forms.ModelForm):
     class Meta:
         model = UserFeedbackReport
+"""

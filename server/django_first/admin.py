@@ -50,4 +50,7 @@ class PromptsModelAdmin(admin.ModelAdmin):
 @admin.register(StrHistory)
 class StrHistoryAdmin(admin.ModelAdmin):
     list_display = ('original_text', 'time')
-    
+
+@admin.register(RandomModel)
+class RandomModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type', 'link')

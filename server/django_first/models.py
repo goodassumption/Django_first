@@ -226,3 +226,25 @@ class ReviewModel(models.Model):
     class Meta:
         verbose_name = "Рецензия"
         verbose_name_plural = "Рецензии"    
+
+class RandomModel(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название видео')
+    link = models.CharField(max_length=1000, verbose_name='Ссылка на видео')
+    time = models.CharField(max_length=50, default=create_time(), editable=False, verbose_name='Время создания')
+    
+    type = models.CharField(
+        verbose_name='Жанр',
+        choices={
+            'Музыка': 'Музыка',
+            'Видео': 'Видео',
+            'Прочее': 'Прочее',
+        },
+        null=True
+    )
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Рандомные ссылки"
+        verbose_name_plural = "Рандомные ссылки"

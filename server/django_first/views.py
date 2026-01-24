@@ -396,8 +396,11 @@ def about(request):
 
 # ------------- ЭЭЭЭЭЭ ------------- 
 def random(request):
-
-    return render(request, 'random.html')
+    context = {
+        'table': RandomModel.objects.all().order_by('-time')
+    }
+    
+    return render(request, 'random.html', context)
 
 # ------------- Обратная связь ------------- 
 def feedback(request):
