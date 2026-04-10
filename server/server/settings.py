@@ -143,6 +143,7 @@ if DEBUG:
         'localhost',
         '192.168.1.74',
         '127.0.0.1',
+        '26.125.109.78',
     ]
 
     for d in DEBUG_HOSTS:
