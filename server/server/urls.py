@@ -32,11 +32,6 @@ urlpatterns = [
     path('str2words/history/', views.str2words_history, name='str2words/history'),
     path('str2words/history/<int:str_id>', views.str2words_history_more, name='str2words/history/more'),
 
-    # ----------- НЕЙРОНКА -----------
-    path('neyro/', views.neyro, name='neyro'),
-    path('neyro/prompts/', views.prompts, name='prompts'),
-    path('neyro/prompts/add', views.add_prompt, name='add_prompt'),
-
     # ----------- ПРОСМОТРЕННОЕ -----------
     path('viewed/', views.viewed, name='viewed'),   
     path('viewed/<str:rev_name>', views.review, name='review'),   
@@ -50,9 +45,7 @@ urlpatterns = [
     # ----------- РАНДОМ -----------
     path('random/', views.random, name='random'),
 
-    # ----------- ОБРАТНАЯ СВЯЗЬ -----------
-    path('feedback/', views.feedback, name='feedback'),
-    path('feedback/add', views.feedback_add, name='feedback/add'),
-    path('feedback/message/', views.feedback_message, name='feedback/message'),
-    path('feedback/report/', views.feedback_report, name='feedback/report'),
+    # ----------- РЕДИРЕКТЫ -----------
+    path('r/<str:service_name>', views.redirects, name='redirects'),
+    
 ]

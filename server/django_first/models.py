@@ -120,15 +120,16 @@ class RefsModel(models.Model):
         verbose_name_plural = 'Референсы'
 
 class SocialsModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название соцсети')
-    url = models.CharField(max_length=100, verbose_name='Ссылка на соцсеть')
+    name = models.CharField(max_length=100, verbose_name='Человеческое название сервиса')
+    short_name = models.CharField(max_length=100, verbose_name='Короткое название сервиса')
+    url = models.CharField(max_length=100, verbose_name='Ссылка на сервис')
 
     def __str__(self):
         return self.name
     
     class Meta:
-        verbose_name = 'Ссылка на соцсеть'
-        verbose_name_plural = 'Ссылки на соцсети'
+        verbose_name = 'Ссылка на сервис'
+        verbose_name_plural = 'Ссылки на сервисы'
 
 class GamesModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название игры')

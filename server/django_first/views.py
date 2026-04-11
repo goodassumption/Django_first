@@ -314,43 +314,6 @@ def str2words_history_more(request, str_id):
 
     return render(request, 'str2words_history_more.html', context)
 
-# ------------- НЕЙРОСЕТИ ------------- 
-def neyro(request):
-    if request.method == 'POST':
-        context = make_request(request)
-
-    else:
-        context = {
-        'model': 'GigaChat',
-        'question': 'Привет! Кто ты?',
-        }
-
-    return render(request, 'neyro.html', context)
-
-def prompts(request):
-    context = {
-        'prompts': list(PromptsModel.objects.values('name', 'prompt', 'description').filter(is_approved=True))
-    }
-
-    return render(request, 'prompts.html', context)
-
-def add_prompt(request):
-    if request.method == 'POST':
-        form = AddPromptForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('add_prompt')
-    
-    else:
-        form = AddPromptForm(data=None)
-
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'add_prompt.html', context) 
-
 # ------------- ЗАГАДКА/ОТГАДКА ------------- 
 def riddle(request):
     return render(request, 'riddle.html')
@@ -402,19 +365,11 @@ def random(request):
     
     return render(request, 'random.html', context)
 
-# ------------- Обратная связь ------------- 
-def feedback(request):
+# ------------- РЕДИРЕКТЫ -----------------
+def redirects(request, service_name):
+    try:
+        values = dict(SocialsModel.objects.filter(short_name=service_name).values()[0])
+    except IndexError:
+        return render(request, '404.html')
 
-    return render(request, 'feedback.html')
-
-def feedback_add(request):
-
-    return render(request, 'feedback_add.html')
-
-def feedback_message(request):
-
-    return render(request, 'feedback_message.html')
-
-def feedback_report(request):
-
-    return render(request, 'feedback_report.html')
+    return redirect(values['url'])
